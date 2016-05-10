@@ -41,6 +41,6 @@ namespace ExStrataServer.ColorPattern
             frames.Add(frame);
         }
 
-        // TODO add methods for defining pretty patterns
+        // TODO add methods for defining pretty patterns zoals gradients
     }
 }
