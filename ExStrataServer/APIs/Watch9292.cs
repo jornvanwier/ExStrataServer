@@ -34,6 +34,11 @@ namespace ExStrataServer.APIs
             using (WebResponse response = request.GetResponse())
             {
                 Stream dataStream = response.GetResponseStream();
+
+                using (string sok = "test")
+                {
+
+                }
             }
 
 
