@@ -37,6 +37,20 @@ namespace ExStrataServer.ColourPattern
                 Colours[i] = Colour;
             }
         }
-        
+
+        public string ToJSON()
+        {
+            string result = "\t\t\t'zones':{";
+            for (int i = 0; i < colours.Length; i++)
+            {
+                result += "\n\t\t\t\t" + colours[i].ToJSON(i+1);
+
+                if (i != colours.Length-1)
+                    result += ",";
+            }
+            return result + "\n\t\t\t}";
+
+        }
+
     }
 }

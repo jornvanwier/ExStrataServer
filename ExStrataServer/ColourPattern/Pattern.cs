@@ -32,6 +32,7 @@ namespace ExStrataServer.ColourPattern
         public Pattern(string name, int delay, List<Frame> frames)
         {
             Name = name;
+            Delay = delay;
 
             this.frames = frames;
         }
@@ -39,6 +40,7 @@ namespace ExStrataServer.ColourPattern
         public Pattern(string name, int delay)
         {
             Name = name;
+            Delay = delay;
 
             frames = new List<Frame>();
         }
@@ -47,6 +49,21 @@ namespace ExStrataServer.ColourPattern
         {
             frames.Add(frame);
         }
+
+        public string ToJSON()
+        {
+            string result = "{\n\t'frames':[\n";
+            for (int i = 0; i < frames.Count; i++)
+            {
+                result += "{\n\t\t\t'ms':" + (i*delay)+ ",\n" + frames[i].ToJSON() + "\n\t\t\t}";
+
+                if (i != frames.Count - 1)
+                    result += ",";
+            }
+            return result + "\n\t]\n}";
+        }
+
+
 
         // TODO add methods for defining pretty patterns zoals gradients
         // TODO add toString method

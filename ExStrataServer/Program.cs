@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExStrataServer.ColourPattern;
 using ExStrataServer.APIs;
+using ExStrataServer.Communication;
 
 namespace ExStrataServer
 {
@@ -14,7 +15,7 @@ namespace ExStrataServer
         {
             Log.Add("Piet", "Sok");
             //WatchWeather WeatherWatcher = new WatchWeather(10000, "NL", "Leeuwarden");
-            Frame RedToYellow = Gradient.GetFrame(new Gradient.GradientColour[]
+            Frame gradients = Gradient.GetFrame(new Gradient.GradientColour[]
             {
                 new Gradient.GradientColour(0, Colour.Red),
                 new Gradient.GradientColour(20, Colour.Blue),
@@ -22,10 +23,42 @@ namespace ExStrataServer
                 new Gradient.GradientColour(70, Colour.Pink),
                 new Gradient.GradientColour(100, Colour.Yellow)
             });
+            Frame redToGreen = Gradient.GetFrame(new Gradient.GradientColour[]
+            {
+                new Gradient.GradientColour(0, Colour.Red),
+                new Gradient.GradientColour(100, Colour.Green)
+            });
 
-            Console.WriteLine(RedToYellow);
+            Pattern testPattern = new Pattern("TestPattern", 500, new List<Frame>()
+            {
+                new Frame(new Colour[]
+                {
+                    Colour.Red,
+                    Colour.Blue
+                    }),
+                new Frame(new Colour[]
+                {
+                    Colour.Aquamarine,
+                    Colour.Blanchedalmond,
+                    Colour.Bisque
+                    }),
+                new Frame(new Colour[]
+                {
+                    Colour.Black,
+                    Colour.Black
+                    }),
+            });
 
+
+            Pattern pattern = new Pattern("test", 100, new List<Frame>() { gradients, redToGreen });
+
+            //ExStrataAPI.PlayPattern(new Pattern("sok", 1000));
+
+            string framejson = gradients.ToString();
+            string patternjson = pattern.ToString();
+            Console.WriteLine(testPattern.ToJSON());
             Console.ReadKey();
+
         }
     }
 }
