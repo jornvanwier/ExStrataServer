@@ -52,11 +52,12 @@ namespace ExStrataServer
 
             Pattern pattern = new Pattern("test", 100, new List<Frame>() { gradients, redToGreen });
 
-            //ExStrataAPI.PlayPattern(new Pattern("sok", 1000));
-
             string framejson = gradients.ToString();
             string patternjson = pattern.ToString();
-            Console.WriteLine(testPattern.ToJSON());
+            Console.WriteLine(pattern.ToJSON());
+
+            ExStrataAPI.PlayPattern(testPattern);
+
             Console.ReadKey();
 
         }

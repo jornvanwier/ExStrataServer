@@ -8,6 +8,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ExStrataServer.Communication;
+using ExtensionMethods;
 
 namespace ExStrataServer.APIs
 {
