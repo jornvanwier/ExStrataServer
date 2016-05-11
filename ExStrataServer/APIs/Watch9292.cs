@@ -40,6 +40,9 @@ namespace ExStrataServer.APIs
             catch (Exception exception)
             {
                 Log.AddError("Could not parse 9292OV data: " + exception.Message);
+
+                // Can't continue
+                return;
             }
 
             base.Check(Sender, e);
