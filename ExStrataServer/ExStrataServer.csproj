@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="APIs\Watch9292.cs" />
     <Compile Include="APIs\APIWatcher.cs" />
+    <Compile Include="APIs\WatchWeather.cs" />
     <Compile Include="ColorPattern\Color.cs" />
     <Compile Include="ColorPattern\Frame.cs" />
     <Compile Include="ColorPattern\Pattern.cs" />

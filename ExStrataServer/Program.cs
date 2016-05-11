@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExStrataServer.ColorPattern;
+using ExStrataServer.APIs;
 
 namespace ExStrataServer
 {
@@ -12,6 +13,8 @@ namespace ExStrataServer
         static void Main(string[] args)
         {
             Log.Add("Piet", "Sok");
+            WatchWeather WeatherWatcher = new WatchWeather(10000, "NL", "Leeuwarden");
+            Console.ReadKey();
         }
     }
 }
