@@ -18,7 +18,7 @@ namespace ExStrataServer.ColourPattern
                 this.colour = colour;
             }
         }
-        public static Frame GetFrame(GradientColour[] colours)
+        public static Frame GetFrame(GradientColour[] colours, int start = 0, int stop = Frame.ExStrataHeight)
         {
             Frame result = new Frame();
             int currentRow = 0;
@@ -33,18 +33,25 @@ namespace ExStrataServer.ColourPattern
 
                 for (int j = 0; j < ringsToNextPoint; j++)
                 {
-                    result.SetRow(currentRow, new Colour(
-                        Convert.ToByte(colours[i].colour.R + (rColorDiff * j)),
-                        Convert.ToByte(colours[i].colour.G + (gColorDiff * j)),
-                        Convert.ToByte(colours[i].colour.B + (bColorDiff * j))
-                    ));
+                    if (currentRow >= start && currentRow <= stop)
+                    {
+                        result.SetRow(currentRow, new Colour(
+                            Convert.ToByte(colours[i].colour.R + (rColorDiff * j)),
+                            Convert.ToByte(colours[i].colour.G + (gColorDiff * j)),
+                            Convert.ToByte(colours[i].colour.B + (bColorDiff * j))
+                        ));
+                    }
+                    else
+                    {
+                        result.SetRow(currentRow, new Colour(0,0,0));
+                    }
                     currentRow++;
                 }
-                if (currentRow == 0)
+                if (currentRow == 0 && currentRow >= start && currentRow <= stop)
                 {
                     result.SetRow(currentRow, colours[i + 1].colour);
                 }
-                else {
+                else if(currentRow >= start && currentRow <= stop) {
                     result.SetRow(currentRow - 1, colours[i + 1].colour);
                 }
             }

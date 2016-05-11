@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ExStrataServer.ColourPattern
 {
@@ -66,6 +67,10 @@ namespace ExStrataServer.ColourPattern
                     result += ",";
             }
             return result + "\n\t]\n}";
+        }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
 
 

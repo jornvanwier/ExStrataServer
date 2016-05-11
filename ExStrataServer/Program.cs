@@ -50,14 +50,25 @@ namespace ExStrataServer
             });
 
 
+            int temperatureRings = (int)(((float)5 + (float)5) / (float)35 * (float)80);
+
+            Pattern temperaturepGradient = new Pattern("Temperature", 60 * 1000);
+            temperaturepGradient.Add(Gradient.GetFrame(new Gradient.GradientColour[]
+            {
+                    new Gradient.GradientColour(0, new Colour(0,200,220)),
+                    new Gradient.GradientColour(50, new Colour(255,200,0)),
+                    new Gradient.GradientColour(100, new Colour(255,70,0))
+            }, 0, temperatureRings));
+            Console.WriteLine(temperaturepGradient.ToString());
+
             Pattern pattern = new Pattern("test", 100, new List<Frame>() { gradients, redToGreen });
             string framejson = gradients.ToString();
             string patternjson = pattern.ToString();
-            Console.WriteLine(pattern.ToJSON());
 
             ExStrataAPI.PlayPattern(testPattern);
             //ExStrataAPI.PlayPattern(new Pattern("sok", 1000));
-            Console.WriteLine(testPattern.ToJSON());
+
+            
 
             Console.ReadKey();
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using ExStrataServer.Communication;
+using ExStrataServer.ColourPattern;
 
 namespace ExStrataServer.APIs
 {
@@ -34,16 +35,25 @@ namespace ExStrataServer.APIs
 
         protected override void Check(object Sender = null, EventArgs e = null)
         {
-            try
+            JObject result;
+            if (ExtensionMethods.Extensions.TryParseJObject(Request.GetData("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"), out result))
             {
-                JObject result = JObject.Parse(Request.GetData("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"));
-                int temp = (int)result["current_observation"]["temp_c"];
+                float temperatureC = (float)result["current_observation"]["temp_c"];
 
-                // TODO: send correct gradient to API
+                int temperatureRings = (int)((temperatureC + 5) / 35 * 80);
+
+                Pattern temperaturepGradient = new Pattern("Temperature", 60 * 1000);
+                temperaturepGradient.Add(Gradient.GetFrame(new Gradient.GradientColour[]
+                {
+                    new Gradient.GradientColour(0, new Colour(0,200,220)),
+                    new Gradient.GradientColour(50, new Colour(255,200,0)),
+                    new Gradient.GradientColour(100, new Colour(255,70,0))
+                }, 0, temperatureRings));
+                Console.WriteLine(temperaturepGradient.ToString());
             }
-            catch (Exception exception)
+            else
             {
-                Log.AddError("Could not parse weather data: " + exception.Message);
+                Log.AddError("Could not parse weather data: ");
                 return;
             }
         }
