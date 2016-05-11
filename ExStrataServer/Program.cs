@@ -13,11 +13,8 @@ namespace ExStrataServer
         static void Main(string[] args)
         {
             Log.Add("Piet", "Sok");
-            //WatchWeather WeatherWatcher = new WatchWeather(60*1000, "NL", "Leeuwarden");
-            Frame redToYellow = Gradient.GetFrame(new Gradient.GradientColour[] {
-                new Gradient.GradientColour(0, Colour.Red),
-                new Gradient.GradientColour(100, Colour.Yellow)
-            });
+            //WatchWeather WeatherWatcher = new WatchWeather(10000, "NL", "Leeuwarden");
+            
             Console.ReadKey();
         }
     }
