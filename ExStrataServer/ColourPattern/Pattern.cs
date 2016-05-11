@@ -53,9 +53,14 @@ namespace ExStrataServer.ColourPattern
         public string ToJSON()
         {
             string result = "{\n\t'frames':[\n";
+            string tabs = "";
             for (int i = 0; i < frames.Count; i++)
             {
-                result += "{\n\t\t\t'ms':" + (i*delay)+ ",\n" + frames[i].ToJSON() + "\n\t\t\t}";
+                if (i == 0)
+                    tabs = "\t\t";
+                else
+                    tabs = "";
+                result += tabs+ "{\n\t\t\t'ms':" + (i*delay)+ ",\n" + frames[i].ToJSON() + "\n\t\t}";
 
                 if (i != frames.Count - 1)
                     result += ",";
