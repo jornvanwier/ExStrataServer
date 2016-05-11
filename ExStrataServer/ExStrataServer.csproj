@@ -49,10 +49,12 @@
   <ItemGroup>
     <Compile Include="APIs\Watch9292.cs" />
     <Compile Include="APIs\APIWatcher.cs" />
+    <Compile Include="APIs\WatchCBS.cs" />
     <Compile Include="APIs\WatchWeather.cs" />
-    <Compile Include="ColorPattern\Color.cs" />
-    <Compile Include="ColorPattern\Frame.cs" />
-    <Compile Include="ColorPattern\Pattern.cs" />
+    <Compile Include="ColourPattern\Colour.cs" />
+    <Compile Include="ColourPattern\Frame.cs" />
+    <Compile Include="ColourPattern\Gradient.cs" />
+    <Compile Include="ColourPattern\Pattern.cs" />
     <Compile Include="Communication\ExStrataAPI.cs" />
     <Compile Include="Communication\Request.cs" />
     <Compile Include="Log.cs" />
