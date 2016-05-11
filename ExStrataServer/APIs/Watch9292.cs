@@ -28,6 +28,7 @@ namespace ExStrataServer.APIs
         protected override void Check(object Sender = null, EventArgs e = null)
         {
             //TODO: Actually check the API
+            
 
             WebRequest request = WebRequest.Create("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=en-GB");
 

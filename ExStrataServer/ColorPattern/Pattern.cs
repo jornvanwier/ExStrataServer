@@ -42,5 +42,6 @@ namespace ExStrataServer.ColorPattern
         }
 
         // TODO add methods for defining pretty patterns zoals gradients
+        // TODO add toString method
     }
 }
