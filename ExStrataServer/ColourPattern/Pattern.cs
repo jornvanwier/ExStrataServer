@@ -10,6 +10,7 @@ namespace ExStrataServer.ColourPattern
     {
         private List<Frame> frames;
         private string name;
+        private int delay;
 
         public string Name
         {
@@ -22,14 +23,20 @@ namespace ExStrataServer.ColourPattern
             get { return frames; }
         }
 
-        public Pattern(string name, List<Frame> frames)
+        public int Delay
+        {
+            get { return delay; }
+            set { delay = value; }
+        }
+
+        public Pattern(string name, int delay, List<Frame> frames)
         {
             Name = name;
 
             this.frames = frames;
         }
 
-        public Pattern(string name)
+        public Pattern(string name, int delay)
         {
             Name = name;
 

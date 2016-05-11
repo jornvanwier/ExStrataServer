@@ -8,25 +8,18 @@ namespace ExStrataServer.ColourPattern
 {
     public class Frame
     {
-        private Colour[] colours = new Colour[80];
-        private int delay;
+        public const int ExStrataHeight = 80;
+        private Colour[] colours = new Colour[ExStrataHeight];
 
-        public Colour[] Colours { get { return Colours; } }
+        public Colour[] Colours { get { return colours; } }
 
-        public int Delay
+
+        public Frame()
         {
-            get { return delay; }
-            set { delay = value; }
         }
 
-        public Frame(int delay)
+        public Frame(Colour[] Colours)
         {
-            this.delay = delay;
-        }
-
-        public Frame(int delay, Colour[] Colours)
-        {
-            this.delay = delay;
             this.colours = Colours;
         }
 
@@ -37,12 +30,13 @@ namespace ExStrataServer.ColourPattern
 
         public void SetRegion(int startPos, int endPos, Colour Colour)
         {
-            if (startPos < 0 || endPos > 80) throw new ArgumentException();
+            if (startPos < 0 || endPos > ExStrataHeight) throw new ArgumentException();
 
             for (int i = startPos; i < endPos; i++)
             {
                 Colours[i] = Colour;
             }
         }
+        
     }
 }
