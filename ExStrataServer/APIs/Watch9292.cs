@@ -31,11 +31,22 @@ namespace ExStrataServer.APIs
         {
             //TODO: Actually check the API
 
-            string data = Request.GetData("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=nl-NL");
+            string data = Request.GetData("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=en-GB");
 
             try
             {
                 JObject parsedData = JObject.Parse(data);
+
+                JToken departures = parsedData["tabs"]["departures"];
+
+                foreach(JToken departure in departures)
+                {
+                    //Bus is at destination
+                    if ((string)departure["destinationName"] == Destination && (string)departure["time"] == DateTime.Now.ToString("HH:mm"))
+                    {
+                        Send();
+                    }
+                }
             } 
             catch (Exception exception)
             {
