@@ -38,11 +38,13 @@ namespace ExStrataServer.APIs
             {
                 JObject result = JObject.Parse(Request.GetData("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"));
                 int temp = (int)result["current_observation"]["temp_c"];
+
+                // TODO: send correct gradient to API
             }
             catch (Exception exception)
             {
                 Log.AddError("Could not parse weather data: " + exception.Message);
-                throw;
+                return;
             }
         }
     }

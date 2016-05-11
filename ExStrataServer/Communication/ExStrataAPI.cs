@@ -23,15 +23,34 @@ namespace ExStrataServer.Communication
          By doing this the server wont unnecessarily block the livecontrol, and we dont need to worry about keeping our token stored
          */
 
-
+        /// <summary>
+        /// Play a pattern on the EX STRATA
+        /// </summary>
+        /// <param name="pattern">The pattern to be played</param>
+        /// <returns>Wether the pattern was successfully played</returns>
         public static bool PlayPattern(Pattern pattern)
         {
-            SubscribeToLiveControl();
-            throw new NotImplementedException();
+            string token = SubscribeToLiveControl();
+            Console.WriteLine(token);
+
+            if (token != String.Empty)
+            {
+                JObject json = JObject.FromObject(new
+                {
+                    liveControlToken = token,
+                    pattern = pattern
+                });
+
+                Request.PostJSON(ExStrataAPIURI + "play_pattern.php", json);
+
+                UnsubscribeFromLiveControl(token);
+                return true;
+            }
+            else return false;
         }
 
         /// <summary>
-        /// Subscribe to LiveControl on the EX STRATA.
+        /// Subscribe to LiveControl on the EX STRATA
         /// </summary>
         /// <returns>The LiveControl token</returns>
         private static string SubscribeToLiveControl()
@@ -55,19 +74,19 @@ namespace ExStrataServer.Communication
                         Log.AddError("LiveControl queue is not empty");
                         UnsubscribeFromLiveControl(token);
 
-                        return "";
+                        return String.Empty;
                     }
                 }
                 else
                 {
                     Log.AddError("SubscribeToLiveControl returned false");
-                    return "";
+                    return String.Empty;
                 }
             }
             catch (Exception exception)
             {
                 Log.AddError("Could not parse LiveControl token data: " + exception.Message);
-                return "";
+                return String.Empty;
             }
         }
 
@@ -75,11 +94,11 @@ namespace ExStrataServer.Communication
         /// Unsubscribe from LiveControl on the EX STRATA
         /// </summary>
         /// <param name="token">The LiveControl token</param>
-        private static void UnsubscribeFromLiveControl(string token)
+        private static string UnsubscribeFromLiveControl(string token)
         {
-            JObject json = new JObject(new { liveControlToken = token });
+            JObject json = JObject.FromObject(new { liveControlToken = token });
 
-            Request.PostData(ExStrataAPIURI + "unsubscribe_from_live_control.php", json);
+            return Request.PostJSON(ExStrataAPIURI + "unsubscribe_from_live_control.php", json);
         }
     }
 }

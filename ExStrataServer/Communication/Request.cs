@@ -17,8 +17,34 @@ namespace ExStrataServer.Communication
     {
         public static string GetData(string url)
         {
-            string result;
             WebRequest request = WebRequest.Create(url);
+
+            return GetResponse(request);
+        }
+
+        public static string PostJSON(string url, string data)
+        {
+            WebRequest request = WebRequest.Create(url);
+            request.ContentType = "application/json";
+            request.Method = "POST";
+
+            using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
+            {
+                writer.Write(data);
+            }
+
+            return GetResponse(request);
+        }
+
+        public static string PostJSON(string url, JObject data)
+        {
+            return PostJSON(url, data.ToString());
+        }
+
+        private static string GetResponse(WebRequest request)
+        {
+            string result;
+
             using (WebResponse response = request.GetResponse())
             {
                 using (StreamReader sr = new StreamReader(response.GetResponseStream()))
@@ -28,16 +54,6 @@ namespace ExStrataServer.Communication
             }
 
             return result;
-        }
-
-        public static string PostData(string url, string data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static string PostData(string url, JObject data)
-        {
-            return PostData(url, data.ToString());
         }
     }
 }
