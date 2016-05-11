@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using ExStrataServer.ColourPattern;
+using ExStrataServer.Communication;
 
 namespace ExStrataServer.APIs
 {
@@ -45,9 +46,7 @@ namespace ExStrataServer.APIs
         /// </summary>
         /// <param name="sender">The object that sends the event.</param>
         /// <param name="e">The EventArgs.</param>
-        protected virtual void Check(object sender = null, EventArgs e = null)
-        {
-        }
+        protected abstract void Check(object sender = null, EventArgs e = null);
 
         /// <summary>
         /// Send a pattern to the EX STRATA and add a new entry to the log.
@@ -57,7 +56,7 @@ namespace ExStrataServer.APIs
         {
             Log.Add(Name, pattern.Name);
             // Send current pattern with EX STRATA API
-            throw new NotImplementedException();
+            ExStrataAPI.PlayPattern(pattern);
         }
     }
 }

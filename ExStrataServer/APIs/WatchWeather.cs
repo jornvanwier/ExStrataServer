@@ -44,9 +44,6 @@ namespace ExStrataServer.APIs
                 Log.AddError("Could not parse weather data: " + exception.Message);
                 throw;
             }
-
-
-            base.Check(Sender, e);
         }
     }
 }

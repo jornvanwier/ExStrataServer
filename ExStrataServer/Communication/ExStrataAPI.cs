@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExStrataServer.ColourPattern;
+using Newtonsoft.Json.Linq;
 
 namespace ExStrataServer.Communication
 {
     public static class ExStrataAPI
     {
+        private const string ExStrataAPIURI = "http://www.exstrata.nl/control/api/";
+
         /*  
          For liveControl:
          Subscribe to livecontrol
@@ -23,6 +26,7 @@ namespace ExStrataServer.Communication
 
         public static bool PlayPattern(Pattern pattern)
         {
+            SubscribeToLiveControl();
             throw new NotImplementedException();
         }
 
@@ -32,7 +36,39 @@ namespace ExStrataServer.Communication
         /// <returns>The LiveControl token</returns>
         private static string SubscribeToLiveControl()
         {
-            throw new NotImplementedException();
+            string data = Request.GetData(ExStrataAPIURI + "subscribe_to_live_control.php");
+
+            try
+            {
+                JObject parsedData = JObject.Parse(data);
+
+                if ((bool)parsedData["result"])
+                {
+                    string token = (string)parsedData["liveControlToken"];
+
+                    if ((int)parsedData["liveControlQueuePosition"] == 0)
+                    {
+                        return token;
+                    }
+                    else
+                    {
+                        Log.AddError("LiveControl queue is not empty");
+                        UnsubscribeFromLiveControl(token);
+
+                        return "";
+                    }
+                }
+                else
+                {
+                    Log.AddError("SubscribeToLiveControl returned false");
+                    return "";
+                }
+            }
+            catch (Exception exception)
+            {
+                Log.AddError("Could not parse LiveControl token data: " + exception.Message);
+                return "";
+            }
         }
 
         /// <summary>
@@ -41,7 +77,9 @@ namespace ExStrataServer.Communication
         /// <param name="token">The LiveControl token</param>
         private static void UnsubscribeFromLiveControl(string token)
         {
-            throw new NotImplementedException();
+            JObject json = new JObject(new { liveControlToken = token });
+
+            Request.PostData(ExStrataAPIURI + "unsubscribe_from_live_control.php", json);
         }
     }
 }
