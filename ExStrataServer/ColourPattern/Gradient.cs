@@ -18,9 +18,5 @@ namespace ExStrataServer.ColourPattern
                 this.Colour = Colour;
             }
         }
-        public static Frame GetFrame(GradientColour[] Colours)
-        {
-
-        }
     }
 }

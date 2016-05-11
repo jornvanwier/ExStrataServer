@@ -46,9 +46,7 @@ namespace ExStrataServer.APIs
         /// </summary>
         /// <param name="sender">The object that sends the event.</param>
         /// <param name="e">The EventArgs.</param>
-        protected virtual void Check(object sender = null, EventArgs e = null)
-        {
-        }
+        protected abstract void Check(object sender = null, EventArgs e = null);
 
         /// <summary>
         /// Send a pattern to the EX STRATA and add a new entry to the log.

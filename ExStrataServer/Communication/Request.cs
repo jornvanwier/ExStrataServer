@@ -29,5 +29,15 @@ namespace ExStrataServer.Communication
 
             return result;
         }
+
+        public static string PostData(string url, string data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string PostData(string url, JObject data)
+        {
+            return PostData(url, data.ToString());
+        }
     }
 }
