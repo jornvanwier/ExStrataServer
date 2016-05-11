@@ -158,6 +158,7 @@ namespace ExStrataServer.ColourPattern
         public static Colour Rebeccapurple = new Colour(102, 51, 153);
 
         #endregion
+
         private byte red, green, blue;
 
         public byte R
