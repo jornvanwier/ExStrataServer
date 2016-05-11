@@ -31,6 +31,19 @@ namespace ExStrataServer
             }
         }
 
+        public static void AddError(string data)
+        {
+            if (!Directory.Exists(location))
+            {
+                Directory.CreateDirectory(location);
+            }
+
+            using (StreamWriter sw = File.AppendText(location + "/" + FormatFileName()))
+            {
+                sw.WriteLine(String.Format("[{0}] {1}", FormatTime(), data));
+            }
+        }
+
         private static string FormatFileName()
         {
             return DateTime.Now.ToString("yyyy-MM-dd") + ".log";

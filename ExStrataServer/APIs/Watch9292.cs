@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ExStrataServer.Communication;
 
 namespace ExStrataServer.APIs
@@ -29,8 +30,17 @@ namespace ExStrataServer.APIs
         protected override void Check(object Sender = null, EventArgs e = null)
         {
             //TODO: Actually check the API
-            
 
+            string data = Request.GetData("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=nl-NL");
+
+            try
+            {
+                JObject parsedData = JObject.Parse(data);
+            } 
+            catch (Exception exception)
+            {
+                Log.AddError("Could not parse 9292OV data: " + exception.Message);
+            }
 
             base.Check(Sender, e);
         }
