@@ -13,6 +13,7 @@ namespace ExStrataServer.APIs
         private Timer checkTimer;
         private double checkDelay;
         private string name;
+        private Pattern pattern;
 
         public string Name
         {
@@ -46,9 +47,10 @@ namespace ExStrataServer.APIs
         /// Send a pattern to the EX STRATA and add a new entry to the log.
         /// </summary>
         /// <param name="pattern">The pattern to be played.</param>
-        protected virtual void Send(Pattern pattern)
+        protected virtual void Send()
         {
             Log.Add(Name, pattern.Name);
+            // Send current pattern with EX STRATA API
             throw new NotImplementedException();
         }
     }
