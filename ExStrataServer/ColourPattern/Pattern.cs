@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExStrataServer.ColorPattern
+namespace ExStrataServer.ColourPattern
 {
     public class Pattern
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using ExStrataServer.ColorPattern;
+using ExStrataServer.ColourPattern;
 
 namespace ExStrataServer.APIs
 {
@@ -33,7 +33,10 @@ namespace ExStrataServer.APIs
         {
             checkTimer = new Timer((obj) =>
             {
-                Check();
+                if (DateTime.Now.Minute % 15 == 0)
+                {
+                    Check();
+                }
             }, null, 0, 500);
         }
 

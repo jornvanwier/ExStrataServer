@@ -37,7 +37,7 @@ namespace ExStrataServer.APIs
             try
             {
                 JObject result = JObject.Parse(Request.GetData("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"));
-                var a = 0;
+                int temp = (int)result["current_observation"]["temp_c"];
             }
             catch (Exception exception)
             {
