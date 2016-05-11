@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
+using System.Threading;
 using ExStrataServer.ColorPattern;
 
 namespace ExStrataServer.APIs
@@ -24,12 +24,17 @@ namespace ExStrataServer.APIs
         public APIWatcher(double delay, string name)
         {
             Name = name;
+            StartTimer();
 
             // Initialize the timer.
-            checkTimer.Interval = delay;
-            checkTimer.Elapsed += Check;
-            checkTimer.AutoReset = false;
-            checkTimer.Start();
+        }
+
+        public void StartTimer()
+        {
+            checkTimer = new Timer((obj) =>
+            {
+                Check();
+            }, null, 0, 500);
         }
 
         /// <summary>
@@ -39,8 +44,6 @@ namespace ExStrataServer.APIs
         /// <param name="e">The EventArgs.</param>
         protected virtual void Check(object sender = null, EventArgs e = null)
         {
-            // Reset the timer after the API has been checked.
-            checkTimer.Start();
         }
 
         /// <summary>
