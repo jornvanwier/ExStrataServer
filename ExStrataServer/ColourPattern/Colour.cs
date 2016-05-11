@@ -26,8 +26,8 @@ namespace ExStrataServer.ColourPattern
         public static Colour Blue = new Colour(0, 0, 255);
         public static Colour Teal = new Colour(0, 128, 128);
         public static Colour Aqua = new Colour(0, 255, 255);
-        public static Colour Range = new Colour(255, 165, 0);
-        public static Colour Liceblue = new Colour(240, 248, 255);
+        public static Colour Orange = new Colour(255, 165, 0);
+        public static Colour Aliceblue = new Colour(240, 248, 255);
         public static Colour Antiquewhite = new Colour(250, 235, 215);
         public static Colour Aquamarine = new Colour(127, 255, 212);
         public static Colour Azure = new Colour(240, 255, 255);
