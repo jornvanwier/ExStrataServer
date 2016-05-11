@@ -13,9 +13,9 @@ using System.IO;
 
 namespace ExStrataServer.Communication
 {
-    class Request
+    public static class Request
     {
-        public string GetData(string url)
+        public static string GetData(string url)
         {
             string result;
             WebRequest request = WebRequest.Create(url);

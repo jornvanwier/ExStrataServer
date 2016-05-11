@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using ExStrataServer.Communication;
 
 namespace ExStrataServer.APIs
 {
@@ -29,18 +30,6 @@ namespace ExStrataServer.APIs
         {
             //TODO: Actually check the API
             
-
-            WebRequest request = WebRequest.Create("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=en-GB");
-
-            using (WebResponse response = request.GetResponse())
-            {
-                Stream dataStream = response.GetResponseStream();
-
-                using (string sok = "test")
-                {
-
-                }
-            }
 
 
             base.Check(Sender, e);
