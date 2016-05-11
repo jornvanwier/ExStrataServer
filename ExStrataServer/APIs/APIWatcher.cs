@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using ExStrataServer.ColourPattern;
+using ExStrataServer.Communication;
 
 namespace ExStrataServer.APIs
 {
@@ -57,7 +58,7 @@ namespace ExStrataServer.APIs
         {
             Log.Add(Name, pattern.Name);
             // Send current pattern with EX STRATA API
-            throw new NotImplementedException();
+            ExStrataAPI.PlayPattern(pattern);
         }
     }
 }
