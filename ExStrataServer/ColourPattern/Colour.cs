@@ -187,7 +187,7 @@ namespace ExStrataServer.ColourPattern
         }
 
         /// <summary>
-        /// Format the Colour in the format expected by the EX STRATA.
+        /// Format the Colour in the format expected by the EX STRATA
         /// </summary>
         /// <returns>The formatted string.</returns>
         public override string ToString()

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExStrataServer.ColourPattern;
 using ExStrataServer.APIs;
+using ExStrataServer.Communication;
 
 namespace ExStrataServer
 {
@@ -24,6 +25,8 @@ namespace ExStrataServer
             });
 
             Console.WriteLine(RedToYellow);
+
+            ExStrataAPI.PlayPattern(new Pattern("sok", 2));
 
             Console.ReadKey();
         }
