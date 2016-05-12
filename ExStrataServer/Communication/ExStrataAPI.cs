@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,10 @@ namespace ExStrataServer.Communication
 {
     public static class ExStrataAPI
     {
-        private const string ExStrataAPIURI = "http://exstrata.nl/control/api/";
+        private const string exStrataAPIURI = "http://exstrata.nl/control/api/";
+        private const string applicationKey = "ExStrataAPIWatcher";
+
+        private readonly static DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /*  
          For liveControl:
@@ -35,20 +39,16 @@ namespace ExStrataServer.Communication
 
             if (token != String.Empty)
             {
-                JObject json = JObject.FromObject(new
-                {
-                    liveControlToken = token,
-                    pattern = pattern.ToJSON()
-                });
+                string data = FormatPattern(token, pattern);
 
-                Console.WriteLine(Request.PostJSON(ExStrataAPIURI + "play_pattern.php", json));
+                Console.WriteLine(Request.PostJSON(exStrataAPIURI + "play_pattern.php", data, "application/x-www-form-urlencoded"));
 
                 UnsubscribeFromLiveControl(token);
                 return true;
             }
             else
             {
-                Log.AddError("Could not obtain LiveControl token.");
+                Log.AddError("Could not obtain LiveControl token");
                 return false;
             }
         }
@@ -59,12 +59,13 @@ namespace ExStrataServer.Communication
         /// <returns>The LiveControl token</returns>
         private static string SubscribeToLiveControl()
         {
-            string data = Request.GetData(ExStrataAPIURI + "subscribe_to_live_control.php");
+            string data = Request.GetData(exStrataAPIURI + "subscribe_to_live_control.php");
 
-            try
+            Console.WriteLine(data);
+
+            JObject parsedData;
+            if(ExtensionMethods.Extensions.TryParseJObject(data, out parsedData))
             {
-                JObject parsedData = JObject.Parse(data);
-
                 if ((bool)parsedData["result"])
                 {
                     string token = (string)parsedData["liveControlToken"];
@@ -87,9 +88,9 @@ namespace ExStrataServer.Communication
                     return String.Empty;
                 }
             }
-            catch (Exception exception)
+            else
             {
-                Log.AddError("Could not parse LiveControl token data: " + exception.Message);
+                Log.AddError("Could not parse LiveControl token data");
                 return String.Empty;
             }
         }
@@ -102,7 +103,16 @@ namespace ExStrataServer.Communication
         {
             JObject json = JObject.FromObject(new { liveControlToken = token });
 
-            return Request.PostJSON(ExStrataAPIURI + "unsubscribe_from_live_control.php", json);
+            string result = Request.PostJSON(exStrataAPIURI + "unsubscribe_from_live_control.php", json);
+            Console.WriteLine(result);
+            return result;
+        }
+
+        private static string FormatPattern(string token, Pattern pattern)
+        {
+            if (token == String.Empty) throw new ArgumentException();
+
+            return String.Format("liveControlToken={0}&applicationKey={2}&{1}", token, pattern.Serialize(), applicationKey);
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ExStrataServer.ColourPattern
 {
@@ -50,22 +52,24 @@ namespace ExStrataServer.ColourPattern
             frames.Add(frame);
         }
 
-        public string ToJSON()
+        public string Serialize()
         {
-            string result = "{\n\t'frames':[\n";
-            string tabs = "";
+            string result = "";
+            string ampersand = "";
             for (int i = 0; i < frames.Count; i++)
             {
                 if (i == 0)
-                    tabs = "\t\t";
+                    ampersand = "";
                 else
-                    tabs = "";
-                result += tabs+ "{\n\t\t\t'ms':" + (i*delay)+ ",\n" + frames[i].ToJSON() + "\n\t\t}";
-
-                if (i != frames.Count - 1)
-                    result += ",";
+                    ampersand = "&";
+                result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + "=" + (Delay * i);
+                result += frames[i].Serialize(i);
             }
-            return result + "\n\t]\n}";
+            return result + "";
+        }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
 
 

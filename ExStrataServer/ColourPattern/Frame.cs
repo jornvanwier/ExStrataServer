@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,41 +15,42 @@ namespace ExStrataServer.ColourPattern
         public Colour[] Colours { get { return colours; } }
 
 
-        public Frame()
+        public Frame(Colour colour)
         {
+            for (int i = 0; i < colours.Length; i++)
+            {
+                colours[i] = colour;
+            }
         }
 
-        public Frame(Colour[] Colours)
+        public Frame(Colour[] colours)
         {
-            this.colours = Colours;
+            this.colours = colours;
         }
 
-        public void SetRow(int pos, Colour Colour)
+        public void SetRow(int pos, Colour colour)
         {
-            Colours[pos] = Colour;
+            Colours[pos] = colour;
         }
 
-        public void SetRegion(int startPos, int endPos, Colour Colour)
+        public void SetRegion(int startPos, int endPos, Colour colour)
         {
             if (startPos < 0 || endPos > ExStrataHeight) throw new ArgumentException();
 
             for (int i = startPos; i < endPos; i++)
             {
-                Colours[i] = Colour;
+                Colours[i] = colour;
             }
         }
 
-        public string ToJSON()
+        public string Serialize(int frameNum)
         {
-            string result = "\t\t\t'zones':{";
+            string result = "";
             for (int i = 0; i < colours.Length; i++)
             {
-                result += "\n\t\t\t\t" + colours[i].ToJSON(i+1);
-
-                if (i != colours.Length-1)
-                    result += ",";
+                result += "&" + WebUtility.UrlEncode("pattern[frames][" + frameNum + "][zones][" + (i+1) + "]") + "=" + colours[i].Serialize();
             }
-            return result + "\n\t\t\t}";
+            return result + "";
 
         }
 

@@ -22,7 +22,7 @@ namespace ExStrataServer.APIs
             set { destination = value; }
         }
 
-        public Watch9292(double delay, string destination) : base(delay, name)
+        public Watch9292(int delay, string destination) : base(delay, name)
         {
             Destination = destination;
         }

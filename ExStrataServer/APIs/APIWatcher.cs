@@ -9,7 +9,7 @@ using ExStrataServer.Communication;
 
 namespace ExStrataServer.APIs
 {
-    public abstract class APIWatcher
+    public abstract class APIWatcher : IDisposable
     {
         private Timer checkTimer;
         private double checkDelay;
@@ -22,23 +22,38 @@ namespace ExStrataServer.APIs
             set { name = value; }
         }
 
-        public APIWatcher(double delay, string name)
+        public APIWatcher(int delay, string name)
         {
             Name = name;
-            StartTimer();
 
             // Initialize the timer.
+            StartTimer(delay);
         }
 
-        public void StartTimer()
+        public void StartTimer(int delay)
         {
             checkTimer = new Timer((obj) =>
             {
-                if (DateTime.Now.Minute % 15 == 0)
+                Check();
+            }, null, 0, delay);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                if(checkTimer != null)
                 {
-                    Check();
+                    checkTimer.Dispose();
+                    checkTimer = null;
                 }
-            }, null, 0, 500);
+            }
         }
 
         /// <summary>
