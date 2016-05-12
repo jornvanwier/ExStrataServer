@@ -38,17 +38,14 @@ namespace ExStrataServer.ColourPattern
             }
         }
 
-        public string ToJSON()
+        public string Serialize(int frameNum)
         {
-            string result = "\t\t\t'zones':{";
+            string result = "";
             for (int i = 0; i < colours.Length; i++)
             {
-                result += "\n\t\t\t\t" + colours[i].ToJSON(i+1);
-
-                if (i != colours.Length-1)
-                    result += ",";
+                result += "&pattern[frames][" + frameNum + "][zones][" + (i+1) + "]" + colours[i].Serialize() + "\n";
             }
-            return result + "\n\t\t\t}";
+            return result + "";
 
         }
 

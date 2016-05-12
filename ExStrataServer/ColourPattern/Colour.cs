@@ -190,9 +190,9 @@ namespace ExStrataServer.ColourPattern
         /// Format the Colour in the format expected by the EX STRATA
         /// </summary>
         /// <returns>The formatted string.</returns>
-        public string ToJSON(int i)
+        public string Serialize()
         {
-            return String.Format("'{0}':'{1},{2},{3}'", i, R, G, B);
+            return String.Format("{0},{1},{2}", R, G, B);
         }
 
     }
