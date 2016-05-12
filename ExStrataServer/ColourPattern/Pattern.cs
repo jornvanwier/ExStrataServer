@@ -31,21 +31,12 @@ namespace ExStrataServer.ColourPattern
             set { delay = value; }
         }
 
-        public int Length
-        {
-            get { return frames.Count; }
-        }
-
         public Pattern(string name, int delay, List<Frame> frames)
         {
             Name = name;
             Delay = delay;
 
             this.frames = frames;
-            if (frames.Last() != Frame.Empty)
-            {
-                frames.Add(Frame.Empty);
-            }
         }
 
         public Pattern(string name, int delay)
@@ -53,28 +44,27 @@ namespace ExStrataServer.ColourPattern
             Name = name;
             Delay = delay;
 
-            frames = new List<Frame>() { Frame.Empty };
-
+            frames = new List<Frame>();
         }
 
         public void Add(Frame frame)
         {
-            frames.Insert(frames.Count-1, frame);
+            frames.Add(frame);
         }
 
         public string Serialize()
         {
-            string result = "";
-            string ampersand;
+            string result = String.Empty;
+            string ampersand = String.Empty;
+
             for (int i = 0; i < frames.Count; i++)
             {
-                if (i == 0)
-                    ampersand = "";
-                else
-                    ampersand = "&";
-                result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + "=" + (Delay * i);
+                if(i > 0) ampersand = "&";
+
+                result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + '=' + (Delay * i);
                 result += frames[i].Serialize(i);
             }
+
             return result;
         }
         public override string ToString()

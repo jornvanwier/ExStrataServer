@@ -14,7 +14,11 @@ namespace ExStrataServer.APIs
         private static string name = "CBS";
 
         private DateTime date;
-        public DateTime Date { get; set; }
+        public DateTime Date
+        {
+            get { return date; }
+            set { date = value; }
+        }
 
         public WatchCBS(int delay, DateTime date) : base(delay, name)
         {
