@@ -11,6 +11,13 @@ namespace ExStrataServer
     {
         private static string name;
         private static string location = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
+        private static bool consoleOutput = true;
+
+        public static bool ConsoleOutput
+        {
+            get { return consoleOutput; }
+            set { consoleOutput = value; }
+        }
 
         public static string Name
         {
@@ -20,18 +27,21 @@ namespace ExStrataServer
 
         public static void Add(string senderName, string patternName)
         {
-            if(!Directory.Exists(location))
-            {
-                Directory.CreateDirectory(location);
-            }
+            string text = String.Format("[{0}] {1} played pattern {2}.", FormatTime(), senderName, patternName);
 
-            using (StreamWriter sw = File.AppendText(location + "/" + FormatFileName()))
-            {
-                sw.WriteLine(String.Format("[{0}] {1} played pattern {2}.", FormatTime(), senderName, patternName));
-            }
+            Write(text);
+            if (ConsoleOutput) Console.WriteLine(text);
         }
 
         public static void AddError(string data)
+        {
+            string text = String.Format("[{0}] {1}", FormatTime(), data);
+
+            Write(text);
+            if (ConsoleOutput) Console.WriteLine(text);
+        }
+
+        private static void Write(string text)
         {
             if (!Directory.Exists(location))
             {
@@ -40,7 +50,7 @@ namespace ExStrataServer
 
             using (StreamWriter sw = File.AppendText(location + "/" + FormatFileName()))
             {
-                sw.WriteLine(String.Format("[{0}] {1}", FormatTime(), data));
+                sw.WriteLine(text);
             }
         }
 
