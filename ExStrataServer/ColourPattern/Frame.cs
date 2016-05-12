@@ -19,9 +19,9 @@ namespace ExStrataServer.ColourPattern
         {
         }
 
-        public Frame(Colour[] Colours)
+        public Frame(Colour[] colours)
         {
-            this.colours = Colours;
+            this.colours = colours;
         }
 
         public void SetRow(int pos, Colour Colour)
@@ -44,11 +44,92 @@ namespace ExStrataServer.ColourPattern
             string result = "";
             for (int i = 0; i < colours.Length; i++)
             {
-                result += "&" + WebUtility.UrlEncode("pattern[frames][" + frameNum + "][zones][" + (i+1) + "]") + "=" + colours[i].Serialize();
+                result += "&" + WebUtility.UrlEncode("pattern[frames][" + frameNum + "][zones][" + (i + 1) + "]") + "=" + colours[i].Serialize();
             }
             return result + "";
 
         }
-
+        public static Frame BlackFrame = new Frame(new Colour[]{
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black,
+            Colour.Black
+        });
     }
 }
