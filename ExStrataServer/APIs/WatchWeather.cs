@@ -27,7 +27,7 @@ namespace ExStrataServer.APIs
             set { country = value; }
         }
 
-        public WatchWeather(double delay, string country, string city) : base(delay, name)
+        public WatchWeather(int delay, string country, string city) : base(delay, name)
         {
             Country = country;
             City = city;
@@ -35,26 +35,29 @@ namespace ExStrataServer.APIs
 
         protected override void Check(object Sender = null, EventArgs e = null)
         {
-            JObject result;
-            if (ExtensionMethods.Extensions.TryParseJObject(Request.GetData("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"), out result))
+            if (DateTime.Now.Minute % 15 == 0)
             {
-                float temperatureC = (float)result["current_observation"]["temp_c"];
-
-                int temperatureRings = (int)((temperatureC + 5) / 35 * 80);
-
-                Pattern temperaturepGradient = new Pattern("Temperature", 60 * 1000);
-                temperaturepGradient.Add(Gradient.GetFrame(new Gradient.GradientColour[]
+                JObject result;
+                if (ExtensionMethods.Extensions.TryParseJObject(Request.GetData("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"), out result))
                 {
+                    float temperatureC = (float)result["current_observation"]["temp_c"];
+
+                    int temperatureRings = (int)((temperatureC + 5) / 35 * 80);
+
+                    Pattern temperaturepGradient = new Pattern("Temperature", 60 * 1000);
+                    temperaturepGradient.Add(Gradient.GetFrame(new Gradient.GradientColour[]
+                    {
                     new Gradient.GradientColour(0, new Colour(0,200,220)),
                     new Gradient.GradientColour(50, new Colour(255,200,0)),
                     new Gradient.GradientColour(100, new Colour(255,70,0))
-                }, 0, temperatureRings));
-                Console.WriteLine(temperaturepGradient.ToString());
-            }
-            else
-            {
-                Log.AddError("Could not parse weather data: ");
-                return;
+                    }, 0, temperatureRings));
+                    Console.WriteLine(temperaturepGradient.ToString());
+                }
+                else
+                {
+                    Log.AddError("Could not parse weather data: ");
+                    return;
+                }
             }
         }
     }
