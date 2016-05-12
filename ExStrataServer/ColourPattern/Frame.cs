@@ -14,6 +14,10 @@ namespace ExStrataServer.ColourPattern
 
         public Colour[] Colours { get { return colours; } }
 
+        public Frame()
+        {
+
+        }
 
         public Frame(Colour colour)
         {
