@@ -53,6 +53,7 @@ namespace ExStrataServer.ColourPattern
             return result + "";
 
         }
+
         public static Frame Empty = new Frame(Colour.Black);
     }
 }
