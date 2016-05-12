@@ -42,6 +42,8 @@ namespace ExStrataServer
             {
                 sw.WriteLine(String.Format("[{0}] {1}", FormatTime(), data));
             }
+
+            Console.WriteLine("Error: " + data);
         }
 
         private static string FormatFileName()

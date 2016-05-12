@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
+/// <summary>
+/// Namespace for Extensions of existing objects
+/// </summary>
 namespace ExtensionMethods
 {
     public static class Extensions

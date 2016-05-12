@@ -14,7 +14,6 @@ namespace ExStrataServer
         static void Main(string[] args)
         {
             Log.Add("Piet", "Sok");
-            //WatchWeather WeatherWatcher = new WatchWeather(10000, "NL", "Leeuwarden");
             Frame gradients = Gradient.GetFrame(new Gradient.GradientColour[]
             {
                 new Gradient.GradientColour(0, Colour.Red),
@@ -51,13 +50,7 @@ namespace ExStrataServer
 
 
             Pattern pattern = new Pattern("test", 100, new List<Frame>() { gradients, redToGreen });
-            string framejson = gradients.ToString();
-            string patternjson = pattern.ToString();
-            Console.WriteLine(pattern.ToJSON());
-
             ExStrataAPI.PlayPattern(testPattern);
-            //ExStrataAPI.PlayPattern(new Pattern("sok", 1000));
-            Console.WriteLine(testPattern.ToJSON());
 
             Console.ReadKey();
 

@@ -8,7 +8,6 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ExStrataServer.Communication;
-using ExtensionMethods;
 
 namespace ExStrataServer.APIs
 {
@@ -32,13 +31,12 @@ namespace ExStrataServer.APIs
         {
             string data = Request.GetData("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=en-GB");
 
-            try
+            JObject parsedData;
+            if (ExtensionMethods.Extensions.TryParseJObject(data, out parsedData))
             {
-                JObject parsedData = JObject.Parse(data);
-
                 JToken departures = parsedData["tabs"]["departures"];
 
-                foreach(JToken departure in departures)
+                foreach (JToken departure in departures)
                 {
                     //Bus is at destination
                     if ((string)departure["destinationName"] == Destination && (string)departure["time"] == DateTime.Now.ToString("HH:mm"))
@@ -46,11 +44,8 @@ namespace ExStrataServer.APIs
                         Send();
                     }
                 }
-            } 
-            catch (Exception exception)
-            {
-                Log.AddError("Could not parse 9292OV data: " + exception.Message);
             }
+            else Log.AddError("Could not parse 9292OV data");
         }
     }
 }

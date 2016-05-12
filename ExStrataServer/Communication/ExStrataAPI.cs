@@ -10,7 +10,7 @@ namespace ExStrataServer.Communication
 {
     public static class ExStrataAPI
     {
-        private const string ExStrataAPIURI = "http://www.exstrata.nl/control/api/";
+        private const string ExStrataAPIURI = "http://exstrata.nl/control/api/";
 
         /*  
          For liveControl:
@@ -33,8 +33,6 @@ namespace ExStrataServer.Communication
             string token = SubscribeToLiveControl();
             Console.WriteLine(token);
 
-            Console.WriteLine(pattern.ToJSON());
-
             if (token != String.Empty)
             {
                 JObject json = JObject.FromObject(new
@@ -48,7 +46,11 @@ namespace ExStrataServer.Communication
                 UnsubscribeFromLiveControl(token);
                 return true;
             }
-            else return false;
+            else
+            {
+                Log.AddError("Could not obtain LiveControl token.");
+                return false;
+            }
         }
 
         /// <summary>
