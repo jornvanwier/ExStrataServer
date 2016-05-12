@@ -76,7 +76,6 @@ namespace ExStrataServer
                     new Gradient.GradientColour(100, new Colour(255,70,0))
                 }, 0, i));
             }
-            temperaturepGradient.Add(Frame.Empty);
 
             ExStrataAPI.PlayPattern(temperaturepGradient);
 
