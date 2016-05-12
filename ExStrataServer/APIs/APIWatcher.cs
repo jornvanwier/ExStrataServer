@@ -22,23 +22,20 @@ namespace ExStrataServer.APIs
             set { name = value; }
         }
 
-        public APIWatcher(double delay, string name)
+        public APIWatcher(int delay, string name)
         {
             Name = name;
 
             // Initialize the timer.
-            StartTimer();
+            StartTimer(delay);
         }
 
-        public void StartTimer()
+        public void StartTimer(int delay)
         {
             checkTimer = new Timer((obj) =>
             {
-                if (DateTime.Now.Minute % 15 == 0)
-                {
-                    Check();
-                }
-            }, null, 0, 500);
+                Check();
+            }, null, 0, delay);
         }
 
         public void Dispose()
