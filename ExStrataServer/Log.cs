@@ -35,7 +35,7 @@ namespace ExStrataServer
 
         public static void AddError(string data)
         {
-            string text = String.Format("[{0}] {1}", FormatTime(), data);
+            string text = String.Format("[{0}] ERROR: {1}", FormatTime(), data);
 
             Write(text);
             if (ConsoleOutput) Console.WriteLine(text);
