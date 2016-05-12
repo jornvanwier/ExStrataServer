@@ -108,7 +108,7 @@ namespace ExStrataServer.Communication
         {
             if (token == String.Empty) throw new ArgumentException();
 
-            return String.Format("liveControlToken={0}&{1}&applicationKey={2}", token, pattern.Serialize(), applicationKey);
+            return String.Format("liveControlToken={0}&applicationKey={2}&{1}", token, pattern.Serialize(), applicationKey);
         }
     }
 }

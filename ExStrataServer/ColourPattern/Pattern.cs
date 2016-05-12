@@ -62,7 +62,7 @@ namespace ExStrataServer.ColourPattern
                     ampersand = "";
                 else
                     ampersand = "&";
-                result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + "=" + (Delay * i) + "\n";
+                result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + "=" + (Delay * i);
                 result += frames[i].Serialize(i);
             }
             return result + "";
