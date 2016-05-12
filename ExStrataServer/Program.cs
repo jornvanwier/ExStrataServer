@@ -13,7 +13,7 @@ namespace ExStrataServer
     {
         static void Main(string[] args)
         {
-            WatchCBS CBSWatcher = new WatchCBS(24 * 60 * 60 * 1000, DateTime.Now);
+            WatchCBS CBSWatcher = new WatchCBS(24 * 60 * 60 * 1000);
 
             Log.Add("Piet", "Sok");
             Frame gradients = Gradient.GetFrame(new Gradient.GradientColour[]
