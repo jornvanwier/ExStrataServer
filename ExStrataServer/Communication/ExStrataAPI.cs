@@ -10,7 +10,10 @@ namespace ExStrataServer.Communication
 {
     public static class ExStrataAPI
     {
-        private const string ExStrataAPIURI = "http://www.exstrata.nl/control/api/";
+        private const string exStrataAPIURI = "http://www.exstrata.nl/control/api/";
+        private const string applicationKey = "ExStrataAPIWatcher";
+
+        private readonly static DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /*  
          For liveControl:
@@ -42,7 +45,7 @@ namespace ExStrataServer.Communication
                     pattern = pattern.Serialize()
                 });
 
-                Console.WriteLine(Request.PostJSON(ExStrataAPIURI + "play_pattern.php", json));
+                Console.WriteLine(Request.PostJSON(exStrataAPIURI + "play_pattern.php", json));
 
                 UnsubscribeFromLiveControl(token);
                 return true;
@@ -56,7 +59,9 @@ namespace ExStrataServer.Communication
         /// <returns>The LiveControl token</returns>
         private static string SubscribeToLiveControl()
         {
-            string data = Request.GetData(ExStrataAPIURI + "subscribe_to_live_control.php");
+            string data = Request.GetData(exStrataAPIURI + "subscribe_to_live_control.php");
+
+            Console.WriteLine(data);
 
             try
             {
@@ -99,7 +104,7 @@ namespace ExStrataServer.Communication
         {
             JObject json = JObject.FromObject(new { liveControlToken = token });
 
-            return Request.PostJSON(ExStrataAPIURI + "unsubscribe_from_live_control.php", json);
+            return Request.PostJSON(exStrataAPIURI + "unsubscribe_from_live_control.php", json);
         }
     }
 }
