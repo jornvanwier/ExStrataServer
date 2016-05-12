@@ -46,7 +46,11 @@ namespace ExStrataServer.Communication
                 UnsubscribeFromLiveControl(token);
                 return true;
             }
-            else return false;
+            else
+            {
+                Log.AddError("Could not obtain LiveControl token");
+                return false;
+            }
         }
 
         /// <summary>

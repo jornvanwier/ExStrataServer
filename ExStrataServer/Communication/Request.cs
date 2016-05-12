@@ -31,6 +31,7 @@ namespace ExStrataServer.Communication
             using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
             {
                 writer.Write(data);
+                writer.Flush();
             }
 
             return GetResponse(request);

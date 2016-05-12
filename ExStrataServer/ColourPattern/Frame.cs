@@ -15,8 +15,12 @@ namespace ExStrataServer.ColourPattern
         public Colour[] Colours { get { return colours; } }
 
 
-        public Frame()
+        public Frame(Colour colour)
         {
+            for (int i = 0; i < colours.Length; i++)
+            {
+                colours[i] = colour;
+            }
         }
 
         public Frame(Colour[] colours)
@@ -24,18 +28,18 @@ namespace ExStrataServer.ColourPattern
             this.colours = colours;
         }
 
-        public void SetRow(int pos, Colour Colour)
+        public void SetRow(int pos, Colour colour)
         {
-            Colours[pos] = Colour;
+            Colours[pos] = colour;
         }
 
-        public void SetRegion(int startPos, int endPos, Colour Colour)
+        public void SetRegion(int startPos, int endPos, Colour colour)
         {
             if (startPos < 0 || endPos > ExStrataHeight) throw new ArgumentException();
 
             for (int i = startPos; i < endPos; i++)
             {
-                Colours[i] = Colour;
+                Colours[i] = colour;
             }
         }
 
@@ -49,87 +53,7 @@ namespace ExStrataServer.ColourPattern
             return result + "";
 
         }
-        public static Frame BlackFrame = new Frame(new Colour[]{
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black,
-            Colour.Black
-        });
+
+        public static Frame Empty = new Frame(Colour.Black);
     }
 }
