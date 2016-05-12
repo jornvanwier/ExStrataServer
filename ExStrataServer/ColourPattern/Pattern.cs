@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,7 +62,7 @@ namespace ExStrataServer.ColourPattern
                     ampersand = "";
                 else
                     ampersand = "&";
-                result += ampersand + "pattern[frames][" + i + "][ms]=" + (Delay * i) + "\n";
+                result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + "=" + (Delay * i) + "\n";
                 result += frames[i].Serialize(i);
             }
             return result + "";

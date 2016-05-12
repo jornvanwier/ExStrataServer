@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,7 @@ namespace ExStrataServer.ColourPattern
             string result = "";
             for (int i = 0; i < colours.Length; i++)
             {
-                result += "&pattern[frames][" + frameNum + "][zones][" + (i+1) + "]" + colours[i].Serialize() + "\n";
+                result += "&" + WebUtility.UrlEncode("pattern[frames][" + frameNum + "][zones][" + (i+1) + "]") + "=" + colours[i].Serialize() + "\n";
             }
             return result + "";
 

@@ -65,10 +65,7 @@ namespace ExStrataServer
             string framejson = gradients.ToString();
             string patternjson = pattern.ToString();
 
-            ExStrataAPI.PlayPattern(testPattern);
-            //ExStrataAPI.PlayPattern(new Pattern("sok", 1000));
-
-            Console.WriteLine(temperaturepGradient.Serialize());
+            //ExStrataAPI.PlayPattern(temperaturepGradient);
 
             Console.ReadKey();
 

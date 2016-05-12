@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Net.Http;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +11,7 @@ namespace ExStrataServer.Communication
 {
     public static class ExStrataAPI
     {
-        private const string exStrataAPIURI = "http://www.exstrata.nl/control/api/";
+        private const string exStrataAPIURI = "http://exstrata.nl/control/api/";
         private const string applicationKey = "ExStrataAPIWatcher";
 
         private readonly static DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -36,17 +36,12 @@ namespace ExStrataServer.Communication
         {
             string token = SubscribeToLiveControl();
             Console.WriteLine(token);
-            
 
             if (token != String.Empty)
             {
-                JObject json = JObject.FromObject(new
-                {
-                    liveControlToken = token,
-                    pattern = pattern.Serialize()
-                });
+                string data = FormatPattern(token, pattern);
 
-                Console.WriteLine(Request.PostJSON(exStrataAPIURI + "play_pattern.php", json));
+                Console.WriteLine(Request.PostJSON(exStrataAPIURI + "play_pattern.php", data, "application/x-www-form-urlencoded"));
 
                 UnsubscribeFromLiveControl(token);
                 return true;
@@ -111,7 +106,9 @@ namespace ExStrataServer.Communication
 
         private static string FormatPattern(string token, Pattern pattern)
         {
-            return String.Format("liveControlToken={0}{1}&applicationKey={2}", token, pattern.ToJSON(), applicationKey);
+            if (token == String.Empty) throw new ArgumentException();
+
+            return String.Format("liveControlToken={0}&{1}&applicationKey={2}", token, pattern.Serialize(), applicationKey);
         }
     }
 }
