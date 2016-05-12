@@ -34,6 +34,10 @@ namespace ExStrataServer.Communication
         /// <returns>Wether the pattern was successfully played</returns>
         public static bool PlayPattern(Pattern pattern)
         {
+            if (pattern.Length > 15)
+            {
+                throw new ArgumentException("The API can not process patterns larger than 14 frames");
+            }
             string token = SubscribeToLiveControl();
             Console.WriteLine(token);
 

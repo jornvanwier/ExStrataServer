@@ -13,22 +13,14 @@ namespace ExStrataServer.APIs
     {
         private static string name = "CBS";
 
-        private DateTime date;
-        public DateTime Date
+        public WatchCBS(int delay) : base(delay, name)
         {
-            get { return date; }
-            set { date = value; }
-        }
-
-        public WatchCBS(int delay, DateTime date) : base(delay, name)
-        {
-            Date = date;
         }
 
         protected override void Check(object Sender = null, EventArgs e = null)
         {
             JObject result;
-            string URI = String.Format("https://cbs.nl/nl-nl/visualisaties/bevolkingsteller/-/media/cbs/Infographics/Bevolkingsteller/{0}_{1}_{2}.json", Date.Year, Date.Month, Date.Day);
+            string URI = String.Format("https://cbs.nl/nl-nl/visualisaties/bevolkingsteller/-/media/cbs/Infographics/Bevolkingsteller/{0}_{1}_{2}.json", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             string JSON = "{'data':" + Request.GetData(URI) + "}";
             if (ExtensionMethods.Extensions.TryParseJObject(JSON, out result))
             {

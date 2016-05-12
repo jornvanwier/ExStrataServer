@@ -13,7 +13,7 @@ namespace ExStrataServer
     {
         static void Main(string[] args)
         {
-            WatchCBS CBSWatcher = new WatchCBS(24 * 60 * 60 * 1000, DateTime.Now);
+            WatchCBS CBSWatcher = new WatchCBS(24 * 60 * 60 * 1000);
 
             Log.Add("Piet", "Sok");
             Frame gradients = Gradient.GetFrame(new Gradient.GradientColour[]
@@ -76,7 +76,6 @@ namespace ExStrataServer
                     new Gradient.GradientColour(100, new Colour(255,70,0))
                 }, 0, i));
             }
-            temperaturepGradient.Add(Frame.Empty);
 
             ExStrataAPI.PlayPattern(temperaturepGradient);
 
