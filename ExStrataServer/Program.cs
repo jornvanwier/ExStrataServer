@@ -68,7 +68,7 @@ namespace ExStrataServer
             ExStrataAPI.PlayPattern(testPattern);
             //ExStrataAPI.PlayPattern(new Pattern("sok", 1000));
 
-            
+            Console.WriteLine(temperaturepGradient.Serialize());
 
             Console.ReadKey();
 

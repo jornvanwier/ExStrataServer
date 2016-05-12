@@ -32,15 +32,14 @@ namespace ExStrataServer.Communication
         {
             string token = SubscribeToLiveControl();
             Console.WriteLine(token);
-
-            Console.WriteLine(pattern.ToJSON());
+            
 
             if (token != String.Empty)
             {
                 JObject json = JObject.FromObject(new
                 {
                     liveControlToken = token,
-                    pattern = pattern.ToJSON()
+                    pattern = pattern.Serialize()
                 });
 
                 Console.WriteLine(Request.PostJSON(ExStrataAPIURI + "play_pattern.php", json));
