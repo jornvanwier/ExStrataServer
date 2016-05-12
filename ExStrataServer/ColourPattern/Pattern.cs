@@ -54,18 +54,18 @@ namespace ExStrataServer.ColourPattern
 
         public string Serialize()
         {
-            string result = "";
-            string ampersand = "";
+            string result = String.Empty;
+            string ampersand = String.Empty;
+
             for (int i = 0; i < frames.Count; i++)
             {
-                if (i == 0)
-                    ampersand = "";
-                else
-                    ampersand = "&";
-                result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + "=" + (Delay * i);
+                if(i > 0) ampersand = "&";
+
+                result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + '=' + (Delay * i);
                 result += frames[i].Serialize(i);
             }
-            return result + "";
+
+            return result;
         }
         public override string ToString()
         {
