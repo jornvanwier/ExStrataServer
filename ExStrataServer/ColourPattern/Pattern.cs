@@ -64,8 +64,7 @@ namespace ExStrataServer.ColourPattern
 
         public string Serialize()
         {
-            string result = "";
-            string ampersand = "";
+            string result = "", ampersand = "";
             for (int i = 0; i < frames.Count; i++)
             {
                 if(i > 0) ampersand = "&";

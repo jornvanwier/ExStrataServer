@@ -52,7 +52,7 @@ namespace ExStrataServer.ColourPattern
             string result = String.Empty;
             for (int i = 0; i < colours.Length; i++)
             {
-                result += '&' + WebUtility.UrlEncode("pattern[frames][" + frameNum + "][zones][" + (i + 1) + "]") + '=' + colours[i].Serialize();
+                result += '&' + WebUtility.UrlEncode("pattern[frames][" + frameNum + "][zones][" + (i + 1) + ']') + '=' + colours[i].Serialize();
             }
             return result;
 

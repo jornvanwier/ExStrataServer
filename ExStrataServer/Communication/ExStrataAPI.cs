@@ -86,7 +86,7 @@ namespace ExStrataServer.Communication
         {
             string data = Request.GetData(exStrataAPIURI + "subscribe_to_live_control.php");
 
-            Console.WriteLine(data);
+            Log.RawData(data);
 
             JObject parsedData;
             if(ExtensionMethods.Extensions.TryParseJObject(data, out parsedData))
@@ -134,7 +134,7 @@ namespace ExStrataServer.Communication
             });
 
             string result = Request.PostJSON(exStrataAPIURI + "unsubscribe_from_live_control.php", json);
-            Console.WriteLine(result);
+            Log.RawData(result);
             return result;
         }
 

@@ -14,7 +14,10 @@ namespace ExStrataServer
         static void Main(string[] args)
         {
             //Set log output to console
-            Log.SetAllConsoleOutput(true);
+            Log.ConsoleOutputMessage = true;
+            Log.ConsoleOutputAPI = true;
+            Log.ConsoleOutputError = true;
+            Log.ConsoleOutputRawData = false;
 
             WatchCBS CBSWatcher = new WatchCBS(24 * 60 * 60 * 1000);
 

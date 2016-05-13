@@ -93,7 +93,7 @@ namespace ExStrataServer
         public static void RawData(string data)
         {
             string text = String.Format("[{0}] RAW: {1}", FormatTime(), data);
-            Write(text, "RawData");
+            Write(text, "RawData_");
             if (ConsoleOutputRawData) Console.WriteLine(text);
         }
 
@@ -128,7 +128,7 @@ namespace ExStrataServer
 
         private static string FormatFileName(string name)
         {
-            return name + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
+            return name + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
         }
 
         private static string FormatTime()
