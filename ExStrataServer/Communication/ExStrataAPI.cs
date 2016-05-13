@@ -40,7 +40,6 @@ namespace ExStrataServer.Communication
             }
 
             string token = SubscribeToLiveControl();
-            Console.WriteLine(token);
 
             if (token != String.Empty)
             {
@@ -98,6 +97,8 @@ namespace ExStrataServer.Communication
 
                     if ((int)parsedData["liveControlQueuePosition"] == 0)
                     {
+                        Log.Message("Obtained token: " + token);
+
                         return token;
                     }
                     else

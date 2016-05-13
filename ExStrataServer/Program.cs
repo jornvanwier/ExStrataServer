@@ -13,9 +13,11 @@ namespace ExStrataServer
     {
         static void Main(string[] args)
         {
+            //Set log output to console
+            Log.SetAllConsoleOutput(true);
+
             WatchCBS CBSWatcher = new WatchCBS(24 * 60 * 60 * 1000);
 
-            Log.APIEvent("Piet", "Sok");
             Frame gradients = Gradient.GetFrame(new Gradient.GradientColour[]
             {
                 new Gradient.GradientColour(0, Colour.Red),

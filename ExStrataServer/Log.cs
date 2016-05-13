@@ -11,20 +11,42 @@ namespace ExStrataServer
     {
         private static string name;
         private static string defaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
-        private static bool consoleOutputAPI = true,
-            consoleOutputError = true,
+        private static bool
+            consoleOutputMessage = false,
+            consoleOutputAPI = false,
+            consoleOutputError = false,
             consoleOutputRawData = false;
 
+        /// <summary>
+        /// Output messages to the console.
+        /// </summary>
+        public static bool ConsoleOutputMessage
+        {
+            get { return consoleOutputMessage; }
+            set { consoleOutputMessage = value; }
+        }
+
+        /// <summary>
+        /// Output API events to the console.
+        /// </summary>
         public static bool ConsoleOutputAPI
         {
             get { return consoleOutputAPI; }
             set { consoleOutputAPI = value; }
         }
+
+        /// <summary>
+        /// Output errors to the console.
+        /// </summary>
         public static bool ConsoleOutputError
         {
             get { return consoleOutputError; }
             set { consoleOutputError = value; }
         }
+
+        /// <summary>
+        /// Output raw data to the console.
+        /// </summary>
         public static bool ConsoleOutputRawData
         {
             get { return consoleOutputRawData; }
@@ -35,6 +57,21 @@ namespace ExStrataServer
         {
             get { return name; }
             set { name = value; }
+        }
+
+        public static void SetAllConsoleOutput(bool state)
+        {
+            ConsoleOutputMessage = state;
+            ConsoleOutputAPI = state;
+            ConsoleOutputError = state;
+            ConsoleOutputRawData = state;
+        }
+
+        public static void Message(string data)
+        {
+            string text = String.Format("[{0}] {1}", FormatTime(), data);
+            Write(text);
+            if (ConsoleOutputMessage) Console.WriteLine(text);
         }
 
         public static void APIEvent(string senderName, string patternName)
@@ -55,10 +92,11 @@ namespace ExStrataServer
 
         public static void RawData(string data)
         {
-            string text = string.Format("[{0}] RAW: {1}", FormatTime(), data);
+            string text = String.Format("[{0}] RAW: {1}", FormatTime(), data);
             Write(text, "RawData");
             if (ConsoleOutputRawData) Console.WriteLine(text);
         }
+
 
         private static void Write(string text)
         {

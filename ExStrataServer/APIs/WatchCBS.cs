@@ -39,7 +39,7 @@ namespace ExStrataServer.APIs
                         died -= delta;
                     }
                 }
-                
+
                 Console.WriteLine("born: "+born+" died: "+died);
             }
             else
