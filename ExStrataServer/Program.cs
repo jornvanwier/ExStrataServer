@@ -17,7 +17,7 @@ namespace ExStrataServer
             Log.ConsoleOutputMessage = true;
             Log.ConsoleOutputAPI = true;
             Log.ConsoleOutputError = true;
-            Log.ConsoleOutputRawData = false;
+            Log.ConsoleOutputRawData = true;
 
             WatchCBS CBSWatcher = new WatchCBS(24 * 60 * 60 * 1000);
 
