@@ -67,11 +67,18 @@ namespace ExStrataServer.APIs
         /// Send a pattern to the EX STRATA and add a new entry to the log.
         /// </summary>
         /// <param name="pattern">The pattern to be played.</param>
-        protected virtual void Send()
+        protected virtual void Send(Pattern pattern)
         {
+            if (pattern == null) throw new NullReferenceException("Pattern is not set.");
+
             Log.APIEvent(Name, pattern.Name);
             // Send current pattern with EX STRATA API
             ExStrataAPI.PlayPattern(pattern);
+        }
+
+        protected virtual void Send()
+        {
+            Send(pattern);
         }
     }
 }
