@@ -28,39 +28,61 @@ namespace ExStrataServer.Communication
          */
 
         /// <summary>
-        /// Play a pattern on the EX STRATA
+        /// Play a pattern on the EX STRATA.
         /// </summary>
-        /// <param name="pattern">The pattern to be played</param>
-        /// <returns>Wether the pattern was successfully played</returns>
+        /// <param name="pattern">The pattern to be played.</param>
+        /// <returns>Wether the pattern was successfully played.</returns>
         public static bool PlayPattern(Pattern pattern)
         {
             if (pattern.Length > 15)
             {
                 throw new ArgumentException("The API can not process patterns larger than 14 frames");
             }
+
             string token = SubscribeToLiveControl();
             Console.WriteLine(token);
 
             if (token != String.Empty)
             {
-                string data = FormatPattern(token, pattern);
+                string serializedPattern = FormatPattern(token, pattern);
 
-                Console.WriteLine(Request.PostJSON(exStrataAPIURI + "play_pattern.php", data, "application/x-www-form-urlencoded"));
+                string response  = Request.PostJSON(exStrataAPIURI + "play_pattern.php", serializedPattern, "application/x-www-form-urlencoded");
+                JObject parsedResponse;
 
-                UnsubscribeFromLiveControl(token);
-                return true;
+                if (ExtensionMethods.Extensions.TryParseJObject(response, out parsedResponse))
+                {
+                    bool responseResult = (bool)parsedResponse["result"];
+
+                    if (responseResult)
+                    {
+                        UnsubscribeFromLiveControl(token);
+                        return true;
+                    }
+                    else
+                    {
+                        Log.Error("Play pattern failed: " + (string)parsedResponse["feedback"]);
+                        UnsubscribeFromLiveControl(token);
+                        return false;
+                    }
+                }
+                else
+                {
+                    Log.Error("Could not parse play_pattern response");
+                    UnsubscribeFromLiveControl(token);
+                    return false;
+                }
             }
             else
             {
-                Log.AddError("Could not obtain LiveControl token");
+                Log.Error("Could not obtain LiveControl token");
                 return false;
             }
         }
 
         /// <summary>
-        /// Subscribe to LiveControl on the EX STRATA
+        /// Subscribe to LiveControl on the EX STRATA.
         /// </summary>
-        /// <returns>The LiveControl token</returns>
+        /// <returns>The LiveControl token.</returns>
         private static string SubscribeToLiveControl()
         {
             string data = Request.GetData(exStrataAPIURI + "subscribe_to_live_control.php");
@@ -80,7 +102,7 @@ namespace ExStrataServer.Communication
                     }
                     else
                     {
-                        Log.AddError("LiveControl queue is not empty");
+                        Log.Error("LiveControl queue is not empty");
                         UnsubscribeFromLiveControl(token);
 
                         return String.Empty;
@@ -88,24 +110,27 @@ namespace ExStrataServer.Communication
                 }
                 else
                 {
-                    Log.AddError("SubscribeToLiveControl returned false");
+                    Log.Error("SubscribeToLiveControl returned false");
                     return String.Empty;
                 }
             }
             else
             {
-                Log.AddError("Could not parse LiveControl token data");
+                Log.Error("Could not parse LiveControl token data");
                 return String.Empty;
             }
         }
 
         /// <summary>
-        /// Unsubscribe from LiveControl on the EX STRATA
+        /// Unsubscribe from LiveControl on the EX STRATA.
         /// </summary>
-        /// <param name="token">The LiveControl token</param>
+        /// <param name="token">The LiveControl token.</param>
         private static string UnsubscribeFromLiveControl(string token)
         {
-            JObject json = JObject.FromObject(new { liveControlToken = token });
+            JObject json = JObject.FromObject(new
+            {
+                liveControlToken = token
+            });
 
             string result = Request.PostJSON(exStrataAPIURI + "unsubscribe_from_live_control.php", json);
             Console.WriteLine(result);
@@ -114,7 +139,7 @@ namespace ExStrataServer.Communication
 
         private static string FormatPattern(string token, Pattern pattern)
         {
-            if (token == String.Empty) throw new ArgumentException();
+            if (token == String.Empty) throw new ArgumentException("Token is invalid.");
 
             return String.Format("liveControlToken={0}&applicationKey={2}&{1}", token, pattern.Serialize(), applicationKey);
         }

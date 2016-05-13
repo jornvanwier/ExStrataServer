@@ -44,7 +44,7 @@ namespace ExStrataServer.APIs
             }
             else
             {
-                Log.AddError("Could not parse CBS data");
+                Log.Error("Could not parse CBS data");
                 return;
             }
         }

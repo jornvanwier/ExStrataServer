@@ -55,7 +55,7 @@ namespace ExStrataServer.APIs
                 }
                 else
                 {
-                    Log.AddError("Could not parse weather data: ");
+                    Log.Error("Could not parse weather data: ");
                     return;
                 }
             }

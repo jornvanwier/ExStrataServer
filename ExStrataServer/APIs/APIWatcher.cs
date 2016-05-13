@@ -69,7 +69,7 @@ namespace ExStrataServer.APIs
         /// <param name="pattern">The pattern to be played.</param>
         protected virtual void Send()
         {
-            Log.Add(Name, pattern.Name);
+            Log.APIEvent(Name, pattern.Name);
             // Send current pattern with EX STRATA API
             ExStrataAPI.PlayPattern(pattern);
         }

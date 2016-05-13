@@ -44,17 +44,28 @@ namespace ExStrataServer.Communication
 
         private static string GetResponse(WebRequest request)
         {
-            string result;
-
-            using (WebResponse response = request.GetResponse())
+            try
             {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
+                string result;
+                using (WebResponse response = request.GetResponse())
                 {
-                    result = sr.ReadToEnd();
+                    using (StreamReader sr = new StreamReader(response.GetResponseStream()))
+                    {
+                        result = sr.ReadToEnd();
+                    }
                 }
-            }
 
-            return result;
+                return result;
+            }
+            catch(WebException e)
+            {
+                if (e.Response == null) Log.Error("Could not get response: " + e.Message);
+                else Log.Error(String.Format("Could not get response: ({0}) {1}", 
+                    ((HttpWebResponse)e.Response).StatusCode, 
+                    ((HttpWebResponse)e.Response).StatusDescription));
+
+                return String.Empty;
+            }
         }
     }
 }

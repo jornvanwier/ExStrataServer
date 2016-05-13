@@ -15,7 +15,7 @@ namespace ExStrataServer
         {
             WatchCBS CBSWatcher = new WatchCBS(24 * 60 * 60 * 1000);
 
-            Log.Add("Piet", "Sok");
+            Log.APIEvent("Piet", "Sok");
             Frame gradients = Gradient.GetFrame(new Gradient.GradientColour[]
             {
                 new Gradient.GradientColour(0, Colour.Red),

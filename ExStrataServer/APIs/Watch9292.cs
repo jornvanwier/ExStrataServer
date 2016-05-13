@@ -45,7 +45,7 @@ namespace ExStrataServer.APIs
                     }
                 }
             }
-            else Log.AddError("Could not parse 9292OV data");
+            else Log.Error("Could not parse 9292OV data");
         }
     }
 }
