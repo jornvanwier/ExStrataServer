@@ -72,7 +72,7 @@ namespace ExStrataServer
             //        new Gradient.GradientColour(100, new Colour(255,70,0))
             //}, 0, temperatureRings));
 
-            for (int i = 1; i < Frame.ExStrataHeight; i+=6)
+            for (int i = 1; i < Frame.ExStrataHeight; i += 6)
             {
                 temperaturepGradient.Add(Gradient.GetFrame(new Gradient.GradientColour[]
                 {
@@ -86,7 +86,20 @@ namespace ExStrataServer
             whitePattern.Add(new Frame(Colour.Orange));
             whitePattern.Add(new Frame(Colour.Orange));
 
-            ExStrataAPI.PlayPattern(whitePattern);
+            ExStrataAPI.PlayPattern(Gradient.GetPattern(new Gradient.GradientFrame[] {
+                new Gradient.GradientFrame(0, Gradient.GetFrame(new Gradient.GradientColour[]
+                {
+                    new Gradient.GradientColour(0, new Colour(0,200,220)),
+                    new Gradient.GradientColour(50, new Colour(255,200,0)),
+                    new Gradient.GradientColour(100, new Colour(255,70,0))
+                })),
+                new Gradient.GradientFrame(100, Gradient.GetFrame(new Gradient.GradientColour[]
+                {
+                    new Gradient.GradientColour(0, new Colour(250,200,0)),
+                    new Gradient.GradientColour(50, new Colour(0,100,0)),
+                    new Gradient.GradientColour(100, new Colour(0,70,255))
+                }))
+                }, "gradientPattern", 500, 14));
 
             Pattern pattern = new Pattern("test", 100, new List<Frame>() { gradients, redToGreen });
 

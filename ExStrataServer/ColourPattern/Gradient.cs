@@ -43,7 +43,7 @@ namespace ExStrataServer.ColourPattern
                     }
                     else
                     {
-                        result.SetRow(currentRow, new Colour(0,0,0));
+                        result.SetRow(currentRow, new Colour(0, 0, 0));
                     }
                     currentRow++;
                 }
@@ -51,9 +51,62 @@ namespace ExStrataServer.ColourPattern
                 {
                     result.SetRow(currentRow, colours[i + 1].colour);
                 }
-                else if(currentRow >= start && currentRow <= stop) {
+                else if (currentRow >= start && currentRow <= stop)
+                {
                     result.SetRow(currentRow - 1, colours[i + 1].colour);
                 }
+            }
+            return result;
+        }
+
+        public struct GradientFrame
+        {
+            public int percentage;
+            public Frame frame;
+            public GradientFrame(int percentage, Frame frame)
+            {
+                this.percentage = percentage;
+                this.frame = frame;
+            }
+        }
+        public static Pattern GetPattern(GradientFrame[] frames, string name, int delay, int length)
+        {
+            if (length > 14)
+            {
+                throw new ArgumentException("The length of a pattern can not be more than 14");
+            }
+            Pattern result = new Pattern(name, delay);
+            int currentFrame = 0;
+            for (int i = 0; i < frames.Length - 1; i++)
+            {
+                float percentage = (float)(frames[i + 1].percentage - frames[i].percentage) / 100;
+                int framesToNextPoint = (int)((length - 1) * percentage);
+
+                List<float> rColorDifs = new List<float>(),
+                    gColorDifs = new List<float>(),
+                    bColorDifs = new List<float>();
+
+                for (int j = 0; j < frames[i].frame.Colours.Length; j++)
+                {
+                    rColorDifs.Add((frames[i + 1].frame.Colours[j].R - frames[i].frame.Colours[j].R) / (float)framesToNextPoint);
+                    gColorDifs.Add((frames[i + 1].frame.Colours[j].G - frames[i].frame.Colours[j].G) / (float)framesToNextPoint);
+                    bColorDifs.Add((frames[i + 1].frame.Colours[j].B - frames[i].frame.Colours[j].B) / (float)framesToNextPoint);
+                }
+
+                for (int k = 0; k < framesToNextPoint; k++)
+                {
+                    List<Colour> colours = new List<Colour>();
+                    for (int l = 0; l < rColorDifs.Count; l++)
+                    {
+                        colours.Add(new Colour(
+                            Convert.ToByte(frames[i].frame.Colours[l].R + (rColorDifs[l] * k)),
+                            Convert.ToByte(frames[i].frame.Colours[l].G + (gColorDifs[l] * k)),
+                            Convert.ToByte(frames[i].frame.Colours[l].B + (bColorDifs[l] * k))
+                            ));
+                    }
+                    result.Add(new Frame(colours.ToArray()));
+                }
+                result.Add(frames[i+1].frame);
             }
             return result;
         }
