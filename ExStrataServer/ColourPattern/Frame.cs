@@ -58,6 +58,16 @@ namespace ExStrataServer.ColourPattern
 
         }
 
+        public string UnencodedSerialize(int frameNum)
+        {
+            string result = String.Empty;
+            for (int i = 0; i < colours.Length; i++)
+            {
+                result += '&' + "pattern[frames][" + frameNum + "][zones][" + (i + 1) + ']' + '=' + colours[i].Serialize();
+            }
+            return result;
+        }
+
         public static Frame Empty = new Frame(Colour.Black);
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace ExStrataServer.ColourPattern
 {
@@ -74,9 +75,36 @@ namespace ExStrataServer.ColourPattern
             }
             return result + "";
         }
+        public string UnencodedSerialize()
+        {
+            string result = "", ampersand = "";
+            for (int i = 0; i < frames.Count; i++)
+            {
+                if (i > 0) ampersand = "&";
+
+                result += ampersand + "pattern[frames][" + i + "][ms]" + '=' + (Delay * i);
+                result += frames[i].UnencodedSerialize(i);
+            }
+            return result + "";
+        }
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+        
+        public void Save()
+        {
+            string defaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Patterns");
+
+            if (!Directory.Exists(defaultLocation))
+            {
+                Directory.CreateDirectory(defaultLocation);
+            }
+
+            using (StreamWriter sw = File.AppendText(defaultLocation + "/" + Name + ".pattern"))
+            {
+                sw.WriteLine(UnencodedSerialize());
+            }
         }
 
 
