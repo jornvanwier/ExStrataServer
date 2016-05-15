@@ -22,10 +22,10 @@ namespace ExStrataServer.Communication
             return GetResponse(request);
         }
 
-        public static string PostJSON(string url, string data, string ContentType = "application/json")
+        public static string PostJSON(string url, string data, string contentType = "application/json")
         {
             WebRequest request = WebRequest.Create(url);
-            request.ContentType = ContentType;
+            request.ContentType = contentType;
             request.Method = "POST";
 
             using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
@@ -37,9 +37,9 @@ namespace ExStrataServer.Communication
             return GetResponse(request);
         }
 
-        public static string PostJSON(string url, JObject data, string ContentType = "application/json")
+        public static string PostJSON(string url, JObject data, string contentType = "application/json")
         {
-            return PostJSON(url, data.ToString(), ContentType);
+            return PostJSON(url, data.ToString(), contentType);
         }
 
         private static string GetResponse(WebRequest request)

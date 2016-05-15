@@ -50,6 +50,7 @@
     <Compile Include="APIs\Watch9292.cs" />
     <Compile Include="APIs\APIWatcher.cs" />
     <Compile Include="APIs\WatchCBS.cs" />
+    <Compile Include="APIs\WatchTest.cs" />
     <Compile Include="APIs\WatchWeather.cs" />
     <Compile Include="ColourPattern\Colour.cs" />
     <Compile Include="ColourPattern\Frame.cs" />

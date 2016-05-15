@@ -14,7 +14,7 @@ namespace ExStrataServer.APIs
         private Timer checkTimer;
         private double checkDelay;
         private string name;
-        private Pattern pattern;
+        protected Pattern pattern;
 
         public string Name
         {
