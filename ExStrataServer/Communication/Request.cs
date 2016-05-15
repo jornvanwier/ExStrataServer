@@ -15,14 +15,14 @@ namespace ExStrataServer.Communication
 {
     public static class Request
     {
-        public static string GetData(string url)
+        public static async Task<string> GetDataAsync(string url)
         {
             WebRequest request = WebRequest.Create(url);
 
-            return GetResponse(request);
+            return await GetResponseAsync(request);
         }
 
-        public static string PostJSON(string url, string data, string contentType = "application/json")
+        public static async Task<string> PostDataAsync(string url, string data, bool waitForResponse = true, string contentType = "application/json")
         {
             WebRequest request = WebRequest.Create(url);
             request.ContentType = contentType;
@@ -34,20 +34,26 @@ namespace ExStrataServer.Communication
                 writer.Flush();
             }
 
-            return GetResponse(request);
+            if(waitForResponse) return await GetResponseAsync(request);
+            else
+            {
+                // We don't need the result of this call
+                Task delayTask = GetResponseAsync(request);
+                return String.Empty;
+            }
         }
 
-        public static string PostJSON(string url, JObject data, string contentType = "application/json")
+        public static async Task<string> PostDataAsync(string url, JObject data, bool waitForResponse = true, string contentType = "application/json")
         {
-            return PostJSON(url, data.ToString(), contentType);
+            return await PostDataAsync(url, data.ToString(), waitForResponse, contentType);
         }
 
-        private static string GetResponse(WebRequest request)
+        private static async Task<string> GetResponseAsync(WebRequest request)
         {
             try
             {
                 string result;
-                using (WebResponse response = request.GetResponse())
+                using (WebResponse response = await request.GetResponseAsync())
                 {
                     using (StreamReader sr = new StreamReader(response.GetResponseStream()))
                     {
@@ -59,13 +65,18 @@ namespace ExStrataServer.Communication
             }
             catch(WebException e)
             {
-                if (e.Response == null) Log.Error("Could not get response: " + e.Message);
-                else Log.Error(String.Format("Could not get response: ({0}) {1}", 
-                    ((HttpWebResponse)e.Response).StatusCode, 
-                    ((HttpWebResponse)e.Response).StatusDescription));
+                HandleWebException(e);
 
                 return String.Empty;
             }
+        }
+
+        private static void HandleWebException(WebException e)
+        {
+            if (e.Response == null) Log.Error("Could not get response: " + e.Message);
+            else Log.Error(String.Format("Could not get response: ({0}) {1}",
+                ((HttpWebResponse)e.Response).StatusCode,
+                ((HttpWebResponse)e.Response).StatusDescription));
         }
     }
 }

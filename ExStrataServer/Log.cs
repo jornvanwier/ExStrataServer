@@ -115,7 +115,7 @@ namespace ExStrataServer
                 Directory.CreateDirectory(location);
             }
 
-            using (StreamWriter sw = File.AppendText(location + "/" + FormatFileName()))
+            using (StreamWriter sw = File.AppendText(location + "/" + FormatFileName(name)))
             {
                 sw.WriteLine(text);
             }

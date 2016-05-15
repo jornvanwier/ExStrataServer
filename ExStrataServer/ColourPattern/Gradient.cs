@@ -71,10 +71,6 @@ namespace ExStrataServer.ColourPattern
         }
         public static Pattern GetPattern(GradientFrame[] frames, string name, int delay, int length)
         {
-            if (length > 14)
-            {
-                throw new ArgumentException("The length of a pattern can not be more than 14");
-            }
             Pattern result = new Pattern(name, delay);
             int currentFrame = 0;
             for (int i = 0; i < frames.Length - 1; i++)

@@ -15,7 +15,7 @@ namespace ExStrataServer.APIs
             {
             new Gradient.GradientFrame(0, new Frame(Colour.Orange)),
             new Gradient.GradientFrame(100, new Frame(Colour.Blue))
-            }, "BlueToYellow", 500, 14);
+            }, "OrangeToBlue", 300, 14);
         }
 
         protected override void Check(object sender = null, EventArgs e = null)

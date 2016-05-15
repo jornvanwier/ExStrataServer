@@ -33,12 +33,12 @@ namespace ExStrataServer.APIs
             City = city;
         }
 
-        protected override void Check(object Sender = null, EventArgs e = null)
+        protected override async void Check(object Sender = null, EventArgs e = null)
         {
             if (DateTime.Now.Minute % 15 == 0)
             {
                 JObject result;
-                if (ExtensionMethods.Extensions.TryParseJObject(Request.GetData("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"), out result))
+                if (ExtensionMethods.Extensions.TryParseJObject(await Request.GetDataAsync("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"), out result))
                 {
                     float temperatureC = (float)result["current_observation"]["temp_c"];
 

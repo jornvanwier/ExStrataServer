@@ -12,7 +12,7 @@ namespace ExStrataServer.APIs
     public abstract class APIWatcher : IDisposable
     {
         private Timer checkTimer;
-        private double checkDelay;
+        private int checkDelay;
         private string name;
         protected Pattern pattern;
 
@@ -24,18 +24,16 @@ namespace ExStrataServer.APIs
 
         public APIWatcher(int delay, string name)
         {
+            checkDelay = delay;
             Name = name;
-
-            // Initialize the timer.
-            StartTimer(delay);
         }
 
-        public void StartTimer(int delay)
+        public void Start()
         {
             checkTimer = new Timer((obj) =>
             {
                 Check();
-            }, null, 0, delay);
+            }, null, 0, checkDelay);
         }
 
         public void Dispose()
@@ -67,13 +65,13 @@ namespace ExStrataServer.APIs
         /// Send a pattern to the EX STRATA and add a new entry to the log.
         /// </summary>
         /// <param name="pattern">The pattern to be played.</param>
-        protected virtual void Send(Pattern pattern)
+        protected virtual async void Send(Pattern pattern)
         {
             if (pattern == null) throw new NullReferenceException("Pattern is not set.");
 
             Log.APIEvent(Name, pattern.Name);
             // Send current pattern with EX STRATA API
-            ExStrataAPI.PlayPattern(pattern);
+            await ExStrataAPI.PlayPattern(pattern);
         }
 
         protected virtual void Send()

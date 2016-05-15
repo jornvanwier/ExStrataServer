@@ -27,9 +27,9 @@ namespace ExStrataServer.APIs
             Destination = destination;
         }
 
-        protected override void Check(object Sender = null, EventArgs e = null)
+        protected override async void Check(object Sender = null, EventArgs e = null)
         {
-            string data = Request.GetData("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=en-GB");
+            string data = await Request.GetDataAsync("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=en-GB");
 
             JObject parsedData;
             if (ExtensionMethods.Extensions.TryParseJObject(data, out parsedData))

@@ -17,11 +17,11 @@ namespace ExStrataServer.APIs
         {
         }
 
-        protected override void Check(object Sender = null, EventArgs e = null)
+        protected override async void Check(object Sender = null, EventArgs e = null)
         {
             JObject result;
             string URI = String.Format("https://cbs.nl/nl-nl/visualisaties/bevolkingsteller/-/media/cbs/Infographics/Bevolkingsteller/{0}_{1}_{2}.json", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            string JSON = "{'data':" + Request.GetData(URI) + "}";
+            string JSON = "{'data':" + await Request.GetDataAsync(URI) + "}";
             if (ExtensionMethods.Extensions.TryParseJObject(JSON, out result))
             {
                 int born=0,

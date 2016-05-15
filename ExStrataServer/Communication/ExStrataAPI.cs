@@ -32,44 +32,31 @@ namespace ExStrataServer.Communication
         /// </summary>
         /// <param name="pattern">The pattern to be played.</param>
         /// <returns>Wether the pattern was successfully played.</returns>
-        public static bool PlayPattern(Pattern pattern)
+        public static async Task<bool> PlayPattern(Pattern pattern)
         {
             if (pattern.Length > 15)
             {
                 throw new ArgumentException("The API can not process patterns larger than 14 frames");
             }
 
-            string token = SubscribeToLiveControl();
+            string token = await SubscribeToLiveControl();
 
             if (token != String.Empty)
             {
                 string serializedPattern = FormatPattern(token, pattern);
 
-                string response  = Request.PostJSON(exStrataAPIURI + "play_pattern.php", serializedPattern, "application/x-www-form-urlencoded");
-                JObject parsedResponse;
 
-                if (ExtensionMethods.Extensions.TryParseJObject(response, out parsedResponse))
-                {
-                    bool responseResult = (bool)parsedResponse["result"];
+                /* 
+                For some reason, play_pattern doesn't want to give a response when playing the pattern.
+                Because of this, we send the request and don't wait for any response. 
+                This leaves the code unable to determine if the pattern was played successfully, sadly.
 
-                    if (responseResult)
-                    {
-                        UnsubscribeFromLiveControl(token);
-                        return true;
-                    }
-                    else
-                    {
-                        Log.Error("Play pattern failed: " + (string)parsedResponse["feedback"]);
-                        UnsubscribeFromLiveControl(token);
-                        return false;
-                    }
-                }
-                else
-                {
-                    Log.Error("Could not parse play_pattern response");
-                    UnsubscribeFromLiveControl(token);
-                    return false;
-                }
+                In the past, the responses did work. Further investigation is required to determine what caused the sudden disappearance of these responses.
+                */
+                await Request.PostDataAsync(exStrataAPIURI + "play_pattern.php", serializedPattern, waitForResponse: false, contentType: "application/x-www-form-urlencoded");
+
+                await UnsubscribeFromLiveControl(token);
+                return true;
             }
             else
             {
@@ -82,9 +69,9 @@ namespace ExStrataServer.Communication
         /// Subscribe to LiveControl on the EX STRATA.
         /// </summary>
         /// <returns>The LiveControl token.</returns>
-        private static string SubscribeToLiveControl()
+        private static async Task<string> SubscribeToLiveControl()
         {
-            string data = Request.GetData(exStrataAPIURI + "subscribe_to_live_control.php");
+            string data = await Request.GetDataAsync(exStrataAPIURI + "subscribe_to_live_control.php");
 
             Log.RawData(data);
 
@@ -104,7 +91,7 @@ namespace ExStrataServer.Communication
                     else
                     {
                         Log.Error("LiveControl queue is not empty");
-                        UnsubscribeFromLiveControl(token);
+                        await UnsubscribeFromLiveControl(token);
 
                         return String.Empty;
                     }
@@ -126,14 +113,14 @@ namespace ExStrataServer.Communication
         /// Unsubscribe from LiveControl on the EX STRATA.
         /// </summary>
         /// <param name="token">The LiveControl token.</param>
-        private static string UnsubscribeFromLiveControl(string token)
+        private static async Task<string> UnsubscribeFromLiveControl(string token)
         {
             JObject json = JObject.FromObject(new
             {
                 liveControlToken = token
             });
 
-            string result = Request.PostJSON(exStrataAPIURI + "unsubscribe_from_live_control.php", json);
+            string result = await Request.PostDataAsync(exStrataAPIURI + "unsubscribe_from_live_control.php", json);
             Log.RawData(result);
             return result;
         }
