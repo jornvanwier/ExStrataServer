@@ -55,7 +55,6 @@
     <Compile Include="APIs\WatchWeather.cs" />
     <Compile Include="ColourPattern\Colour.cs" />
     <Compile Include="ColourPattern\Frame.cs" />
-    <Compile Include="ColourPattern\Gradient.cs" />
     <Compile Include="ColourPattern\Pattern.cs" />
     <Compile Include="Communication\ExStrataAPI.cs" />
     <Compile Include="Communication\Request.cs" />

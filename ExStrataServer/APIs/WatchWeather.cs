@@ -45,11 +45,11 @@ namespace ExStrataServer.APIs
                     int temperatureRings = (int)((temperatureC + 5) / 35 * 80);
 
                     Pattern temperaturepGradient = new Pattern("Temperature", 60 * 1000);
-                    temperaturepGradient.Add(Gradient.GetFrame(new Gradient.GradientColour[]
+                    temperaturepGradient.Add(Frame.Gradient(new Frame.GradientColour[]
                     {
-                    new Gradient.GradientColour(0, new Colour(0,200,220)),
-                    new Gradient.GradientColour(50, new Colour(255,200,0)),
-                    new Gradient.GradientColour(100, new Colour(255,70,0))
+                        new Frame.GradientColour(0, new Colour(0,200,220)),
+                        new Frame.GradientColour(50, new Colour(255,200,0)),
+                        new Frame.GradientColour(100, new Colour(255,70,0))
                     }, 0, temperatureRings));
                     Console.WriteLine(temperaturepGradient.ToString());
                 }

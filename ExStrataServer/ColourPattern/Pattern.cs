@@ -63,6 +63,53 @@ namespace ExStrataServer.ColourPattern
             frames.Insert(frames.Count-1, frame);
         }
 
+        public struct GradientFrame
+        {
+            public int percentage;
+            public Frame frame;
+            public GradientFrame(int percentage, Frame frame)
+            {
+                this.percentage = percentage;
+                this.frame = frame;
+            }
+        }
+        public static Pattern Animate(GradientFrame[] frames, string name, int delay, int length)
+        {
+            Pattern result = new Pattern(name, delay);
+            for (int i = 0; i < frames.Length - 1; i++)
+            {
+                float percentage = (float)(frames[i + 1].percentage - frames[i].percentage) / 100;
+                int framesToNextPoint = (int)((length - 1) * percentage);
+
+                List<float> rColorDifs = new List<float>(),
+                    gColorDifs = new List<float>(),
+                    bColorDifs = new List<float>();
+
+                for (int j = 0; j < frames[i].frame.Colours.Length; j++)
+                {
+                    rColorDifs.Add((frames[i + 1].frame.Colours[j].R - frames[i].frame.Colours[j].R) / (float)framesToNextPoint);
+                    gColorDifs.Add((frames[i + 1].frame.Colours[j].G - frames[i].frame.Colours[j].G) / (float)framesToNextPoint);
+                    bColorDifs.Add((frames[i + 1].frame.Colours[j].B - frames[i].frame.Colours[j].B) / (float)framesToNextPoint);
+                }
+
+                for (int k = 0; k < framesToNextPoint; k++)
+                {
+                    List<Colour> colours = new List<Colour>();
+                    for (int l = 0; l < rColorDifs.Count; l++)
+                    {
+                        colours.Add(new Colour(
+                            Convert.ToByte(frames[i].frame.Colours[l].R + (rColorDifs[l] * k)),
+                            Convert.ToByte(frames[i].frame.Colours[l].G + (gColorDifs[l] * k)),
+                            Convert.ToByte(frames[i].frame.Colours[l].B + (bColorDifs[l] * k))
+                            ));
+                    }
+                    result.Add(new Frame(colours.ToArray()));
+                }
+                result.Add(frames[i + 1].frame);
+            }
+            return result;
+        }
+
         public string Serialize()
         {
             string result = "", ampersand = "";
