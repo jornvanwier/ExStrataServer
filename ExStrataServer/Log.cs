@@ -74,9 +74,11 @@ namespace ExStrataServer
             if (ConsoleOutputMessage) Console.WriteLine(text);
         }
 
-        public static void APIEvent(string senderName, string patternName)
+        public static void APIEvent(string senderName, string patternName, bool success = true)
         {
-            string text = String.Format("[{0}] {1} played pattern {2}.", FormatTime(), senderName, patternName);
+            string text;
+            if (success) text = String.Format("[{0}] {1} played pattern {2}.", FormatTime(), senderName, patternName);
+            else text = String.Format("[{0}] {1} failed to play pattern {2}.", FormatTime(), senderName, patternName);
 
             Write(text);
             if (ConsoleOutputAPI) Console.WriteLine(text);

@@ -69,9 +69,9 @@ namespace ExStrataServer.APIs
         {
             if (pattern == null) throw new NullReferenceException("Pattern is not set.");
 
-            Log.APIEvent(Name, pattern.Name);
-            // Send current pattern with EX STRATA API
-            await ExStrataAPI.PlayPattern(pattern);
+            // Send pattern with EX STRATA API
+            if (await ExStrataAPI.PlayPattern(pattern)) Log.APIEvent(Name, pattern.Name);
+            else Log.APIEvent(Name, pattern.Name, false);
         }
 
         protected virtual void Send()
