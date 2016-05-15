@@ -24,14 +24,14 @@ namespace ExStrataServer.Communication
          If not in queue, play the pattern
          Unsubscribe from livecontrol
 
-         By doing this the server wont unnecessarily block the livecontrol, and we dont need to worry about keeping our token stored
+         By doing this the server wont unnecessarily block the livecontrol, and we dont need to worry about keeping our token stored.
          */
 
         /// <summary>
         /// Play a pattern on the EX STRATA.
         /// </summary>
         /// <param name="pattern">The pattern to be played.</param>
-        /// <returns>Wether the pattern was successfully played.</returns>
+        /// <returns>Whether the pattern was successfully played.</returns>
         public static async Task<bool> PlayPattern(Pattern pattern)
         {
             if (pattern.Length > 15)
