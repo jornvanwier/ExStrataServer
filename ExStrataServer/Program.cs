@@ -19,11 +19,17 @@ namespace ExStrataServer
             Log.ConsoleOutputError = true;
             Log.ConsoleOutputRawData = false;
 
-            APIWatcher test = new WatchTest(1000 * 60 * 2);
-            test.Start();
+            Log.Message("Started program.");
+
+            APIManager manager = new APIManager(
+                new WatchTest(1000 * 60 * 2),
+                new Watch9292(1000 * 60, "NHL Stenden Hogeschool"));
+
+            manager.StartAll();
 
             Console.ReadKey();
 
+            Log.Message("Shutting down.");
         }
     }
 }

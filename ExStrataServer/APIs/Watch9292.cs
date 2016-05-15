@@ -34,7 +34,7 @@ namespace ExStrataServer.APIs
             JObject parsedData;
             if (ExtensionMethods.Extensions.TryParseJObject(data, out parsedData))
             {
-                JToken departures = parsedData["tabs"]["departures"];
+                JToken departures = parsedData["tabs"][1]["departures"];
 
                 foreach (JToken departure in departures)
                 {

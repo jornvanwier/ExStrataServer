@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIs\APIManager.cs" />
     <Compile Include="APIs\Watch9292.cs" />
     <Compile Include="APIs\APIWatcher.cs" />
     <Compile Include="APIs\WatchCBS.cs" />
