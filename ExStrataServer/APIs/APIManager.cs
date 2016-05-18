@@ -13,15 +13,17 @@ namespace ExStrataServer.APIs
         public List<APIWatcher> LoadedAPIs
         {
             get { return loadedAPIs; }
+            private set { loadedAPIs = value; }
         }
 
         public APIManager(params APIWatcher[] apis)
         {
-            loadedAPIs = apis.ToList();
+            LoadedAPIs = apis.ToList();
+            StartAll();
             Log.Message("API Manager started.");
         }
 
-        public void StartAll()
+        private void StartAll()
         {
             foreach(APIWatcher api in LoadedAPIs)
             {
@@ -33,7 +35,13 @@ namespace ExStrataServer.APIs
         public void Add(APIWatcher api)
         {
             api.Start();
-            loadedAPIs.Add(api);
+            LoadedAPIs.Add(api);
+        }
+
+        public void Remove(int index)
+        {
+            LoadedAPIs[index].Dispose();
+            LoadedAPIs.RemoveAt(index);
         }
 
         public void Dispose()
@@ -47,7 +55,7 @@ namespace ExStrataServer.APIs
             for (int i = 0; i < LoadedAPIs.Count; i++)
             {
                 LoadedAPIs[i].Dispose();
-                loadedAPIs = null;
+                LoadedAPIs = null;
             }
         }
     }

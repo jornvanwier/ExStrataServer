@@ -13,7 +13,7 @@ namespace ExStrataServer
     {
         static void Main(string[] args)
         {
-            //Set log output to console
+            // Set log output to console
             Log.ConsoleOutputMessage = true;
             Log.ConsoleOutputAPI = true;
             Log.ConsoleOutputError = true;
@@ -21,28 +21,18 @@ namespace ExStrataServer
 
             Log.Message("Started program.");
 
+            // Start the API Manager with a few APIs
             APIManager manager = new APIManager(
                 new WatchTest(1000 * 60 * 2),
                 new Watch9292(1000 * 60, "NHL Stenden Hogeschool"));
 
-            manager.StartAll();
+            manager.Add(new WatchCBS(1000 * 60));
 
-            Pattern animationPattern = Pattern.Animate(new Pattern.GradientFrame[]{
-                new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
-                {
-                    new Frame.GradientColour(0, Colour.Red),
-                    new Frame.GradientColour(100, Colour.Blue)
-                })),
-                new Pattern.GradientFrame(100, Frame.Gradient(new Frame.GradientColour[]
-                {
-                    new Frame.GradientColour(0, Colour.Green),
-                    new Frame.GradientColour(100, Colour.Orange)
-                }))
-            }, "Animation", 200, 14);
+            char c;
+            Console.WriteLine("Press q to quit.");
 
-            //ExStrataAPI.PlayPattern(animationPattern);
-
-            Console.ReadKey();
+            do c = Console.ReadKey().KeyChar;
+            while (c != 'q');
 
             Log.Message("Shutting down.");
         }
