@@ -35,7 +35,7 @@ namespace ExStrataServer.APIs
 
         protected override async void Check(object Sender = null, EventArgs e = null)
         {
-            if (DateTime.Now.Minute % 15 == 0)
+            if (DateTime.Now.Minute % 15 == 7)
             {
                 JObject result;
                 if (ExtensionMethods.Extensions.TryParseJObject(await Request.GetDataAsync("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"), out result))
@@ -51,7 +51,8 @@ namespace ExStrataServer.APIs
                         new Frame.GradientColour(50, new Colour(255,200,0)),
                         new Frame.GradientColour(100, new Colour(255,70,0))
                     }, 0, temperatureRings));
-                    Console.WriteLine(temperaturepGradient.ToString());
+
+                    Send(temperaturepGradient);
                 }
                 else
                 {
