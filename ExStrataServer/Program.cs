@@ -25,7 +25,7 @@ namespace ExStrataServer
                 new WatchTest(1000 * 60 * 2),
                 new Watch9292(1000 * 60, "NHL Stenden Hogeschool"));
 
-            //manager.StartAll();
+            manager.StartAll();
 
             Pattern animationPattern = Pattern.Animate(new Pattern.GradientFrame[]{
                 new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
@@ -40,7 +40,7 @@ namespace ExStrataServer
                 }))
             }, "Animation", 200, 14);
 
-            ExStrataAPI.PlayPattern(animationPattern);
+            //ExStrataAPI.PlayPattern(animationPattern);
 
             Console.ReadKey();
 
