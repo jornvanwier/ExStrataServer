@@ -17,6 +17,8 @@ namespace ExStrataServer
             consoleOutputError = false,
             consoleOutputRawData = false;
 
+        private static object locker = new object();
+
         /// <summary>
         /// Output messages to the console.
         /// </summary>
@@ -112,14 +114,17 @@ namespace ExStrataServer
 
         private static void Write(string text, string location, string name)
         {
-            if (!Directory.Exists(location))
+            lock (locker)
             {
-                Directory.CreateDirectory(location);
-            }
+                if (!Directory.Exists(location))
+                {
+                    Directory.CreateDirectory(location);
+                }
 
-            using (StreamWriter sw = File.AppendText(location + "/" + FormatFileName(name)))
-            {
-                sw.WriteLine(text);
+                using (StreamWriter sw = File.AppendText(location + "/" + FormatFileName(name)))
+                {
+                    sw.WriteLine(text);
+                }
             }
         }
 

@@ -11,11 +11,18 @@ namespace ExStrataServer.APIs
     {
         public WatchTest(int delay) : base(delay, "TestAPI")
         {
-            pattern = Pattern.Animate(new Pattern.GradientFrame[]
-            {
-            new Pattern.GradientFrame(0, new Frame(Colour.Orange)),
-            new Pattern.GradientFrame(100, new Frame(Colour.Blue))
-            }, "OrangeToBlue", 300, 14);
+            pattern = Pattern.Animate(new Pattern.GradientFrame[]{
+                new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
+                {
+                    new Frame.GradientColour(0, Colour.Red),
+                    new Frame.GradientColour(100, Colour.Blue)
+                })),
+                new Pattern.GradientFrame(100, Frame.Gradient(new Frame.GradientColour[]
+                {
+                    new Frame.GradientColour(0, Colour.Green),
+                    new Frame.GradientColour(100, Colour.Orange)
+                }))
+            }, "Animation", 300, 14);
         }
 
         protected override void Check(object sender = null, EventArgs e = null)

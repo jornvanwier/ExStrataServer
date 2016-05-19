@@ -51,7 +51,8 @@ namespace ExStrataServer.APIs
                         new Frame.GradientColour(50, new Colour(255,200,0)),
                         new Frame.GradientColour(100, new Colour(255,70,0))
                     }, 0, temperatureRings));
-                    Console.WriteLine(temperaturepGradient.ToString());
+
+                    Send(temperaturepGradient);
                 }
                 else
                 {
