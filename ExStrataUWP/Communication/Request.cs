@@ -28,7 +28,7 @@ namespace ExStrataUWP.Communication
             request.ContentType = contentType;
             request.Method = "POST";
 
-            using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
+            using (StreamWriter writer = new StreamWriter(await request.GetRequestStreamAsync()))
             {
                 writer.Write(data);
                 writer.Flush();
