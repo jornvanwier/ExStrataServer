@@ -54,8 +54,6 @@ namespace ExStrataUWP.APIs
                     }, 0, babyRings));
 
                     Send(babyGradient);
-
-                    Console.WriteLine("born: " + born + " died: " + died);
                 }
             }
             else

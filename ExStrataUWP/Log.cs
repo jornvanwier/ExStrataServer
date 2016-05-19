@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Windows.Storage;  
+using Windows.Storage;
 
 namespace ExStrataUWP
 {
@@ -74,7 +74,7 @@ namespace ExStrataUWP
         {
             string text = String.Format("[{0}] {1}", FormatTime(), data);
             Write(text);
-            if (ConsoleOutputMessage) Console.WriteLine(text);
+            if (ConsoleOutputMessage) WriteConsole(text);
         }
 
         public static void APIEvent(string senderName, string patternName, bool success = true)
@@ -84,7 +84,7 @@ namespace ExStrataUWP
             else text = String.Format("[{0}] {1} failed to play pattern {2}.", FormatTime(), senderName, patternName);
 
             Write(text);
-            if (ConsoleOutputAPI) Console.WriteLine(text);
+            if (ConsoleOutputAPI) WriteConsole(text);
         }
 
         public static void Error(string data)
@@ -92,14 +92,14 @@ namespace ExStrataUWP
             string text = String.Format("[{0}] ERROR: {1}", FormatTime(), data);
 
             Write(text);
-            if (ConsoleOutputError) Console.WriteLine(text);
+            if (ConsoleOutputError) WriteConsole(text);
         }
 
         public static void RawData(string data)
         {
             string text = String.Format("[{0}] RAW: {1}", FormatTime(), data);
             Write(text, "RawData_");
-            if (ConsoleOutputRawData) Console.WriteLine(text);
+            if (ConsoleOutputRawData) WriteConsole(text);
         }
 
 
@@ -127,6 +127,11 @@ namespace ExStrataUWP
                     sw.WriteLine(text);
                 }
             }
+        }
+
+        private static void WriteConsole(string text)
+        {
+            System.Diagnostics.Debug.WriteLine(text);
         }
 
         private static string FormatFileName()

@@ -44,13 +44,8 @@ namespace ExStrataUWP
 
             manager.Add(new WatchCBS(1000 * 60));
 
-            char c;
-            Console.WriteLine("Press q to quit.");
-
-            do c = Console.ReadKey().KeyChar;
-            while (c != 'q');
-
-            Log.Message("Shutting down.");
+            // Later input accepteren van named pipe
+            while (true) ;
         }
     }
 }
