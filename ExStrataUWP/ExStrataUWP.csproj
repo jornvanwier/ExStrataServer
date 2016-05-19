@@ -95,9 +95,22 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIs\APIManager.cs" />
+    <Compile Include="APIs\APIWatcher.cs" />
+    <Compile Include="APIs\Watch9292.cs" />
+    <Compile Include="APIs\WatchCBS.cs" />
+    <Compile Include="APIs\WatchTest.cs" />
+    <Compile Include="APIs\WatchWeather.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ColourPattern\Colour.cs" />
+    <Compile Include="ColourPattern\Frame.cs" />
+    <Compile Include="ColourPattern\Pattern.cs" />
+    <Compile Include="Communication\ExStrataAPI.cs" />
+    <Compile Include="Communication\Request.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
