@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using Windows.Storage;
 
 namespace ExStrataUWP.ColourPattern
 {
@@ -141,7 +142,7 @@ namespace ExStrataUWP.ColourPattern
         
         public void Save()
         {
-            string defaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Patterns");
+            string defaultLocation = ApplicationData.Current.LocalFolder.Path + "/Patterns";
 
             if (!Directory.Exists(defaultLocation))
             {

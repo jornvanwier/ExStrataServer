@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Windows.Storage;  
 
 namespace ExStrataUWP
 {
     public static class Log
     {
         private static string name;
-        private static string defaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
+        private static string defaultLocation = ApplicationData.Current.LocalFolder.Path + "/Log";
         private static bool
             consoleOutputMessage = false,
             consoleOutputAPI = false,
