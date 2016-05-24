@@ -75,6 +75,7 @@
     <Compile Include="Communication\ExStrataAPI.cs" />
     <Compile Include="Communication\Request.cs" />
     <Compile Include="Communication\Server\AsyncSocketListener.cs" />
+    <Compile Include="Communication\Server\MessageParser.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
