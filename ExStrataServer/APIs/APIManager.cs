@@ -9,6 +9,9 @@ namespace ExStrataServer.APIs
     public class APIManager : IDisposable
     {
         private List<APIWatcher> loadedAPIs;
+        private readonly Type[] allAPIs = AppDomain.CurrentDomain.GetAssemblies()
+                       .SelectMany(assembly => assembly.GetTypes())
+                       .Where(type => type.IsSubclassOf(typeof(APIWatcher))).ToArray();
 
         public List<APIWatcher> LoadedAPIs
         {

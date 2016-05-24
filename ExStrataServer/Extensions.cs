@@ -8,9 +8,9 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 /// Namespace for Extensions of existing objects
 /// </summary>
-namespace ExtensionMethods
+namespace ExStrataServer
 {
-    public static class Extensions
+    public static class Utilities
     {
         public static bool TryParseJObject(string data, out JObject result)
         {
