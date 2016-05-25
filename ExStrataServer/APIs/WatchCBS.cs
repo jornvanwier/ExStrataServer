@@ -25,7 +25,7 @@ namespace ExStrataServer.APIs
                 JObject result;
                 string URI = String.Format("https://cbs.nl/nl-nl/visualisaties/bevolkingsteller/-/media/cbs/Infographics/Bevolkingsteller/{0}_{1}_{2}.json", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                 string JSON = "{'data':" + await Request.GetDataAsync(URI) + "}";
-                if (ExtensionMethods.Extensions.TryParseJObject(JSON, out result))
+                if (Utilities.TryParseJObject(JSON, out result))
                 {
                     int born = 0,
                         died = 0;
