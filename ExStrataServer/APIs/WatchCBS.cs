@@ -12,9 +12,15 @@ namespace ExStrataServer.APIs
 {
     class WatchCBS : APIWatcher
     {
-        private static string name = "CBS";
+        private const string name = "CBS";
+        private const string description = "Laat 1 keer per dag zien hoeveel baby's er die dag zijn geboren.";
 
-        public WatchCBS(int delay) : base(delay, name)
+        public WatchCBS()
+        {
+            Name = name;
+        }
+
+        public WatchCBS(int delay) : base(delay, name, description)
         {
         }
 
@@ -44,16 +50,9 @@ namespace ExStrataServer.APIs
                         }
                     }
 
-                    int babyRings = born / 25;
+                    
 
-                    Pattern babyGradient = new Pattern("Babies", 60 * 1000);
-                    babyGradient.Add(Frame.Gradient(new Frame.GradientColour[]
-                    {
-                        new Frame.GradientColour(0, Colour.Pink),
-                        new Frame.GradientColour(100, Colour.Maroon)
-                    }, 0, babyRings));
-
-                    Send(babyGradient);
+                    Send(GetPattern(born));
 
                     Console.WriteLine("born: " + born + " died: " + died);
                 }
@@ -63,6 +62,25 @@ namespace ExStrataServer.APIs
                 Log.Error("Could not parse CBS data");
                 return;
             }
+        }
+
+        public override Pattern GetPattern()
+        {
+            return GetPattern(1300);
+        }
+
+        private Pattern GetPattern(int born)
+        {
+            int babyRings = born / 25;
+
+            Pattern babyGradient = new Pattern("Babies", 60 * 1000);
+            babyGradient.Add(Frame.Gradient(new Frame.GradientColour[]
+            {
+                        new Frame.GradientColour(0, Colour.Pink),
+                        new Frame.GradientColour(100, Colour.Maroon)
+            }, 0, babyRings));
+
+            return babyGradient;
         }
     }
 }

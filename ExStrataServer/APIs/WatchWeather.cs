@@ -11,7 +11,8 @@ namespace ExStrataServer.APIs
 {
     class WatchWeather : APIWatcher
     {
-        private static string name = "Weather";
+        private const string name = "Weather";
+        private const string description = "Bekijk het weer in Leeuwarden, en laat dit elk kwartier zien. Het aantal rijen van lampen dat aan staat geeft de temperatuur aan, op een schaal van -3 tot 35";
 
         private string city;
         public string City
@@ -27,7 +28,13 @@ namespace ExStrataServer.APIs
             set { country = value; }
         }
 
-        public WatchWeather(int delay, string country, string city) : base(delay, name)
+        public WatchWeather()
+        {
+            Name = name;
+            Description = description;
+        }
+
+        public WatchWeather(int delay, string country, string city) : base(delay, name, description)
         {
             Country = country;
             City = city;
@@ -42,17 +49,7 @@ namespace ExStrataServer.APIs
                 {
                     float temperatureC = (float)result["current_observation"]["temp_c"];
 
-                    int temperatureRings = (int)((temperatureC + 5) / 35 * 80);
-
-                    Pattern temperaturepGradient = new Pattern("Temperature", 60 * 1000);
-                    temperaturepGradient.Add(Frame.Gradient(new Frame.GradientColour[]
-                    {
-                        new Frame.GradientColour(0, new Colour(0,200,220)),
-                        new Frame.GradientColour(50, new Colour(255,200,0)),
-                        new Frame.GradientColour(100, new Colour(255,70,0))
-                    }, 0, temperatureRings));
-
-                    Send(temperaturepGradient);
+                    Send(GetPattern(temperatureC));
                 }
                 else
                 {
@@ -60,6 +57,25 @@ namespace ExStrataServer.APIs
                     return;
                 }
             }
+        }
+
+        public override Pattern GetPattern()
+        {
+            return GetPattern(35);
+        }
+
+        private Pattern GetPattern(float temperatureC)
+        {
+            int temperatureRings = (int)((temperatureC + 5) / 35 * 80);
+            Pattern temperatureGradient = new Pattern("Temperature", 60 * 1000);
+            temperatureGradient.Add(Frame.Gradient(new Frame.GradientColour[]
+            {
+                        new Frame.GradientColour(0, new Colour(0,200,220)),
+                        new Frame.GradientColour(50, new Colour(255,200,0)),
+                        new Frame.GradientColour(100, new Colour(255,70,0))
+            }, 0, temperatureRings));
+
+            return temperatureGradient;
         }
     }
 }

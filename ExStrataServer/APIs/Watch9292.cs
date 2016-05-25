@@ -15,7 +15,8 @@ namespace ExStrataServer.APIs
     public class Watch9292 : APIWatcher
     {
         private string destination;
-        private static string name = "9292OV";
+        private const string name = "9292OV";
+        private const string description = "Kijkt of er een bus aan komt. Als het patroon afgespeeld wordt, betekent het dat er over één minuut een bus aan komt.";
 
         public string Destination
         {
@@ -23,21 +24,15 @@ namespace ExStrataServer.APIs
             set { destination = value; }
         }
 
-        public Watch9292(int delay, string destination) : base(delay, name)
+        public Watch9292()
+        {
+            Name = name;
+        }
+
+        public Watch9292(int delay, string destination) : base(delay, name, description)
         {
             Destination = destination;
-            pattern = Pattern.Animate(new Pattern.GradientFrame[]{
-                            new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
-                            {
-                                new Frame.GradientColour(0, Colour.Blue),
-                                new Frame.GradientColour(100, Colour.Blueviolet)
-                            })),
-                            new Pattern.GradientFrame(100, Frame.Gradient(new Frame.GradientColour[]
-                            {
-                                new Frame.GradientColour(0, Colour.Lightblue),
-                                new Frame.GradientColour(100, Colour.Blue)
-                            }))
-                        }, "Animate", 20 / 14 * 1000, 14);
+            pattern = GetPattern();
         }
 
         protected override async void Check(object Sender = null, EventArgs e = null)
@@ -62,6 +57,22 @@ namespace ExStrataServer.APIs
                 }
             }
             else Log.Error("Could not parse 9292OV data");
+        }
+
+        public override Pattern GetPattern()
+        {
+            return Pattern.Animate(new Pattern.GradientFrame[]{
+                            new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
+                            {
+                                new Frame.GradientColour(0, Colour.Blue),
+                                new Frame.GradientColour(100, Colour.Blueviolet)
+                            })),
+                            new Pattern.GradientFrame(100, Frame.Gradient(new Frame.GradientColour[]
+                            {
+                                new Frame.GradientColour(0, Colour.Lightblue),
+                                new Frame.GradientColour(100, Colour.Blue)
+                            }))
+                        }, "Animate", 20 / 14 * 1000, 14);
         }
     }
 }

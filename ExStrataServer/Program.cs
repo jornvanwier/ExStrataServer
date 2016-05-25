@@ -20,15 +20,15 @@ namespace ExStrataServer
             Log.ConsoleOutputError = true;
             Log.ConsoleOutputRawData = false;
 
-            Log.Message("Started program.");
+            Log.Message("Started program. .NET version " + Environment.Version);
 
             // Start the API Manager with a few APIs
             APIManager.Initialize(
                 new Watch9292(1000 * 60, "NHL Stenden Hogeschool"),
-                new WatchWeather(1000 * 60, "NL", "Leeuwarden"));
+                new WatchWeather(1000 * 60, "NL", "Leeuwarden"),
+                new WatchCBS(1000 * 60));
 
-            Communication.Server.AsyncSocketListener.Initialize();
-
+            AsyncSocketListener.Initialize();
 
             char c;
             Console.WriteLine("Press q to quit.");
