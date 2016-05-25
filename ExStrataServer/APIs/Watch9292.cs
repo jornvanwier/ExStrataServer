@@ -45,7 +45,7 @@ namespace ExStrataServer.APIs
             string data = await Request.GetDataAsync("https://api.9292.nl/0.1/locations/station-leeuwarden/departure-times?lang=en-GB");
 
             JObject parsedData;
-            if (ExtensionMethods.Extensions.TryParseJObject(data, out parsedData))
+            if (Utilities.TryParseJObject(data, out parsedData))
             {
                 JToken departures = parsedData["tabs"][1]["departures"];
 
