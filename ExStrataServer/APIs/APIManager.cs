@@ -6,27 +6,27 @@ using System.Threading.Tasks;
 
 namespace ExStrataServer.APIs
 {
-    public class APIManager : IDisposable
+    public class APIManager
     {
-        private List<APIWatcher> loadedAPIs;
-        private readonly Type[] allAPIs = AppDomain.CurrentDomain.GetAssemblies()
+        private static List<APIWatcher> loadedAPIs;
+        private static readonly Type[] allAPIs = AppDomain.CurrentDomain.GetAssemblies()
                        .SelectMany(assembly => assembly.GetTypes())
                        .Where(type => type.IsSubclassOf(typeof(APIWatcher))).ToArray();
 
-        public List<APIWatcher> LoadedAPIs
+        public static List<APIWatcher> LoadedAPIs
         {
             get { return loadedAPIs; }
             private set { loadedAPIs = value; }
         }
 
-        public APIManager(params APIWatcher[] apis)
+        public static void Initialize(params APIWatcher[] apis)
         {
             LoadedAPIs = apis.ToList();
             StartAll();
             Log.Message("API Manager started.");
         }
 
-        private void StartAll()
+        private static void StartAll()
         {
             foreach(APIWatcher api in LoadedAPIs)
             {
@@ -35,25 +35,24 @@ namespace ExStrataServer.APIs
             }
         }
 
-        public void Add(APIWatcher api)
+        public static void Add(APIWatcher api)
         {
             api.Start();
             LoadedAPIs.Add(api);
         }
 
-        public void Remove(int index)
+        public static void Remove(int index)
         {
             LoadedAPIs[index].Dispose();
             LoadedAPIs.RemoveAt(index);
         }
 
-        public void Dispose()
+        public static void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private static void Dispose(bool disposing)
         {
             for (int i = 0; i < LoadedAPIs.Count; i++)
             {
