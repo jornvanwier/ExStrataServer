@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ExStrataServer.ColourPattern;
 using ExStrataServer.APIs;
 using ExStrataServer.Communication;
+using ExStrataServer.Communication.Server;
 
 namespace ExStrataServer
 {
@@ -19,15 +20,15 @@ namespace ExStrataServer
             Log.ConsoleOutputError = true;
             Log.ConsoleOutputRawData = false;
 
-            Log.Message("Started program.");
+            Log.Message("Started program. .NET version " + Environment.Version);
 
             // Start the API Manager with a few APIs
-            APIManager manager = new APIManager(
-                new WatchTest(1000 * 60 * 2),
+            APIManager.Initialize(
                 new Watch9292(1000 * 60, "NHL Stenden Hogeschool"),
-                new WatchWeather(1000 * 60, "NL", "Leeuwarden"));
+                new WatchWeather(1000 * 60, "NL", "Leeuwarden"),
+                new WatchCBS(1000 * 60));
 
-            manager.Add(new WatchCBS(1000 * 60));
+            AsyncSocketListener.Initialize();
 
             char c;
             Console.WriteLine("Press q to quit.");

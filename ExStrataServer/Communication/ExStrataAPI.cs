@@ -76,7 +76,7 @@ namespace ExStrataServer.Communication
             Log.RawData(data);
 
             JObject parsedData;
-            if(ExtensionMethods.Extensions.TryParseJObject(data, out parsedData))
+            if(Utilities.TryParseJObject(data, out parsedData))
             {
                 if ((bool)parsedData["result"])
                 {

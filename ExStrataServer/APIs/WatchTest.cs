@@ -9,9 +9,27 @@ namespace ExStrataServer.APIs
 {
     public class WatchTest : APIWatcher
     {
-        public WatchTest(int delay) : base(delay, "TestAPI")
+        private const string name = "TestAPI";
+        private const string description = "Test API, moet verwijderd worden voor release.";
+
+        public WatchTest()
         {
-            pattern = Pattern.Animate(new Pattern.GradientFrame[]{
+            Name = name;
+        }
+
+        public WatchTest(int delay) : base(delay, name, description)
+        {
+            pattern = GetPattern();
+        }
+
+        protected override void Check(object sender = null, EventArgs e = null)
+        {
+            Send(); 
+        }
+
+        public override Pattern GetPattern()
+        {
+            return Pattern.Animate(new Pattern.GradientFrame[]{
                 new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
                 {
                     new Frame.GradientColour(0, Colour.Red),
@@ -23,11 +41,6 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(100, Colour.Orange)
                 }))
             }, "Animation", 300, 14);
-        }
-
-        protected override void Check(object sender = null, EventArgs e = null)
-        {
-            Send(); 
         }
     }
 }

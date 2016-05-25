@@ -14,6 +14,7 @@ namespace ExStrataServer.APIs
         private Timer checkTimer;
         private int checkDelay;
         private string name;
+        private string description;
         protected Pattern pattern;
 
         public string Name
@@ -22,10 +23,27 @@ namespace ExStrataServer.APIs
             set { name = value; }
         }
 
-        public APIWatcher(int delay, string name)
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+
+        public Pattern Pattern
+        {
+            get { return pattern; }
+            protected set { pattern = value; }
+        }
+
+        public APIWatcher()
+        {
+        }
+
+        public APIWatcher(int delay, string name, string description)
         {
             checkDelay = delay;
             Name = name;
+            Description = description;
         }
 
         public void Start()
@@ -78,5 +96,7 @@ namespace ExStrataServer.APIs
         {
             Send(pattern);
         }
+
+        public abstract Pattern GetPattern();
     }
 }
