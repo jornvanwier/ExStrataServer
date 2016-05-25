@@ -94,6 +94,10 @@ namespace ExStrataServer.ColourPattern
                     result.SetRow(currentRow - 1, colours[i + 1].colour);
                 }
             }
+            if(result.Colours.Last()== null)
+            {
+                result.SetRow(79, result.Colours[78]);
+            }
             return result;
         }
 
@@ -113,7 +117,7 @@ namespace ExStrataServer.ColourPattern
             string result = String.Empty;
             for (int i = 0; i < colours.Length; i++)
             {
-                result += '&' + "pattern[frames][" + frameNum + "][zones][" + (i + 1) + ']' + '=' + colours[i].Serialize();
+                result += '&' + "pattern[frames][" + frameNum + "][zones][" + (i + 1) + "]=" + colours[i].Serialize();
             }
             return result;
         }
