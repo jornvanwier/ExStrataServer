@@ -20,7 +20,7 @@ namespace ExStrataServer.APIs
 
         protected override async void Check(object Sender = null, EventArgs e = null)
         {
-            if (true || DateTime.Now.Hour == 13 && DateTime.Now.Minute == 55)
+            if (DateTime.Now.Hour == 13 && DateTime.Now.Minute == 55)
             {
                 JObject result;
                 string URI = String.Format("https://cbs.nl/nl-nl/visualisaties/bevolkingsteller/-/media/cbs/Infographics/Bevolkingsteller/{0}_{1}_{2}.json", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
