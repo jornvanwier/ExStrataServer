@@ -56,11 +56,11 @@ namespace ExStrataServer.APIs
 
                     Console.WriteLine("born: " + born + " died: " + died);
                 }
-            }
-            else
-            {
-                Log.Error("Could not parse CBS data");
-                return;
+                else
+                {
+                    Log.Error("Could not parse CBS data");
+                    return;
+                }
             }
         }
 
