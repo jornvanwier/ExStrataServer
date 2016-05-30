@@ -22,7 +22,9 @@ namespace ExStrataServer.Communication.Server
         {
             IPAddress ip = Array.Find(Dns.GetHostEntry(Dns.GetHostName()).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
 
-            server = new WebSocketListener(new IPEndPoint(ip, port));
+            WebSocketListenerOptions serverOptions = new WebSocketListenerOptions();
+            serverOptions.UseDualStackSocket = false;
+            server = new WebSocketListener(new IPEndPoint(ip, port), serverOptions);
             vtortola.WebSockets.Rfc6455.WebSocketFactoryRfc6455 rfc6455 = new vtortola.WebSockets.Rfc6455.WebSocketFactoryRfc6455(server);
             server.Standards.RegisterStandard(rfc6455);
             server.Start();

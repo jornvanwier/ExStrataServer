@@ -20,7 +20,8 @@ namespace ExStrataServer
             Log.ConsoleOutputError = true;
             Log.ConsoleOutputRawData = false;
 
-            Log.Message("Started program. .NET version " + Environment.Version);
+            Log.Message("Started program. Using .NET version " + Environment.Version);
+            Log.Message("Mono: " + (Type.GetType("Mono.Runtime") != null));
 
             // Start the API Manager with a few APIs
             APIManager.Initialize(
