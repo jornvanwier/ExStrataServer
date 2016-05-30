@@ -22,7 +22,7 @@ namespace ExStrataServer.Communication.Server
                 return invalidJson;
             }
 
-            switch (((string)json["action"]).ToLower())
+            switch (((string)json["action"]).ToLower())//action key zit er misschien niet in, dan is er error
             {
                 case "getloadedapis":
                     return GetLoadedAPIs();
