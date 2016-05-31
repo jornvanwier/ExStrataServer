@@ -26,6 +26,8 @@ namespace ExStrataServer.APIs
 
         protected override async void Check(object Sender = null, EventArgs e = null)
         {
+            base.Check();
+
             if (DateTime.Now.Hour == 13 && DateTime.Now.Minute == 55)
             {
                 JObject result;

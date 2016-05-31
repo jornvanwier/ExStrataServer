@@ -24,6 +24,8 @@ namespace ExStrataServer.APIs
 
         protected override void Check(object sender = null, EventArgs e = null)
         {
+            base.Check();
+
             Send(); 
         }
 
