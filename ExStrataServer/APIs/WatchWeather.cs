@@ -12,7 +12,7 @@ namespace ExStrataServer.APIs
     class WatchWeather : APIWatcher
     {
         private const string name = "Weather";
-        private const string description = "Bekijk het weer in Leeuwarden, en laat dit elk kwartier zien. Het aantal rijen van lampen dat aan staat geeft de temperatuur aan, op een schaal van -3 tot 35";
+        private const string description = "Bekijk het weer in Leeuwarden, en laat dit elk kwartier zien. Het aantal rijen van lampen dat aan staat geeft de temperatuur aan, op een schaal van -5 tot 30";
 
         private string city;
         public string City
