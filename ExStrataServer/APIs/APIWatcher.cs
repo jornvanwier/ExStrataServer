@@ -77,7 +77,10 @@ namespace ExStrataServer.APIs
         /// </summary>
         /// <param name="sender">The object that sends the event.</param>
         /// <param name="e">The EventArgs.</param>
-        protected abstract void Check(object sender = null, EventArgs e = null);
+        protected virtual void Check(object sender = null, EventArgs e = null)
+        {
+            Console.WriteLine(Name);
+        }
 
         /// <summary>
         /// Send a pattern to the EX STRATA and add a new entry to the log.
@@ -88,8 +91,8 @@ namespace ExStrataServer.APIs
             if (pattern == null) throw new NullReferenceException("Pattern is not set.");
 
             // Send pattern with EX STRATA API
-            if (await ExStrataAPI.PlayPattern(pattern)) Log.APIEvent(Name, pattern.Name);
-            else Log.APIEvent(Name, pattern.Name, false);
+            if (await ExStrataAPI.PlayPattern(pattern)) Log.APISend(Name, pattern.Name);
+            else Log.APISend(Name, pattern.Name, false);
         }
 
         protected virtual void Send()

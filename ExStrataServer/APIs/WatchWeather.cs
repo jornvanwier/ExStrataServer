@@ -42,6 +42,8 @@ namespace ExStrataServer.APIs
 
         protected override async void Check(object Sender = null, EventArgs e = null)
         {
+            base.Check();
+
             if (DateTime.Now.Minute % 15 == 0)
             {
                 JObject result;
