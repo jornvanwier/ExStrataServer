@@ -24,6 +24,9 @@ namespace ExStrataServer.Communication.Server
 
             switch (((string)json["action"]).ToLower())//action key zit er misschien niet in, dan is er error
             {
+                case "login":
+                    return Login(json);
+
                 case "getloadedapis":
                     return GetLoadedAPIs();
 
@@ -39,6 +42,38 @@ namespace ExStrataServer.Communication.Server
                     return String.Format(fieldMissing, "action");
 
             }
+        }
+
+        private static string Login(JObject data)
+        {
+            JToken username;
+            if (data.TryGetValue("user", out username))
+            {
+                JToken password;
+                if (data.TryGetValue("pass", out password))
+                {
+                    Token token = UserManager.Authenticate((string)username, (string)password);
+
+                    if (token != null)
+                    {
+                        return JsonConvert.SerializeObject(new
+                        {
+                            success = true,
+                            code = 200,
+                            token = token.Code,
+                            displayName = token.User.Displayname
+                        });
+                    }
+                    else return JsonConvert.SerializeObject(new
+                    {
+                        success = false,
+                        code = 400,
+                        error = "Username or password is invalid."
+                    });
+                }
+                else return String.Format(fieldMissing, "pass");
+            }
+            else return String.Format(fieldMissing, "user");
         }
 
         private static string GetLoadedAPIs()

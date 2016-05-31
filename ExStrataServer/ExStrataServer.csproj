@@ -76,6 +76,9 @@
     <Compile Include="Communication\Request.cs" />
     <Compile Include="Communication\Server\AsyncSocketListener.cs" />
     <Compile Include="Communication\Server\MessageParser.cs" />
+    <Compile Include="Communication\Server\Token.cs" />
+    <Compile Include="Communication\Server\User.cs" />
+    <Compile Include="Communication\Server\UserManager.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
