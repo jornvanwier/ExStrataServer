@@ -40,6 +40,14 @@ namespace ExStrataServer.Communication.Server
             }
         }
 
+        public static User CheckToken(string token)
+        {
+            CleanupTokens();
+            IEnumerable<Token> tokenList = tokens.Where(a => a.Code == token);
+            if (tokenList.Count() == 0) return null;
+            else return tokenList.First().User;
+        }
+
         public static bool TokenExists(string token)
         {
             return tokens.Where(a => a.Code == token).Count() > 0;

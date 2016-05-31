@@ -16,6 +16,14 @@ namespace ExStrataServer.APIs
         private string name;
         private string description;
         protected Pattern pattern;
+        private List<object> parameters = new List<object>()
+        {
+            new
+            {
+                name = "delay",
+                type = "int"
+            }
+        };
 
         public string Name
         {
@@ -33,6 +41,12 @@ namespace ExStrataServer.APIs
         {
             get { return pattern; }
             protected set { pattern = value; }
+        }
+
+        public List<object> Parameters
+        {
+            get { return parameters; }
+            protected set { parameters = value; }
         }
 
         public APIWatcher()
@@ -79,7 +93,7 @@ namespace ExStrataServer.APIs
         /// <param name="e">The EventArgs.</param>
         protected virtual void Check(object sender = null, EventArgs e = null)
         {
-            Console.WriteLine(Name);
+            //Console.WriteLine(Name);
         }
 
         /// <summary>

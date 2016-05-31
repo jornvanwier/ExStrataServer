@@ -22,26 +22,37 @@ namespace ExStrataServer.Communication.Server
                 return invalidJson;
             }
 
-            switch (((string)json["action"]).ToLower())//action key zit er misschien niet in, dan is er error
+            JToken action;
+            if (json.TryGetValue("action", out action))
             {
-                case "login":
-                    return Login(json);
+                switch (((string)json["action"]).ToLower())
+                {
+                    case "login":
+                        return Login(json);
 
-                case "getloadedapis":
-                    return GetLoadedAPIs();
+                    case "getloadedapis":
+                        return GetLoadedAPIs();
 
-                case "getpattern":
-                    JToken data;
-                    if (json.TryGetValue("data", out data))
-                    {
-                        return GetPattern(data);
-                    }
-                    else return String.Format(fieldMissing, "data");
+                    case "getallapis":
+                        return GetAllAPIs();
 
-                default:
-                    return String.Format(fieldMissing, "action");
+                    case "getpattern":
+                        return GetPattern(json);
 
+                    case "removeapi":
+                        return RemoveAPI(json);
+
+                    default:
+                        return JsonConvert.SerializeObject(new
+                        {
+                            success = false,
+                            code = 400,
+                            error = "Action doesn't exist."
+                        });
+
+                }
             }
+            else return String.Format(fieldMissing, "action");
         }
 
         private static string Login(JObject data)
@@ -100,33 +111,89 @@ namespace ExStrataServer.Communication.Server
             });
         }
 
-        private static string GetPattern(JToken data)
+        private static string GetAllAPIs()
         {
-            if (!APIManager.AllPatterns.ContainsKey((string)data)) return invalidIndex;
+            Type[] types = APIManager.AllAPIs;
+
+            List<object> values = new List<object>();
+
+            for (int i = 0; i < types.Length; i++)
+            {
+                values.Add(new
+                {
+                    name = types[i].ToString().Split('.').Last().Substring(5),
+                    index = i
+                });
+            }
 
             return JsonConvert.SerializeObject(new
             {
                 success = true,
                 code = 200,
-                data = APIManager.AllPatterns[(string)data].UnencodedSerialize()
+                data = values
             });
         }
 
-        #region defaultErrors
+        private static string GetPattern(JObject data)
+        {
+            JToken patternName;
+            if (data.TryGetValue("patternName", out patternName))
+            {
+                if (!APIManager.AllPatterns.ContainsKey((string)patternName)) return invalidIndex;
 
-        private static readonly string invalidJson = JsonConvert.SerializeObject(JObject.FromObject(new
+                return JsonConvert.SerializeObject(new
+                {
+                    success = true,
+                    code = 200,
+                    data = APIManager.AllPatterns[(string)patternName].UnencodedSerialize()
+                });
+            }
+
+            else return String.Format(fieldMissing, "patternName");
+        }
+
+        private static string RemoveAPI(JObject data)
+        {
+            JToken index;
+            if (data.TryGetValue("index", out index))
+            {
+                int parsedIndex;
+                if (Int32.TryParse((string)index, out parsedIndex))
+                {
+                    APIManager.Remove(parsedIndex);
+                    return success;
+                }
+                else return JsonConvert.SerializeObject(new
+                {
+                    success = false,
+                    code = 400,
+                    error = "Index was not an integer."
+                });
+            }
+            else return String.Format(fieldMissing, "index");
+        }
+
+        #region defaultMessages
+
+        private static readonly string success = JsonConvert.SerializeObject(new
+        {
+            success = true,
+            code = 200
+        });
+
+        private static readonly string invalidJson = JsonConvert.SerializeObject(new
         {
             success = false,
             code = 400,
             error = "JSON was invalid."
-        }));
+        });
 
-        private static readonly string fieldMissing = JsonConvert.SerializeObject(JObject.FromObject(new
+        private static readonly string fieldMissing = JsonConvert.SerializeObject(new
         {
             success = false,
             code = 400,
             error = "field {0} was missing."
-        }));
+        });
 
         private static readonly string invalidIndex = JsonConvert.SerializeObject(new
         {

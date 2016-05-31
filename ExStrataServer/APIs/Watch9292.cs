@@ -27,6 +27,11 @@ namespace ExStrataServer.APIs
         public Watch9292()
         {
             Name = name;
+            Parameters.Add(new
+            {
+                name = "destination",
+                type = "string"
+            });
         }
 
         public Watch9292(int delay, string destination) : base(delay, name, description)
