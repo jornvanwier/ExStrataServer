@@ -52,7 +52,7 @@ namespace ExStrataServer.APIs
                     string busDestination = (string)departure["destinationName"];
                     string departureTime = (string)departure["time"];
                     string timeNow = DateTime.Now.AddMinutes(1).ToString("HH:mm");
-                    Console.WriteLine("departuretime {0} timenow {1}, destination {2}", departureTime, timeNow, busDestination);
+                    //Console.WriteLine("departuretime {0} timenow {1}, destination {2}", departureTime, timeNow, busDestination);
                     if (busDestination == Destination && departureTime == timeNow)
                     {
                         Send();
