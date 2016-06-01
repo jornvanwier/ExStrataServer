@@ -16,7 +16,7 @@ namespace ExStrataServer.APIs
         private string name;
         private string description;
         protected Pattern pattern;
-        private string instanceInfo;
+        private string instanceInfo = String.Empty;
         private List<Parameter> parameters = new List<Parameter>()
         {
             new Parameter

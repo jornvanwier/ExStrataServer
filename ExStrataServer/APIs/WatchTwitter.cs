@@ -43,6 +43,7 @@ namespace ExStrataServer.APIs
             previousTweets = new List<string>();
             setTweets();
             DefaultPattern = GetPattern();
+            InstanceInfo = "User: " + user;
         }
 
         protected override async void Check(object Sender = null, EventArgs e = null)

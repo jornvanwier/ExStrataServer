@@ -109,6 +109,50 @@ namespace ExStrataServer
             if (ConsoleOutputRawData) Console.WriteLine(text);
         }
 
+        public static string Read(string location, string name)
+        {
+            if (name.Substring(name.Length - 4) != ".log")
+                name += ".log";
+
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(location + name))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+            catch
+            {
+                Error("Could not open file for reading.");
+                return String.Empty;
+            }
+        }
+
+        public static string Read(string name)
+        {
+            return Read(defaultLocation, name);
+        }
+
+        public static string[] List(string location)
+        {
+            List<string> temp = Directory.GetFiles(location).ToList();
+
+            int i = 0;
+            while(i < temp.Count)
+            {
+                if (temp[i].Substring(temp[i].Length - 4) != ".log") temp.RemoveAt(i);
+                else i++;
+            }
+
+            return temp.ToArray();
+        }
+
+        public static string[] List()
+        {
+            return List(defaultLocation);
+        }
+
 
         private static void Write(string text)
         {

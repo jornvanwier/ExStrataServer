@@ -45,6 +45,12 @@ namespace ExStrataServer.Communication.Server
                     case "removeapi":
                         return RemoveAPI(json);
 
+                    case "listlogs":
+                        return ListLogs(json);
+
+                    case "readlog":
+                        return ReadLog(json);
+
                     default:
                         return JsonConvert.SerializeObject(new
                         {
@@ -102,6 +108,7 @@ namespace ExStrataServer.Communication.Server
                 {
                     name = loadedAPIs[i].Name,
                     description = loadedAPIs[i].Description,
+                    instanceInfo = loadedAPIs[i].InstanceInfo,
                     index = i
                 });
             }
@@ -219,6 +226,52 @@ namespace ExStrataServer.Communication.Server
                 });
             }
             else return String.Format(fieldMissing, "index");
+        }
+
+        private static string ListLogs(JObject data)
+        {
+            if (CheckToken(data))
+            {
+                return JsonConvert.SerializeObject(new
+                {
+                    success = true,
+                    code = 200,
+                    logs = Log.List()
+                });
+            }
+            else return notAuthorized;
+        }
+
+        private static string ReadLog(JObject data)
+        {
+            if (CheckToken(data))
+            {
+                JToken filename;
+                if (data.TryGetValue("filename", out filename))
+                {
+                    string result = Log.Read((string)filename);
+                    if(result == String.Empty)
+                    {
+                        return JsonConvert.SerializeObject(new
+                        {
+                            success = false,
+                            code = 400,
+                            error = "Could not read file."
+                        });
+                    }
+                    else
+                    {
+                        return JsonConvert.SerializeObject(new
+                        {
+                            success = true,
+                            code = 200,
+                            log = result
+                        });
+                    }
+                }
+                else return String.Format(fieldMissing, "filename");
+            }
+            else return notAuthorized;
         }
 
         private static bool CheckToken(JObject data)

@@ -35,8 +35,6 @@ namespace ExStrataServer
 
             AsyncSocketListener.Initialize();
 
-
-
             char c;
 
             do c = Console.ReadKey().KeyChar;
