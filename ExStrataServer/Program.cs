@@ -14,6 +14,8 @@ namespace ExStrataServer
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Press q to quit.");
+
             // Set log output to console
             Log.ConsoleOutputMessage = true;
             Log.ConsoleOutputAPI = true;
@@ -27,13 +29,15 @@ namespace ExStrataServer
             APIManager.Initialize(
                 new Watch9292(1000 * 60, "NHL Stenden Hogeschool"),
                 new WatchWeather(1000 * 60, "NL", "Leeuwarden"),
-                new WatchTwitter(1000 * 60, "jojojoghurtnl1"),
+                new WatchTwitter(1000 * 60, "kaasMonsieur"),
                 new WatchCBS(1000 * 60));
+            
 
             AsyncSocketListener.Initialize();
 
+
+
             char c;
-            Console.WriteLine("Press q to quit.");
 
             do c = Console.ReadKey().KeyChar;
             while (c != 'q');

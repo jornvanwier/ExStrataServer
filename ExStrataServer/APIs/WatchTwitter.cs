@@ -72,6 +72,8 @@ namespace ExStrataServer.APIs
                         new string[] { "<div class=\"expanded-content js-tweet-details-dropdown\">" },
                         StringSplitOptions.RemoveEmptyEntries)[0],
                     "<[^>]*>", "").Split('\n')[0];
+
+                Console.WriteLine(tweets[i]);
             }
 
             return tweets;
@@ -88,44 +90,44 @@ namespace ExStrataServer.APIs
                 new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
                 {
                     new Frame.GradientColour(0, Colour.White),
-                    new Frame.GradientColour(25, Colour.Lightblue),
+                    new Frame.GradientColour(25, Colour.Blue),
                     new Frame.GradientColour(50, Colour.White),
-                    new Frame.GradientColour(75, Colour.Lightblue),
+                    new Frame.GradientColour(75, Colour.Blue),
                     new Frame.GradientColour(100, Colour.White),
                 })),
                 new Pattern.GradientFrame(25, Frame.Gradient(new Frame.GradientColour[]
                 {
-                    new Frame.GradientColour(0, Colour.Lightblue),
+                    new Frame.GradientColour(0, Colour.Blue),
                     new Frame.GradientColour(25, Colour.White),
-                    new Frame.GradientColour(50, Colour.Lightblue),
+                    new Frame.GradientColour(50, Colour.Blue),
                     new Frame.GradientColour(75, Colour.White),
-                    new Frame.GradientColour(100, Colour.Lightblue),
+                    new Frame.GradientColour(100, Colour.Blue),
                 })),
                 new Pattern.GradientFrame(50, Frame.Gradient(new Frame.GradientColour[]
                 {
                     new Frame.GradientColour(0, Colour.White),
-                    new Frame.GradientColour(25, Colour.Lightblue),
+                    new Frame.GradientColour(25, Colour.Blue),
                     new Frame.GradientColour(50, Colour.White),
-                    new Frame.GradientColour(75, Colour.Lightblue),
+                    new Frame.GradientColour(75, Colour.Blue),
                     new Frame.GradientColour(100, Colour.White),
                 })),
                 new Pattern.GradientFrame(75, Frame.Gradient(new Frame.GradientColour[]
                 {
-                    new Frame.GradientColour(0, Colour.Lightblue),
+                    new Frame.GradientColour(0, Colour.Blue),
                     new Frame.GradientColour(25, Colour.White),
-                    new Frame.GradientColour(50, Colour.Lightblue),
+                    new Frame.GradientColour(50, Colour.Blue),
                     new Frame.GradientColour(75, Colour.White),
-                    new Frame.GradientColour(100, Colour.Lightblue),
+                    new Frame.GradientColour(100, Colour.Blue),
                 })),
                 new Pattern.GradientFrame(100, Frame.Gradient(new Frame.GradientColour[]
                 {
                     new Frame.GradientColour(0, Colour.White),
-                    new Frame.GradientColour(25, Colour.Lightblue),
+                    new Frame.GradientColour(25, Colour.Blue),
                     new Frame.GradientColour(50, Colour.White),
-                    new Frame.GradientColour(75, Colour.Lightblue),
+                    new Frame.GradientColour(75, Colour.Blue),
                     new Frame.GradientColour(100, Colour.White),
                 }))
-            }, "TwitterPattern", 4000, 14);
+            }, "TwitterPattern", 4000, 9);
 
 
 
