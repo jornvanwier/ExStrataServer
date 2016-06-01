@@ -91,7 +91,7 @@ namespace ExStrataServer.APIs
             base.Check(sender, e);
 
             // Go only every 19 minutes if month or day is set
-            if (!(Month != -1 || Day != -1) && DateTime.Now.Minute % 9 == 0)
+            if ((Month != -1 || Day != -1) && DateTime.Now.Minute % 9 == 0)
             {
                 if (IsDateTimeMatch())
                 {
