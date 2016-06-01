@@ -30,6 +30,7 @@ namespace ExStrataServer
                 new Watch9292(1000 * 60, "NHL Stenden Hogeschool"),
                 new WatchWeather(1000 * 60, "NL", "Leeuwarden"),
                 new WatchTwitter(1000 * 60, "kaasMonsieur"),
+                new WatchDateTime(1000 * 20, -1, -1, -1, 17, "0,120,255"),
                 new WatchCBS(1000 * 60));
             
 

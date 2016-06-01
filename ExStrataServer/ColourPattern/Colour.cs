@@ -186,6 +186,22 @@ namespace ExStrataServer.ColourPattern
             B = blue;
         }
 
+        public static Colour FromString(string s)
+        {
+            string[] splitstring = s.Split(',');
+
+            if (splitstring.Length != 3) return null;
+
+            byte red;
+            byte green;
+            byte blue;
+            if (!Byte.TryParse(splitstring[0], out red)) return null;
+            if (!Byte.TryParse(splitstring[1], out green)) return null;
+            if (!Byte.TryParse(splitstring[2], out blue)) return null;
+
+            return new Colour(red, green, blue);
+        }
+
         /// <summary>
         /// Format the Colour in the format expected by the EX STRATA
         /// </summary>
