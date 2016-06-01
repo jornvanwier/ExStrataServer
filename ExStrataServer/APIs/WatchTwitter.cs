@@ -28,10 +28,10 @@ namespace ExStrataServer.APIs
         {
             Name = name;
             Description = description;
-            Parameters.Add(new
+            Parameters.Add(new Parameter
             {
-                name = "user",
-                type = "string"
+                Name = "user",
+                Type = "string"
             });
 
 
