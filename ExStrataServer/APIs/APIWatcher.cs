@@ -16,6 +16,7 @@ namespace ExStrataServer.APIs
         private string name;
         private string description;
         protected Pattern pattern;
+        private string instanceInfo;
         private List<Parameter> parameters = new List<Parameter>()
         {
             new Parameter
@@ -47,6 +48,12 @@ namespace ExStrataServer.APIs
         {
             get { return parameters; }
             protected set { parameters = value; }
+        }
+
+        public string InstanceInfo
+        {
+            get { return instanceInfo; }
+            protected set { instanceInfo = value; }
         }
 
         public APIWatcher()

@@ -63,7 +63,7 @@ namespace ExStrataServer.Communication.Server
         {
             try
             {
-                await client.WriteStringAsync(response, cancellationToken);
+                 await client.WriteStringAsync(response, cancellationToken);
             } catch
             {
                 Console.WriteLine("Connection closed.");

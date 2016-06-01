@@ -43,11 +43,11 @@ namespace ExStrataServer.Communication.Server
             {
                 int num = r.Next(1, 999999);
 
-                string base36 = num.ToString("36");
+                string base36 = num.ToString();
 
                 HashAlgorithm hasher = SHA1.Create();
 
-                tempCode = Utilities.BytesToString(hasher.ComputeHash(Encoding.Default.GetBytes(base36)));
+                tempCode = Encoding.Unicode.GetString(hasher.ComputeHash(Utilities.StringToBytes(base36)));
             }
             while (UserManager.TokenExists(tempCode));
 
