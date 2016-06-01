@@ -117,7 +117,7 @@ namespace ExStrataServer
 
             try
             {
-                using (StreamReader sr = new StreamReader(location + name))
+                using (StreamReader sr = new StreamReader(location + "/" + name))
                 {
                     return sr.ReadToEnd();
                 }
