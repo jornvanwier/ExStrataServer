@@ -50,11 +50,11 @@ namespace ExStrataServer.APIs
         {
             base.Check();
 
-            if (true||previousTweets.Count != 0)
+            if (previousTweets.Count != 0)
             {
                 List<string> newTweets = await getTweets();
 
-                if (true || !Enumerable.SequenceEqual(previousTweets, newTweets))
+                if (!Enumerable.SequenceEqual(previousTweets, newTweets))
                     Send(); // er is een nieuwe tweet
             }
         }
