@@ -60,7 +60,7 @@ namespace ExStrataServer.Communication.Server
             int i = 0;
             while (i < tokens.Count)
             { 
-                if (tokens[i].Expiration > now) tokens.RemoveAt(i);
+                if (tokens[i].Expiration < now) tokens.RemoveAt(i);
                 else i++;
             }
         }

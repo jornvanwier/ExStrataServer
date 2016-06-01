@@ -27,10 +27,10 @@ namespace ExStrataServer.APIs
         public Watch9292()
         {
             Name = name;
-            Parameters.Add(new
+            Parameters.Add(new Parameter
             {
-                name = "destination",
-                type = "string"
+                Name = "destination",
+                Type = "string"
             });
         }
 

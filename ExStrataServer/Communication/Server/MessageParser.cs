@@ -34,7 +34,10 @@ namespace ExStrataServer.Communication.Server
                         return GetLoadedAPIs();
 
                     case "getallapis":
-                        return GetAllAPIs();
+                        return GetAllAPIs(json);
+
+                    case "addapi":
+                        return AddAPI(json);
 
                     case "getpattern":
                         return GetPattern(json);
@@ -111,27 +114,72 @@ namespace ExStrataServer.Communication.Server
             });
         }
 
-        private static string GetAllAPIs()
+        private static string GetAllAPIs(JObject data)
         {
-            Type[] types = APIManager.AllAPIs;
-
-            List<object> values = new List<object>();
-
-            for (int i = 0; i < types.Length; i++)
+            if (CheckToken(data))
             {
-                values.Add(new
+                Type[] types = APIManager.AllAPIs;
+                List<List<Parameter>> parameters = APIManager.AllParameters;
+
+                List<object> values = new List<object>();
+
+                for (int i = 0; i < types.Length; i++)
                 {
-                    name = types[i].ToString().Split('.').Last().Substring(5),
-                    index = i
+                    values.Add(new
+                    {
+                        name = types[i].ToString().Split('.').Last().Substring(5),
+                        index = i,
+                        parameters = APIManager.AllParameters[i]
+                    });
+                }
+
+                return JsonConvert.SerializeObject(new
+                {
+                    success = true,
+                    code = 200,
+                    data = values
                 });
             }
+            else return notAuthorized;
+        }
 
-            return JsonConvert.SerializeObject(new
+        private static string AddAPI(JObject data)
+        {
+            if (CheckToken(data))
             {
-                success = true,
-                code = 200,
-                data = values
-            });
+                JToken index;
+                if (data.TryGetValue("index", out index))
+                {
+                    int parsedIndex;
+                    if (Int32.TryParse((string)index, out parsedIndex))
+                    {
+                        if (parsedIndex < 0 || parsedIndex >= APIManager.AllAPIs.Length) return invalidIndex;
+
+                        JToken parameters;
+                        if (data.TryGetValue("parameters", out parameters))
+                        {
+                            try
+                            {
+                                Parameter[] parsedParameters = parameters.ToObject<Parameter[]>();
+
+                                if (APIManager.Add(parsedIndex, parsedParameters))
+                                {
+                                    return success;
+                                }
+                                else return invalidParameters;
+                            }
+                            catch
+                            {
+                                return invalidParameters;
+                            }
+                        }
+                        else return String.Format(fieldMissing, "parameters");
+                    }
+                    else return invalidIndex;
+                }
+                else return String.Format(fieldMissing, "index");
+            }
+            else return notAuthorized;
         }
 
         private static string GetPattern(JObject data)
@@ -173,12 +221,35 @@ namespace ExStrataServer.Communication.Server
             else return String.Format(fieldMissing, "index");
         }
 
+        private static bool CheckToken(JObject data)
+        {
+            return GetUser(data) != null;
+        }
+
+        private static User GetUser(JObject data)
+        {
+            JToken token;
+            if (data.TryGetValue("token", out token))
+            {
+                return UserManager.CheckToken((string)token);
+            }
+
+            return null;
+        }
+
         #region defaultMessages
 
         private static readonly string success = JsonConvert.SerializeObject(new
         {
             success = true,
             code = 200
+        });
+
+        private static readonly string notAuthorized = JsonConvert.SerializeObject(new
+        {
+            success = false,
+            code = 400,
+            error = "Token is not supplied or invalid."
         });
 
         private static readonly string invalidJson = JsonConvert.SerializeObject(new
@@ -200,6 +271,13 @@ namespace ExStrataServer.Communication.Server
             success = false,
             code = 400,
             error = "Invalid index."
+        });
+
+        private static readonly string invalidParameters = JsonConvert.SerializeObject(new
+        {
+            success = false,
+            code = 400,
+            error = "Parameters are in wrong format."
         });
         #endregion
     }

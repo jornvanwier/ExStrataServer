@@ -16,12 +16,12 @@ namespace ExStrataServer.APIs
         private string name;
         private string description;
         protected Pattern pattern;
-        private List<object> parameters = new List<object>()
+        private List<Parameter> parameters = new List<Parameter>()
         {
-            new
+            new Parameter
             {
-                name = "delay",
-                type = "int"
+                Name = "delay",
+                Type = "int"
             }
         };
 
@@ -43,7 +43,7 @@ namespace ExStrataServer.APIs
             protected set { pattern = value; }
         }
 
-        public List<object> Parameters
+        public List<Parameter> Parameters
         {
             get { return parameters; }
             protected set { parameters = value; }
