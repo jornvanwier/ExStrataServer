@@ -27,6 +27,7 @@ namespace ExStrataServer
             APIManager.Initialize(
                 new Watch9292(1000 * 60, "NHL Stenden Hogeschool"),
                 new WatchWeather(1000 * 60, "NL", "Leeuwarden"),
+                new WatchTwitter(1000 * 60, "jojojoghurtnl1"),
                 new WatchCBS(1000 * 60));
 
             AsyncSocketListener.Initialize();

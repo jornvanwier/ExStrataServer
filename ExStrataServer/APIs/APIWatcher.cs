@@ -37,7 +37,7 @@ namespace ExStrataServer.APIs
             set { description = value; }
         }
 
-        public Pattern Pattern
+        public Pattern DefaultPattern
         {
             get { return pattern; }
             protected set { pattern = value; }
