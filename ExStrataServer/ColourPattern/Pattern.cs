@@ -24,6 +24,7 @@ namespace ExStrataServer.ColourPattern
         public List<Frame> Frames
         {
             get { return frames; }
+            set { frames = value; }
         }
 
         public int Delay
@@ -73,7 +74,7 @@ namespace ExStrataServer.ColourPattern
                 this.frame = frame;
             }
         }
-        public static Pattern Animate(GradientFrame[] frames, string name, int delay, int length)
+        public static Pattern Animate(GradientFrame[] frames, string name, int delay, int length = 14)
         {
             Pattern result = new Pattern(name, delay);
             for (int i = 0; i < frames.Length - 1; i++)
