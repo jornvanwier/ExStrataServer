@@ -117,7 +117,7 @@ namespace ExStrataServer
 
             try
             {
-                using (StreamReader sr = new StreamReader(location + name))
+                using (StreamReader sr = new StreamReader(location + "/" + name))
                 {
                     return sr.ReadToEnd();
                 }
@@ -136,16 +136,19 @@ namespace ExStrataServer
 
         public static string[] List(string location)
         {
-            List<string> temp = Directory.GetFiles(location).ToList();
+            string[] temp = Directory.GetFiles(location);
+            List<string> result = new List<string>();
 
-            int i = 0;
-            while(i < temp.Count)
+            for (int i = 0; i < temp.Length; i++)
             {
-                if (temp[i].Substring(temp[i].Length - 4) != ".log") temp.RemoveAt(i);
-                else i++;
+                if (temp[i].Substring(temp[i].Length - 4) == ".log")
+                {
+                    string[] filesplit = temp[i].Split('\\', '.');
+                    result.Add(filesplit[filesplit.Length - 2]);
+                }
             }
 
-            return temp.ToArray();
+            return result.ToArray();
         }
 
         public static string[] List()
