@@ -13,7 +13,7 @@ namespace ExStrataServer.APIs
     class WatchTwitter : APIWatcher
     {
         private const string name = "Twitter";
-        private const string description = "Bekijk het weer in Leeuwarden, en laat dit elk kwartier zien. Het aantal rijen van lampen dat aan staat geeft de temperatuur aan, op een schaal van -5 tot 30";
+        private const string description = "Blijf up to date met NHL tweets! Als je dit patroon ziet betekent het dat het NHL Twitter account iets heeft gepost.";
 
         private List<string> previousTweets;
 
@@ -49,10 +49,13 @@ namespace ExStrataServer.APIs
         {
             base.Check();
 
-            List<string> newTweets = await getTweets();
+            if (true||previousTweets.Count != 0)
+            {
+                List<string> newTweets = await getTweets();
 
-            if (previousTweets.Count != 0 && !Enumerable.SequenceEqual(previousTweets, newTweets))
-                Send(); // er is een nieuwe tweet
+                if (true || !Enumerable.SequenceEqual(previousTweets, newTweets))
+                    Send(); // er is een nieuwe tweet
+            }
         }
 
         private async Task<List<string>> getTweets()
@@ -127,7 +130,7 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(75, Colour.Blue),
                     new Frame.GradientColour(100, Colour.White),
                 }))
-            }, "TwitterPattern", 4000, 9);
+            }, "TwitterPattern", 4000, 14);
 
 
 

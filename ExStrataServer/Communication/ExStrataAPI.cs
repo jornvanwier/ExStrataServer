@@ -36,7 +36,8 @@ namespace ExStrataServer.Communication
         {
             if (pattern.Length > 15)
             {
-                throw new ArgumentException("The API can not process patterns larger than 14 frames");
+                Log.Error("Pattern cannot be longer than 14 frames");
+                pattern.Frames = pattern.Frames.GetRange(0, 15);
             }
 
             string token = await SubscribeToLiveControl();
