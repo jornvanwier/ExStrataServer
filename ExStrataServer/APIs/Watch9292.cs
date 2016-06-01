@@ -38,7 +38,7 @@ namespace ExStrataServer.APIs
         {
             Destination = destination;
             pattern = GetPattern();
-            InstanceInfo = "Destination: " + destination;
+            InstanceInfo = destination;
         }
 
         protected override async void Check(object Sender = null, EventArgs e = null)
