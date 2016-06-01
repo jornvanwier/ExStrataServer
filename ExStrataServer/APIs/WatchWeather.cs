@@ -48,7 +48,7 @@ namespace ExStrataServer.APIs
         {
             Country = country;
             City = city;
-            InstanceInfo = String.Format("Country: {0}, City: {1}", country, city);
+            InstanceInfo = city;
         }
 
         protected override async void Check(object Sender = null, EventArgs e = null)

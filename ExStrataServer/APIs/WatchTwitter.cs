@@ -43,7 +43,7 @@ namespace ExStrataServer.APIs
             previousTweets = new List<string>();
             setTweets();
             DefaultPattern = GetPattern();
-            InstanceInfo = "User: " + user;
+            InstanceInfo = user;
         }
 
         protected override async void Check(object Sender = null, EventArgs e = null)
@@ -67,7 +67,6 @@ namespace ExStrataServer.APIs
             tweets = tweets.GetRange(1, 5);
 
             for (int i = 0; i < tweets.Count; i++)
-            {
                 tweets[i] = Regex.Replace(
                     tweets[i].Split(
                         new string[] { "data-aria-label-part=\"0\">" },
@@ -76,9 +75,6 @@ namespace ExStrataServer.APIs
                         new string[] { "<div class=\"expanded-content js-tweet-details-dropdown\">" },
                         StringSplitOptions.RemoveEmptyEntries)[0],
                     "<[^>]*>", "").Split('\n')[0];
-
-                Console.WriteLine(tweets[i]);
-            }
 
             return tweets;
         }
