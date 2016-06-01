@@ -61,7 +61,13 @@ namespace ExStrataServer.Communication.Server
 
         private static async void SendResponse(string response, WebSocket client)
         {
-            await client.WriteStringAsync(response, cancellationToken);
+            try
+            {
+                await client.WriteStringAsync(response, cancellationToken);
+            } catch
+            {
+                Console.WriteLine("Connection closed.");
+            }
         }
     }
 }

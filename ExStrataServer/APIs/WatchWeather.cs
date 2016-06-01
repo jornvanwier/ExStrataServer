@@ -32,15 +32,15 @@ namespace ExStrataServer.APIs
         {
             Name = name;
             Description = description;
-            Parameters.Add(new
+            Parameters.Add(new Parameter
             {
-                name = "country",
-                type = "string"
+                Name = "country",
+                Type = "string"
             });
-            Parameters.Add(new
+            Parameters.Add(new Parameter
             {
-                name = "city",
-                type = "string"
+                Name = "city",
+                Type = "string"
             });
         }
 
