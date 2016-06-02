@@ -67,7 +67,10 @@ namespace ExStrataServer.APIs
         {
             try
             {
-                APIWatcher api = (APIWatcher)Activator.CreateInstance(AllAPIs[index], ParseParameter(parameters));
+                object[] parsedParams = ParseParameter(parameters);
+                if (parsedParams.Contains(null))
+                    return false;
+                APIWatcher api = (APIWatcher)Activator.CreateInstance(AllAPIs[index], parsedParams);
                 Add(api);
                 return true;
             }
