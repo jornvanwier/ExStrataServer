@@ -83,6 +83,7 @@ namespace ExStrataServer.APIs
             Hour = hour;
             Minute = minute;
 
+            InstanceInfo = FormatTime();
             DefaultPattern = GetPattern(Colour.FromString(colour));
         }
 
@@ -98,6 +99,17 @@ namespace ExStrataServer.APIs
                     Send();
                 }
             }
+        }
+
+        private string FormatTime()
+        {
+            string result = String.Empty;
+            if (Month != -1) result += String.Format("Maand: {0} ", Month);
+            if (Day != -1) result += String.Format("Dag: {0} ", Day);
+            if (Hour != -1) result += String.Format("Uur: {0} ", Hour);
+            if (Minute != -1) result += String.Format("Minuut: {0} ", Minute);
+
+            return result;
         }
 
         private bool IsDateTimeMatch()

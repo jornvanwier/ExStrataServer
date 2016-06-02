@@ -143,7 +143,8 @@ namespace ExStrataServer
             {
                 if (temp[i].Substring(temp[i].Length - 4) == ".log")
                 {
-                    string[] filesplit = temp[i].Split('\\', '.');
+                    // Split on both kinds of slashes, Windows uses \, Linux uses /
+                    string[] filesplit = temp[i].Split('\\', '/', '.');
                     result.Add(filesplit[filesplit.Length - 2]);
                 }
             }
