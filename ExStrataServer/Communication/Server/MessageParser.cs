@@ -14,7 +14,7 @@ namespace ExStrataServer.Communication.Server
     class MessageParser
     {
 
-        public static string Parse(string text)
+        public static async Task<string> Parse(string text)
         {
             JObject json;
             if (!Utilities.TryParseJObject(text, out json))
@@ -52,7 +52,7 @@ namespace ExStrataServer.Communication.Server
                         return ReadLog(json);
 
                     case "directcontrol":
-                        return DirectControl(json);
+                        return await DirectControl(json);
 
                     default:
                         return JsonConvert.SerializeObject(new
@@ -272,7 +272,7 @@ namespace ExStrataServer.Communication.Server
             else return notAuthorized;
         }
 
-        private static string DirectControl(JObject data)
+        private static async Task<string> DirectControl(JObject data)
         {
             if (CheckToken(data))
             {
@@ -284,9 +284,21 @@ namespace ExStrataServer.Communication.Server
                         Pattern pattern = APIManager.AllPatterns[(string)patternIndex];
 
                         // Discard result
-                        Task<bool> playResult = ExStrataAPI.PlayPattern(pattern);
-                        Log.Message(String.Format("Playing pattern {0} from direct control.", pattern.Name));
-                        return success;
+                        if (await ExStrataAPI.PlayPattern(pattern))
+                        {
+                            Log.APISend("Direct Control", pattern.Name);
+                            return success;
+                        }
+                        else
+                        {
+                            Log.APISend("Direct Control", pattern.Name, false);
+                            return JsonConvert.SerializeObject(new
+                            {
+                                success = false,
+                                code = 400,
+                                error = "Failed to play pattern."
+                            });
+                        }
 
                     }
                     else return invalidIndex;

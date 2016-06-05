@@ -51,7 +51,7 @@ namespace ExStrataServer.Communication.Server
                     {
                         result = reader.ReadToEnd();
                     }
-                    string response = MessageParser.Parse(result);
+                    string response = await MessageParser.Parse(result);
 
                     SendResponse(response, client);
                 }
