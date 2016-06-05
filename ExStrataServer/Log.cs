@@ -141,7 +141,7 @@ namespace ExStrataServer
 
             for (int i = 0; i < temp.Length; i++)
             {
-                if (temp[i].Substring(temp[i].Length - 4) == ".log")
+                if (temp[i].Substring(temp[i].Length - 4) == ".log" && !temp[i].Contains("RawData_"))
                 {
                     // Split on both kinds of slashes, Windows uses \, Linux uses /
                     string[] filesplit = temp[i].Split('\\', '/', '.');
