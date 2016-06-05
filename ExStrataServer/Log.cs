@@ -149,6 +149,7 @@ namespace ExStrataServer
                 }
             }
 
+            result.Reverse();
             return result.ToArray();
         }
 
