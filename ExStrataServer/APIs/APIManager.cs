@@ -59,6 +59,7 @@ namespace ExStrataServer.APIs
 
         public static void Add(APIWatcher api)
         {
+            Log.Message("Adding API " + api.Name);
             api.Start();
             LoadedAPIs.Add(api);
         }
@@ -84,6 +85,7 @@ namespace ExStrataServer.APIs
         {
             if (index > 0 && index < LoadedAPIs.Count)
             {
+                Log.Message("Removing API " + LoadedAPIs[index].Name);
                 LoadedAPIs[index].Dispose();
                 LoadedAPIs.RemoveAt(index);
                 return true;
