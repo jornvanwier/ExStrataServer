@@ -9,7 +9,7 @@ namespace ExStrataServer.APIs
 {
     public class WatchTest : APIWatcher
     {
-        private const string name = "TestAPI";
+        private const string name = "Test";
         private const string description = "Test API, moet verwijderd worden voor release.";
 
         public WatchTest()

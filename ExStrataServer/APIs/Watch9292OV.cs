@@ -12,7 +12,7 @@ using ExStrataServer.ColourPattern;
 
 namespace ExStrataServer.APIs
 {
-    public class Watch9292 : APIWatcher
+    public class Watch9292OV : APIWatcher
     {
         private string destination;
         private const string name = "9292OV";
@@ -24,7 +24,7 @@ namespace ExStrataServer.APIs
             set { destination = value; }
         }
 
-        public Watch9292()
+        public Watch9292OV()
         {
             Name = name;
             Parameters.Add(new Parameter
@@ -34,7 +34,7 @@ namespace ExStrataServer.APIs
             });
         }
 
-        public Watch9292(int delay, string destination) : base(delay, name, description)
+        public Watch9292OV(int delay, string destination) : base(delay, name, description)
         {
             Destination = destination;
             pattern = GetPattern();
