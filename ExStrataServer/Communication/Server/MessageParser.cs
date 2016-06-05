@@ -51,6 +51,9 @@ namespace ExStrataServer.Communication.Server
                     case "readlog":
                         return ReadLog(json);
 
+                    case "directcontrol":
+                        return DirectControl(json);
+
                     default:
                         return JsonConvert.SerializeObject(new
                         {
@@ -215,15 +218,10 @@ namespace ExStrataServer.Communication.Server
                 int parsedIndex;
                 if (Int32.TryParse((string)index, out parsedIndex))
                 {
-                    APIManager.Remove(parsedIndex);
-                    return success;
+                    if (APIManager.Remove(parsedIndex)) return success;
+                    else return invalidIndex;
                 }
-                else return JsonConvert.SerializeObject(new
-                {
-                    success = false,
-                    code = 400,
-                    error = "Index was not an integer."
-                });
+                else return invalidIndex;
             }
             else return String.Format(fieldMissing, "index");
         }
@@ -270,6 +268,30 @@ namespace ExStrataServer.Communication.Server
                     }
                 }
                 else return String.Format(fieldMissing, "filename");
+            }
+            else return notAuthorized;
+        }
+
+        private static string DirectControl(JObject data)
+        {
+            if (CheckToken(data))
+            {
+                JToken patternIndex;
+                if (data.TryGetValue("pattern", out patternIndex))
+                {
+                    if (APIManager.AllPatterns.ContainsKey((string)patternIndex))
+                    {
+                        Pattern pattern = APIManager.AllPatterns[(string)patternIndex];
+
+                        // Discard result
+                        Task<bool> playResult = ExStrataAPI.PlayPattern(pattern);
+                        Log.Message(String.Format("Playing pattern {0} from direct control.", pattern.Name));
+                        return success;
+
+                    }
+                    else return invalidIndex;
+                }
+                else return String.Format(fieldMissing, "pattern");
             }
             else return notAuthorized;
         }

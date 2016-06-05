@@ -80,10 +80,14 @@ namespace ExStrataServer.APIs
             }
         }
 
-        public static void Remove(int index)
+        public static bool Remove(int index)
         {
-            LoadedAPIs[index].Dispose();
-            LoadedAPIs.RemoveAt(index);
+            if (index > 0 && index < LoadedAPIs.Count)
+            {
+                LoadedAPIs[index].Dispose();
+                LoadedAPIs.RemoveAt(index);
+                return true;
+            } else return false;
         }
 
         public static void Dispose()
