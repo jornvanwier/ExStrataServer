@@ -27,7 +27,7 @@ namespace ExStrataServer
 
             // Start the API Manager with a few APIs
             APIManager.Initialize(
-                new Watch9292(1000 * 60, "NHL / Stenden Hogeschool"),
+                new Watch9292OV(1000 * 60, "NHL / Stenden Hogeschool"),
                 new WatchWeather(1000 * 60, "NL", "Leeuwarden"),
                 new WatchDateTime(1000 * 20, -1, -1, -1, 17, "0,120,255"),
                 new WatchCBS(1000 * 60));

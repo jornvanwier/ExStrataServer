@@ -20,7 +20,7 @@ namespace ExStrataServer.Communication.Server
         {
             CleanupTokens();
 
-            IEnumerable<User> userList = users.Where(a => a.Username == username);
+            IEnumerable<User> userList = users.Where(a => a.Username == username.ToLower());
 
             if (userList.Count() == 0) return null;
             else
