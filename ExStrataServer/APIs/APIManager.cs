@@ -147,6 +147,18 @@ namespace ExStrataServer.APIs
                             return null;
                         break;
 
+                    case "colour":
+                        try
+                        {
+                            Colour colour = Colour.FromString(parameters[i].Value);
+                            result.Add(colour);
+                        }
+                        catch
+                        {
+                            return null;
+                        }
+                        break;
+
                     default:
                         return null;
                 }
