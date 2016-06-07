@@ -70,7 +70,7 @@ namespace ExStrataServer.APIs
         public APIWatcher(int delay, string name, string description)
         {
             checkDelay = delay;
-            DisplayDelay = checkDelay.ToString() + " seconden";
+            DisplayDelay = (checkDelay / 1000) + " seconden";
             Name = name;
             Description = description;
         }

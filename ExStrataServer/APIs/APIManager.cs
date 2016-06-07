@@ -130,7 +130,10 @@ namespace ExStrataServer.APIs
                     case "int":
                         int iResult;
                         if (Int32.TryParse(parameters[i].Value, out iResult))
+                        {
+                            if (parameters[i].Name == "delay") iResult *= 1000;
                             result.Add(iResult);
+                        }
                         else
                             return null;
                         break;
