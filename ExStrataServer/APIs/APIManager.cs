@@ -135,6 +135,7 @@ namespace ExStrataServer.APIs
                             return null;
                         break;
 
+                    case "colour":
                     case "string":
                         result.Add(parameters[i].Value);
                         break;
@@ -145,18 +146,6 @@ namespace ExStrataServer.APIs
                             result.Add(bResult);
                         else
                             return null;
-                        break;
-
-                    case "colour":
-                        try
-                        {
-                            Colour colour = Colour.FromString(parameters[i].Value);
-                            result.Add(colour);
-                        }
-                        catch
-                        {
-                            return null;
-                        }
                         break;
 
                     default:

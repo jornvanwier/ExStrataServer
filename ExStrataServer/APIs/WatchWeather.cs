@@ -46,6 +46,7 @@ namespace ExStrataServer.APIs
 
         public WatchWeather(int delay, string country, string city) : base(delay, name, description)
         {
+            DisplayDelay = "15 minuten op de klok";
             Country = country;
             City = city;
             InstanceInfo = city;
