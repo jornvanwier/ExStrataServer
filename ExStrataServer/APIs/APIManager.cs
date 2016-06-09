@@ -130,11 +130,15 @@ namespace ExStrataServer.APIs
                     case "int":
                         int iResult;
                         if (Int32.TryParse(parameters[i].Value, out iResult))
+                        {
+                            if (parameters[i].Name == "delay") iResult *= 1000;
                             result.Add(iResult);
+                        }
                         else
                             return null;
                         break;
 
+                    case "colour":
                     case "string":
                         result.Add(parameters[i].Value);
                         break;
@@ -145,18 +149,6 @@ namespace ExStrataServer.APIs
                             result.Add(bResult);
                         else
                             return null;
-                        break;
-
-                    case "colour":
-                        try
-                        {
-                            Colour colour = Colour.FromString(parameters[i].Value);
-                            result.Add(colour);
-                        }
-                        catch
-                        {
-                            return null;
-                        }
                         break;
 
                     default:

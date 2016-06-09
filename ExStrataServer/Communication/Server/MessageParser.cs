@@ -112,6 +112,7 @@ namespace ExStrataServer.Communication.Server
                     name = loadedAPIs[i].Name,
                     description = loadedAPIs[i].Description,
                     instanceInfo = loadedAPIs[i].InstanceInfo,
+                    displayDelay = loadedAPIs[i].DisplayDelay,
                     index = i
                 });
             }

@@ -13,6 +13,7 @@ namespace ExStrataServer.APIs
     {
         private Timer checkTimer;
         private int checkDelay;
+        protected string displayDelay;
         private string name;
         private string description;
         protected Pattern pattern;
@@ -25,6 +26,12 @@ namespace ExStrataServer.APIs
                 Type = "int"
             }
         };
+
+        public string DisplayDelay
+        {
+            get { return displayDelay; }
+            set { displayDelay = value; }
+        }
 
         public string Name
         {
@@ -63,6 +70,7 @@ namespace ExStrataServer.APIs
         public APIWatcher(int delay, string name, string description)
         {
             checkDelay = delay;
+            DisplayDelay = (checkDelay / 1000) + " seconden";
             Name = name;
             Description = description;
         }
