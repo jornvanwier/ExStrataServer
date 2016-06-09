@@ -59,9 +59,9 @@ namespace ExStrataServer.APIs
 
         public static void Add(APIWatcher api)
         {
-            Log.Message("Adding API " + api.Name);
             api.Start();
             LoadedAPIs.Add(api);
+            Log.Message("Added API " + api.Name);
         }
 
         public static bool Add(int index, Parameter[] parameters)
@@ -69,7 +69,7 @@ namespace ExStrataServer.APIs
             try
             {
                 object[] parsedParams = ParseParameter(parameters);
-                if (parsedParams.Contains(null))
+                if (parsedParams == null)
                     return false;
                 APIWatcher api = (APIWatcher)Activator.CreateInstance(AllAPIs[index], parsedParams);
                 Add(api);
@@ -85,9 +85,9 @@ namespace ExStrataServer.APIs
         {
             if (index > 0 && index < LoadedAPIs.Count)
             {
-                Log.Message("Removing API " + LoadedAPIs[index].Name);
                 LoadedAPIs[index].Dispose();
                 LoadedAPIs.RemoveAt(index);
+                Log.Message("Removed API " + LoadedAPIs[index].Name);
                 return true;
             } else return false;
         }
