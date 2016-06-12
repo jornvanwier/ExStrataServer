@@ -56,20 +56,17 @@ namespace ExStrataServer.APIs
         {
             base.Check();
 
-            if (DateTime.Now.Minute % 15 == 0)
+            if (DateTime.Now.Minute%15 != 0) return;
+            JObject result;
+            if (Utilities.TryParseJObject(await Request.GetDataAsync("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"), out result))
             {
-                JObject result;
-                if (Utilities.TryParseJObject(await Request.GetDataAsync("http://api.wunderground.com/api/009779345fb40d94/conditions/q/" + Country + "/" + City + ".json"), out result))
-                {
-                    float temperatureC = (float)result["current_observation"]["temp_c"];
+                float temperatureC = (float)result["current_observation"]["temp_c"];
 
-                    Send(GetPattern(temperatureC));
-                }
-                else
-                {
-                    Log.Error("Could not parse weather data");
-                    return;
-                }
+                Send(GetPattern(temperatureC));
+            }
+            else
+            {
+                Log.Error("Could not parse weather data");
             }
         }
 
@@ -82,7 +79,7 @@ namespace ExStrataServer.APIs
         {
             int temperatureRings = (int)((temperatureC + 5) / 35 * 80);
             Pattern temperatureGradient = new Pattern("Temperature", 60 * 1000);
-            temperatureGradient.Add(Frame.Gradient(new Frame.GradientColour[]
+            temperatureGradient.Add(Frame.Gradient(new[]
             {
                         new Frame.GradientColour(0, new Colour(0,200,220)),
                         new Frame.GradientColour(50, new Colour(255,200,0)),

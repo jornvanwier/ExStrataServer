@@ -83,11 +83,11 @@ namespace ExStrataServer.APIs
 
         public static bool Remove(int index)
         {
-            if (index > 0 && index < LoadedAPIs.Count)
+            if (index >= 0 && index < LoadedAPIs.Count)
             {
+                Log.Message("Removed API " + LoadedAPIs[index].Name);
                 LoadedAPIs[index].Dispose();
                 LoadedAPIs.RemoveAt(index);
-                Log.Message("Removed API " + LoadedAPIs[index].Name);
                 return true;
             } else return false;
         }

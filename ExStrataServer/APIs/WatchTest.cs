@@ -31,7 +31,7 @@ namespace ExStrataServer.APIs
 
         public override Pattern GetPattern()
         {
-            return Pattern.Animate(new Pattern.GradientFrame[]{
+            return Pattern.Animate(new[]{
                 new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
                 {
                     new Frame.GradientColour(0, Colour.Red),
