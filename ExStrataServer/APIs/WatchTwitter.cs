@@ -50,16 +50,23 @@ namespace ExStrataServer.APIs
         {
             base.Check();
 
-            if (previousTweets.Count != 0)
+            try
             {
-                List<string> newTweets = await getTweets();
+                if (previousTweets.Count != 0)
+                {
+                    List<string> newTweets = await GetTweets();
 
-                if (!previousTweets.SequenceEqual(newTweets))
-                    Send(); // er is een nieuwe tweet
+                    if (!previousTweets.SequenceEqual(newTweets))
+                        Send(); // er is een nieuwe tweet
+                }
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception.Message);
             }
         }
 
-        private async Task<List<string>> getTweets()
+        private async Task<List<string>> GetTweets()
         {
             string tweetsHtml = await Request.GetDataAsync("https://twitter.com/" + User);
             List<string> tweets = tweetsHtml.Split(new[] { "tweet-text-container" }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -80,7 +87,7 @@ namespace ExStrataServer.APIs
         }
         private async void SetTweets()
         {
-            previousTweets = await getTweets();
+            previousTweets = await GetTweets();
         }
 
         public override Pattern GetPattern()
