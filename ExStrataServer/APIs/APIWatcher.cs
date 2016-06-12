@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
@@ -18,14 +20,7 @@ namespace ExStrataServer.APIs
         private string description;
         protected Pattern pattern;
         private string instanceInfo = String.Empty;
-        private List<Parameter> parameters = new List<Parameter>()
-        {
-            new Parameter
-            {
-                Name = "delay",
-                Type = "int"
-            }
-        };
+        private List<Parameter> parameters = new List<Parameter>();
 
         public string DisplayDelay
         {
@@ -65,6 +60,7 @@ namespace ExStrataServer.APIs
 
         public APIWatcher()
         {
+            FindParameters();
         }
 
         public APIWatcher(int delay, string name, string description)
@@ -130,5 +126,26 @@ namespace ExStrataServer.APIs
         }
 
         public abstract Pattern GetPattern();
+
+        private void FindParameters()
+        {
+            ConstructorInfo[] constructorInfos = GetType().GetConstructors();
+
+            foreach (ConstructorInfo ci in constructorInfos)
+            {
+                ParameterInfo[] parameterInfos = ci.GetParameters();
+
+                if (parameterInfos.Length == 0) continue;
+
+                foreach (ParameterInfo pi in parameterInfos)
+                {
+                    Parameters.Add(new Parameter
+                    {
+                        Name = pi.Name,
+                        Type = pi.ParameterType.ToString().Split('.').Last()
+                    });
+                }
+            }
+        }
     }
 }

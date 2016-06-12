@@ -24,14 +24,14 @@ namespace ExStrataServer.APIs
             set { destination = value; }
         }
 
-        public Watch9292OV()
+        public Watch9292OV() : base()
         {
             Name = name;
-            Parameters.Add(new Parameter
-            {
-                Name = "destination",
-                Type = "string"
-            });
+            //Parameters.Add(new Parameter
+            //{
+            //    Name = "destination",
+            //    Type = "string"
+            //});
         }
 
         public Watch9292OV(int delay, string destination) : base(delay, name, description)
