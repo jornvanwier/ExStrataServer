@@ -84,7 +84,7 @@ namespace ExStrataServer.APIs
             previousTweets = await GetTweets();
         }
 
-        public override Pattern GetPattern()
+        public sealed override Pattern GetPattern()
         {
             Pattern twitterGradient = Pattern.Animate(new[]
             {

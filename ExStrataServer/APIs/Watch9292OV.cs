@@ -64,7 +64,7 @@ namespace ExStrataServer.APIs
             else Log.Error("Could not parse 9292OV data");
         }
 
-        public override Pattern GetPattern()
+        public sealed override Pattern GetPattern()
         {
             return Pattern.Animate(new[]{
                             new Pattern.GradientFrame(0, Frame.Gradient(new[]
