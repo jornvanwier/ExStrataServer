@@ -33,35 +33,40 @@ namespace ExStrataServer.ColourPattern
             set { delay = value; }
         }
 
+        private int duration;
+
         public int Length
         {
             get { return frames.Count; }
         }
 
-        public Pattern(string name, int delay, List<Frame> frames)
+        public Pattern(string name, int d, List<Frame> frames)
         {
             Name = name;
-            Delay = delay;
+            duration = d;
 
             this.frames = frames;
             if (frames.Last() != Frame.Empty)
             {
                 frames.Add(Frame.Empty);
             }
+            Delay = duration / (frames.Count-1);
         }
 
-        public Pattern(string name, int delay)
+        public Pattern(string name, int d)
         {
             Name = name;
-            Delay = delay;
+            duration = d;
+            Delay = duration;
 
-            frames = new List<Frame>() { Frame.Empty };
+            frames = new List<Frame> { Frame.Empty };
 
         }
 
         public void Add(Frame frame)
         {
-            frames.Insert(frames.Count-1, frame);
+            frames.Insert(frames.Count - 1, frame);
+            Delay = duration / (frames.Count - 1);
         }
 
         public struct GradientFrame
@@ -74,8 +79,9 @@ namespace ExStrataServer.ColourPattern
                 this.frame = frame;
             }
         }
-        public static Pattern Animate(GradientFrame[] frames, string name, int delay, int length = 14)
+        public static Pattern Animate(GradientFrame[] frames, string name, int duration, int length = 14)
         {
+            int delay = duration / length;
             Pattern result = new Pattern(name, delay);
             for (int i = 0; i < frames.Length - 1; i++)
             {
@@ -116,7 +122,7 @@ namespace ExStrataServer.ColourPattern
             string result = "", ampersand = "";
             for (int i = 0; i < frames.Count; i++)
             {
-                if(i > 0) ampersand = "&";
+                if (i > 0) ampersand = "&";
 
                 result += ampersand + WebUtility.UrlEncode("pattern[frames][" + i + "][ms]") + '=' + (Delay * i);
                 result += frames[i].Serialize(i);
@@ -139,7 +145,7 @@ namespace ExStrataServer.ColourPattern
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
-        
+
         public void Save()
         {
             string defaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Patterns");
@@ -154,10 +160,5 @@ namespace ExStrataServer.ColourPattern
                 sw.WriteLine(UnencodedSerialize());
             }
         }
-
-
-
-        // TODO add methods for defining pretty patterns zoals gradients
-        // TODO add toString method
     }
 }

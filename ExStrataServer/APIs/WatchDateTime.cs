@@ -76,7 +76,7 @@ namespace ExStrataServer.APIs
             });
         }
 
-        public WatchDateTime(int delay, int month, int day, int hour, int minute, string colour) : base(delay, name, description)
+        public WatchDateTime(int delay, int month, int day, int hour, int minute, string colour, int patternDuration=60) : base(delay, name, description, patternDuration)
         {
             Month = month;
             Day = day;
@@ -128,7 +128,7 @@ namespace ExStrataServer.APIs
         {
             return new Pattern(
                 "DateTime Colour",
-                1000 * 60 * 10,
+                duration,
                 new List<Frame> { new Frame(colour) });
         }
 

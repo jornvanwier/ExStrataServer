@@ -17,7 +17,7 @@ namespace ExStrataServer.APIs
             Name = name;
         }
 
-        public WatchTest(int delay) : base(delay, name, description)
+        public WatchTest(int delay, int patternDuration = 10) : base(delay, name, description, patternDuration)
         {
             pattern = GetPattern();
         }
@@ -42,7 +42,7 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(0, Colour.Green),
                     new Frame.GradientColour(100, Colour.Orange)
                 }))
-            }, "Animation", 300, 14);
+            }, "Animation", duration);
         }
     }
 }

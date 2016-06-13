@@ -13,6 +13,7 @@ namespace ExStrataServer.APIs
     {
         private Timer checkTimer;
         private int checkDelay;
+        protected int duration;
         protected string displayDelay;
         private string name;
         private string description;
@@ -67,12 +68,13 @@ namespace ExStrataServer.APIs
         {
         }
 
-        public APIWatcher(int delay, string name, string description)
+        public APIWatcher(int delay, string name, string description, int patternDuration)
         {
             checkDelay = delay;
             DisplayDelay = (checkDelay / 1000) + " seconden";
             Name = name;
             Description = description;
+            duration = patternDuration * 1000;
         }
 
         public void Start()

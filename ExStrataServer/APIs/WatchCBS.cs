@@ -20,7 +20,7 @@ namespace ExStrataServer.APIs
             Name = name;
         }
 
-        public WatchCBS(int delay) : base(delay, name, description)
+        public WatchCBS(int delay, int patternDuration=120) : base(delay, name, description, patternDuration)
         {
         }
 
@@ -75,8 +75,8 @@ namespace ExStrataServer.APIs
         {
             int babyRings = born / 25;
 
-            Pattern babyGradient = new Pattern("Babies", 60 * 1000);
-            babyGradient.Add(Frame.Gradient(new Frame.GradientColour[]
+            Pattern babyGradient = new Pattern("Babies", duration);
+            babyGradient.Add(Frame.Gradient(new[]
             {
                         new Frame.GradientColour(0, Colour.Pink),
                         new Frame.GradientColour(100, Colour.Maroon)

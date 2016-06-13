@@ -34,7 +34,7 @@ namespace ExStrataServer.APIs
             });
         }
 
-        public Watch9292OV(int delay, string destination) : base(delay, name, description)
+        public Watch9292OV(int delay, string destination, int patternDuration = 30) : base(delay, name, description, patternDuration)
         {
             Destination = destination;
             pattern = GetPattern();
@@ -70,18 +70,18 @@ namespace ExStrataServer.APIs
 
         public override Pattern GetPattern()
         {
-            return Pattern.Animate(new Pattern.GradientFrame[]{
-                            new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
+            return Pattern.Animate(new[]{
+                            new Pattern.GradientFrame(0, Frame.Gradient(new[]
                             {
                                 new Frame.GradientColour(0, Colour.Blue),
                                 new Frame.GradientColour(100, Colour.Blueviolet)
                             })),
-                            new Pattern.GradientFrame(100, Frame.Gradient(new Frame.GradientColour[]
+                            new Pattern.GradientFrame(100, Frame.Gradient(new[]
                             {
                                 new Frame.GradientColour(0, Colour.Lightblue),
                                 new Frame.GradientColour(100, Colour.Blue)
                             }))
-                        }, "Animate", 20 / 14 * 1000, 14);
+                        }, "Animate", duration);
         }
     }
 }

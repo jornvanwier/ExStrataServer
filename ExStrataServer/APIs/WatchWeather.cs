@@ -44,7 +44,7 @@ namespace ExStrataServer.APIs
             });
         }
 
-        public WatchWeather(int delay, string country, string city) : base(delay, name, description)
+        public WatchWeather(int delay, string country, string city, int patternDuration = 60) : base(delay, name, description, patternDuration)
         {
             DisplayDelay = "15 minuten op de klok";
             Country = country;
@@ -78,7 +78,7 @@ namespace ExStrataServer.APIs
         private Pattern GetPattern(float temperatureC)
         {
             int temperatureRings = (int)((temperatureC + 5) / 35 * 80);
-            Pattern temperatureGradient = new Pattern("Temperature", 60 * 1000);
+            Pattern temperatureGradient = new Pattern("Temperature", duration);
             temperatureGradient.Add(Frame.Gradient(new[]
             {
                         new Frame.GradientColour(0, new Colour(0,200,220)),

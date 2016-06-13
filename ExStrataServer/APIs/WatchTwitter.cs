@@ -37,7 +37,7 @@ namespace ExStrataServer.APIs
 
         }
 
-        public WatchTwitter(int delay, string user) : base(delay, name, description)
+        public WatchTwitter(int delay, string user, int patternDuration = 60) : base(delay, name, description, patternDuration)
         {
             User = user;
             previousTweets = new List<string>();
@@ -134,7 +134,7 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(75, Colour.Blue),
                     new Frame.GradientColour(100, Colour.White),
                 }))
-            }, "TwitterPattern", 4000);
+            }, "TwitterPattern", duration);
 
 
 
