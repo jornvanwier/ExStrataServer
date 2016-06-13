@@ -12,7 +12,7 @@ namespace ExStrataServer.APIs
         private const string name = "Test";
         private const string description = "Test API, moet verwijderd worden voor release.";
 
-        public WatchTest()
+        public WatchTest() : base()
         {
             Name = name;
         }

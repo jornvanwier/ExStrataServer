@@ -139,7 +139,7 @@ namespace ExStrataServer.APIs
                         break;
 
                     case "colour":
-                    case "string":
+                    case "String":
                         result.Add(parameters[i].Value);
                         break;
 

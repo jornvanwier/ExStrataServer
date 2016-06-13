@@ -45,35 +45,6 @@ namespace ExStrataServer.APIs
         {
             Name = name;
             Description = description;
-            //Parameters.Add(new Parameter
-            //{
-            //    Name = "month",
-            //    Type = "int",
-            //    Value = Month.ToString()
-            //});
-            //Parameters.Add(new Parameter
-            //{
-            //    Name = "day",
-            //    Type = "int",
-            //    Value = Day.ToString()
-            //});
-            //Parameters.Add(new Parameter
-            //{
-            //    Name = "hour",
-            //    Type = "int",
-            //    Value = Hour.ToString()
-            //});
-            //Parameters.Add(new Parameter
-            //{
-            //    Name = "minute",
-            //    Type = "int",
-            //    Value = Minute.ToString()
-            //});
-            //Parameters.Add(new Parameter
-            //{
-            //    Name = "colour",
-            //    Type = "colour"
-            //});
         }
 
         public WatchDateTime(int delay, int month, int day, int hour, int minute, string colour) : base(delay, name, description)

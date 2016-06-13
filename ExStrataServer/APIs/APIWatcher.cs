@@ -145,6 +145,8 @@ namespace ExStrataServer.APIs
                         Type = pi.ParameterType.ToString().Split('.').Last()
                     });
                 }
+
+                return;
             }
         }
     }

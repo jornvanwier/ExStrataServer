@@ -32,16 +32,6 @@ namespace ExStrataServer.APIs
         {
             Name = name;
             Description = description;
-            //Parameters.Add(new Parameter
-            //{
-            //    Name = "country",
-            //    Type = "string"
-            //});
-            //Parameters.Add(new Parameter
-            //{
-            //    Name = "city",
-            //    Type = "string"
-            //});
         }
 
         public WatchWeather(int delay, string country, string city) : base(delay, name, description)
