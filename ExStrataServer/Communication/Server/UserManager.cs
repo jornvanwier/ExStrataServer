@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
 
 namespace ExStrataServer.Communication.Server
 {
     public static class UserManager
     {
-        private static readonly List<User> users = new List<User>()
+        private static readonly List<User> users = new List<User>
         {
             new User("jfop", "Jos Foppele", CreatePassword("appel"))
         };
@@ -20,32 +18,28 @@ namespace ExStrataServer.Communication.Server
         {
             CleanupTokens();
 
-            IEnumerable<User> userList = users.Where(a => a.Username == username.ToLower());
+            IEnumerable<User> userList = users.Where(a => a.Username == username.ToLower()).ToArray();
 
-            if (userList.Count() == 0) return null;
-            else
+            if (!userList.Any()) return null;
+            User user = userList.First();
+            HashAlgorithm hasher = SHA256.Create();
+            byte[] hashPassword = hasher.ComputeHash(Utilities.StringToBytes(password));
+
+            if (user.Password.SequenceEqual(hashPassword))
             {
-                User user = userList.First();
-                HashAlgorithm hasher = SHA256.Create();
-                byte[] hashPassword = hasher.ComputeHash(Utilities.StringToBytes(password));
+                Token token = new Token(user);
+                tokens.Add(token);
 
-                if (Enumerable.SequenceEqual(user.Password, hashPassword))
-                {
-                    Token token = new Token(user);
-                    tokens.Add(token);
-
-                    return token;
-                }
-                else return null;
+                return token;
             }
+            return null;
         }
 
         public static User CheckToken(string token)
         {
             CleanupTokens();
             Token foundToken = FindToken(token);
-            if (foundToken == null) return null;
-            else return foundToken.User;
+            return foundToken?.User;
         }
 
         public static bool TokenExists(string token)
@@ -55,12 +49,7 @@ namespace ExStrataServer.Communication.Server
 
         public static Token FindToken(string token)
         {
-            for (int i = 0; i < tokens.Count; i++)
-            {
-                if (tokens[i].Code == token) return tokens[i];
-            }
-
-            return null;
+            return tokens.FirstOrDefault(t => t.Code == token);
         }
 
         private static void CleanupTokens()
