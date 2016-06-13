@@ -127,7 +127,7 @@ namespace ExStrataServer.APIs
             {
                 switch (parameters[i].Type)
                 {
-                    case "int":
+                    case "Int32":
                         int iResult;
                         if (Int32.TryParse(parameters[i].Value, out iResult))
                         {
@@ -139,11 +139,11 @@ namespace ExStrataServer.APIs
                         break;
 
                     case "colour":
-                    case "string":
+                    case "String":
                         result.Add(parameters[i].Value);
                         break;
 
-                    case "bool":
+                    case "Boolean":
                         bool bResult;
                         if (Boolean.TryParse(parameters[i].Value, out bResult))
                             result.Add(bResult);

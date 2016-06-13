@@ -24,15 +24,10 @@ namespace ExStrataServer.APIs
             set { user = value; }
         }
 
-        public WatchTwitter()
+        public WatchTwitter() : base()
         {
             Name = name;
             Description = description;
-            Parameters.Add(new Parameter
-            {
-                Name = "user",
-                Type = "string"
-            });
 
 
         }
