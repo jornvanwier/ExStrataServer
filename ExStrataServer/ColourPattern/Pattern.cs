@@ -50,7 +50,7 @@ namespace ExStrataServer.ColourPattern
             {
                 frames.Add(Frame.Empty);
             }
-            Delay = duration / (frames.Count-1);
+            Delay = duration / (frames.Count - 1);
         }
 
         public Pattern(string name, int d)
@@ -81,8 +81,7 @@ namespace ExStrataServer.ColourPattern
         }
         public static Pattern Animate(GradientFrame[] frames, string name, int duration, int length = 14)
         {
-            int delay = duration / length;
-            Pattern result = new Pattern(name, delay);
+            Pattern result = new Pattern(name, duration * 1000);
             for (int i = 0; i < frames.Length - 1; i++)
             {
                 float percentage = (float)(frames[i + 1].percentage - frames[i].percentage) / 100;

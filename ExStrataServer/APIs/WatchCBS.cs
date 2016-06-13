@@ -18,9 +18,10 @@ namespace ExStrataServer.APIs
         public WatchCBS() : base()
         {
             Name = name;
+            duration = 120;
         }
 
-        public WatchCBS(int delay, int patternDuration=120) : base(delay, name, description, patternDuration)
+        public WatchCBS(int delay, int patternDuration = 120) : base(delay, name, description, patternDuration)
         {
         }
 
@@ -52,7 +53,7 @@ namespace ExStrataServer.APIs
                         }
                     }
 
-                    
+
 
                     Send(GetPattern(born));
 

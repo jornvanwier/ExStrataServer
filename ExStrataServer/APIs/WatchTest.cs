@@ -15,6 +15,7 @@ namespace ExStrataServer.APIs
         public WatchTest() : base()
         {
             Name = name;
+            duration = 10;
         }
 
         public WatchTest(int delay, int patternDuration = 10) : base(delay, name, description, patternDuration)

@@ -28,8 +28,7 @@ namespace ExStrataServer.APIs
         {
             Name = name;
             Description = description;
-
-
+            duration = 60;
         }
 
         public WatchTwitter(int delay, string user, int patternDuration = 60) : base(delay, name, description, patternDuration)

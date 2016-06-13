@@ -32,6 +32,7 @@ namespace ExStrataServer.APIs
         {
             Name = name;
             Description = description;
+            duration = 60;
         }
 
         public WatchWeather(int delay, string country, string city, int patternDuration = 60) : base(delay, name, description, patternDuration)

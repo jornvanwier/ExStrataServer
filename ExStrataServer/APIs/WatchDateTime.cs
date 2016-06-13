@@ -45,9 +45,10 @@ namespace ExStrataServer.APIs
         {
             Name = name;
             Description = description;
+            duration = 60;
         }
 
-        public WatchDateTime(int delay, int month, int day, int hour, int minute, string colour, int patternDuration=60) : base(delay, name, description, patternDuration)
+        public WatchDateTime(int delay, int month, int day, int hour, int minute, string colour, int patternDuration = 60) : base(delay, name, description, patternDuration)
         {
             Month = month;
             Day = day;

@@ -27,6 +27,7 @@ namespace ExStrataServer.APIs
         public Watch9292OV() : base()
         {
             Name = name;
+            duration = 30;
         }
 
         public Watch9292OV(int delay, string destination, int patternDuration = 30) : base(delay, name, description, patternDuration)
