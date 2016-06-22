@@ -1,0 +1,63 @@
+<html lang='nl'>
+
+<head>
+    <meta charset='utf-8' />
+    <title>EX Strata</title>
+    <meta name='theme-color' content='#4674C7'>
+    <meta name='mobile-web-app-capable' content='yes'>
+    <link rel='icon' sizes='192x192' href='img/favicon.png'>
+    <link rel='shortcut icon' type='image/png' href='img/favicon.png'>
+    <!-- Favicon moet 192x192 zijn -->
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='main.css'>
+    <script type='text/javascript' src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
+    <script src='three/three.min.js' type='text/javascript'></script>
+    <script src='three/OrbitControls.js' type='text/javascript'></script>
+    <script src='three/threex.dilategeometry.js'></script>
+    <script src='three/threex.atmospherematerial.js'></script>
+    <script src="three/threex.geometricglowmesh.js"></script>
+    <script src='three/dat.gui.min.js'></script>
+    <script src="three/threex.atmospherematerialdatgui.js"></script>
+    <script src='ExStrataModel.js'></script>
+    <script src='SocketConnection.js'></script>
+    <script src='colorpicker/cpjs.js'></script>
+    <link rel='stylesheet' href='colorpicker/cpcss.css'>
+    <script src='datepicker/script.js'></script>
+    <script src='timepicker/TimePicker.js'></script>
+    <link rel='stylesheet' href='datepicker/style.css'>
+    <script src='script.js' type='text/javascript'></script>
+</head>
+
+<body>
+    <div id='renderView' ondblclick="model.toggleFullScreen()">
+    </div>
+    <div id='controlPanel'>
+        <div id='colorful'>
+            <h1>EX STRATA</h1>
+            <h3>Ambient Information Visualization Mark II</h3>
+            <a target='blank' href='http://exstrata.nl/play'>Zie de EX Strata live!</a>
+            <a id='loginKnop' onclick="loginPrompt()">Inloggen</a>
+        </div>
+        <div id='APIList'></div>
+        
+    </div>
+    <div class="prompt">
+        <h2 class="prompttitel">Inloggen</h2>
+        <div class="prompthtml">
+            <input type="text" placeholder="Gebruikersnaam..." id="username">
+            <input type="password" placeholder="Wachtwoord..." id="password">
+            <input type="button" value="Log in" onclick="login()">
+        </div>
+    </div>
+    <div id='dateTimePrompt'>
+        <h2>Kies een..</h2>
+        <span id='datePicker'>Dag</span>
+        <span id='timePicker'>Tijd</span>
+        <a>Kleur: </a><div id='colorPicker'></div>
+        <div id='doneButton' onclick='addDateTimeApi()'>Voeg datum toe</div>
+    </div>
+    <div id='message'></div>
+    <div id='loading'></div>
+</body>
+
+</html>
