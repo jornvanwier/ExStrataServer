@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using ExStrataServer.Communication;
 using ExStrataServer.ColourPattern;
+using ExStrataServer.Communication;
+using Newtonsoft.Json.Linq;
 
 namespace ExStrataServer.APIs
 {
@@ -28,7 +24,7 @@ namespace ExStrataServer.APIs
             set { country = value; }
         }
 
-        public WatchWeather() : base()
+        public WatchWeather()
         {
             Name = name;
             Description = description;

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExStrataServer.ColourPattern;
 
 namespace ExStrataServer.APIs
@@ -12,7 +8,7 @@ namespace ExStrataServer.APIs
         private const string name = "Test";
         private const string description = "Test API, moet verwijderd worden voor release.";
 
-        public WatchTest() : base()
+        public WatchTest()
         {
             Name = name;
             duration = 10;
@@ -33,12 +29,12 @@ namespace ExStrataServer.APIs
         public sealed override Pattern GetPattern()
         {
             return Pattern.Animate(new[]{
-                new Pattern.GradientFrame(0, Frame.Gradient(new Frame.GradientColour[]
+                new Pattern.GradientFrame(0, Frame.Gradient(new[]
                 {
                     new Frame.GradientColour(0, Colour.Red),
                     new Frame.GradientColour(100, Colour.Blue)
                 })),
-                new Pattern.GradientFrame(100, Frame.Gradient(new Frame.GradientColour[]
+                new Pattern.GradientFrame(100, Frame.Gradient(new[]
                 {
                     new Frame.GradientColour(0, Colour.Green),
                     new Frame.GradientColour(100, Colour.Orange)

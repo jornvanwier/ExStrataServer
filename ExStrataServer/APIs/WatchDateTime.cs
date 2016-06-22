@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExStrataServer.ColourPattern;
 
 namespace ExStrataServer.APIs
@@ -41,7 +38,7 @@ namespace ExStrataServer.APIs
             set { minute = value; }
         }
 
-        public WatchDateTime() : base()
+        public WatchDateTime()
         {
             Name = name;
             Description = description;

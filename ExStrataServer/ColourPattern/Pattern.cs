@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Net;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.IO;
+using System.Linq;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace ExStrataServer.ColourPattern
 {

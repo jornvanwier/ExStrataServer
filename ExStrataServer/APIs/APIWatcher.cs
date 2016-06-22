@@ -72,7 +72,7 @@ namespace ExStrataServer.APIs
 
         public void Start()
         {
-            checkTimer = new Timer((obj) =>
+            checkTimer = new Timer(obj =>
             {
                 Check();
             }, null, 0, checkDelay);

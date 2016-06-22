@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
-using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using ExStrataServer.Communication;
 using ExStrataServer.ColourPattern;
+using ExStrataServer.Communication;
+using Newtonsoft.Json.Linq;
 
 namespace ExStrataServer.APIs
 {
@@ -24,7 +17,7 @@ namespace ExStrataServer.APIs
             set { destination = value; }
         }
 
-        public Watch9292OV() : base()
+        public Watch9292OV()
         {
             Name = name;
             duration = 30;

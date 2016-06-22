@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExStrataServer.Communication.Server
+﻿namespace ExStrataServer.Communication.Server
 {
     public class User
     {

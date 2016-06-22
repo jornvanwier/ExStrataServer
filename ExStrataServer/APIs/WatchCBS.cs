@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using ExStrataServer.APIs;
-using ExStrataServer.Communication;
 using ExStrataServer.ColourPattern;
+using ExStrataServer.Communication;
+using Newtonsoft.Json.Linq;
 
 namespace ExStrataServer.APIs
 {
@@ -15,7 +11,7 @@ namespace ExStrataServer.APIs
         private const string name = "CBS";
         private const string description = "Laat 1 keer per dag zien hoeveel baby's er die dag zijn geboren. Het aantal rijen van lampen dat aan staat geeft het aantal geboren babies die dag aan, op een schaal van 0 tot 2000.";
 
-        public WatchCBS() : base()
+        public WatchCBS()
         {
             Name = name;
             duration = 120;
@@ -52,17 +48,12 @@ namespace ExStrataServer.APIs
                             died -= delta;
                         }
                     }
-
-
-
+                    
                     Send(GetPattern(born));
-
-                    Console.WriteLine("born: " + born + " died: " + died);
                 }
                 else
                 {
                     Log.Error("Could not parse CBS data");
-                    return;
                 }
             }
         }

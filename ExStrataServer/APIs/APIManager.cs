@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExStrataServer.ColourPattern;
 
 namespace ExStrataServer.APIs
@@ -89,7 +87,8 @@ namespace ExStrataServer.APIs
                 LoadedAPIs[index].Dispose();
                 LoadedAPIs.RemoveAt(index);
                 return true;
-            } else return false;
+            }
+            return false;
         }
 
         public static void Dispose()

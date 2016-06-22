@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using vtortola.WebSockets;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using ExStrataServer.APIs;
 using ExStrataServer.ColourPattern;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ExStrataServer.Communication.Server
 {
@@ -64,7 +62,7 @@ namespace ExStrataServer.Communication.Server
 
                 }
             }
-            else return String.Format(fieldMissing, "action");
+            return String.Format(fieldMissing, "action");
         }
 
         private static string Login(JObject data)
@@ -87,16 +85,16 @@ namespace ExStrataServer.Communication.Server
                             displayName = token.User.Displayname
                         });
                     }
-                    else return JsonConvert.SerializeObject(new
+                    return JsonConvert.SerializeObject(new
                     {
                         success = false,
                         code = 400,
                         error = "Username or password is invalid."
                     });
                 }
-                else return String.Format(fieldMissing, "pass");
+                return String.Format(fieldMissing, "pass");
             }
-            else return String.Format(fieldMissing, "user");
+            return String.Format(fieldMissing, "user");
         }
 
         private static string GetLoadedAPIs()
@@ -151,7 +149,7 @@ namespace ExStrataServer.Communication.Server
                     data = values
                 });
             }
-            else return notAuthorized;
+            return notAuthorized;
         }
 
         private static string AddAPI(JObject data)
@@ -177,20 +175,20 @@ namespace ExStrataServer.Communication.Server
                                 {
                                     return success;
                                 }
-                                else return invalidParameters;
+                                return invalidParameters;
                             }
                             catch
                             {
                                 return invalidParameters;
                             }
                         }
-                        else return String.Format(fieldMissing, "parameters");
+                        return String.Format(fieldMissing, "parameters");
                     }
-                    else return invalidIndex;
+                    return invalidIndex;
                 }
-                else return String.Format(fieldMissing, "index");
+                return String.Format(fieldMissing, "index");
             }
-            else return notAuthorized;
+            return notAuthorized;
         }
 
         private static string GetPattern(JObject data)
@@ -208,7 +206,7 @@ namespace ExStrataServer.Communication.Server
                 });
             }
 
-            else return String.Format(fieldMissing, "patternName");
+            return String.Format(fieldMissing, "patternName");
         }
 
         private static string RemoveAPI(JObject data)
@@ -220,11 +218,11 @@ namespace ExStrataServer.Communication.Server
                 if (Int32.TryParse((string)index, out parsedIndex))
                 {
                     if (APIManager.Remove(parsedIndex)) return success;
-                    else return invalidIndex;
+                    return invalidIndex;
                 }
-                else return invalidIndex;
+                return invalidIndex;
             }
-            else return String.Format(fieldMissing, "index");
+            return String.Format(fieldMissing, "index");
         }
 
         private static string ListLogs(JObject data)
@@ -238,7 +236,7 @@ namespace ExStrataServer.Communication.Server
                     logs = Log.List()
                 });
             }
-            else return notAuthorized;
+            return notAuthorized;
         }
 
         private static string ReadLog(JObject data)
@@ -258,19 +256,16 @@ namespace ExStrataServer.Communication.Server
                             error = "Could not read file."
                         });
                     }
-                    else
+                    return JsonConvert.SerializeObject(new
                     {
-                        return JsonConvert.SerializeObject(new
-                        {
-                            success = true,
-                            code = 200,
-                            log = result
-                        });
-                    }
+                        success = true,
+                        code = 200,
+                        log = result
+                    });
                 }
-                else return String.Format(fieldMissing, "filename");
+                return String.Format(fieldMissing, "filename");
             }
-            else return notAuthorized;
+            return notAuthorized;
         }
 
         private static async Task<string> DirectControl(JObject data)
@@ -290,23 +285,19 @@ namespace ExStrataServer.Communication.Server
                             Log.APISend("Direct Control", pattern.Name);
                             return success;
                         }
-                        else
+                        Log.APISend("Direct Control", pattern.Name, false);
+                        return JsonConvert.SerializeObject(new
                         {
-                            Log.APISend("Direct Control", pattern.Name, false);
-                            return JsonConvert.SerializeObject(new
-                            {
-                                success = false,
-                                code = 400,
-                                error = "Failed to play pattern."
-                            });
-                        }
-
+                            success = false,
+                            code = 400,
+                            error = "Failed to play pattern."
+                        });
                     }
-                    else return invalidIndex;
+                    return invalidIndex;
                 }
-                else return String.Format(fieldMissing, "pattern");
+                return String.Format(fieldMissing, "pattern");
             }
-            else return notAuthorized;
+            return notAuthorized;
         }
 
         private static bool CheckToken(JObject data)

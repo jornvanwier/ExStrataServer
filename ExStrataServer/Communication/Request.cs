@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Net;
 using System.IO;
-
-
-
+using System.Net;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace ExStrataServer.Communication
 {
@@ -35,12 +28,9 @@ namespace ExStrataServer.Communication
             }
 
             if(waitForResponse) return await GetResponseAsync(request);
-            else
-            {
-                // We don't need the result of this call
-                Task delayTask = GetResponseAsync(request);
-                return String.Empty;
-            }
+            // We don't need the result of this call
+            Task delayTask = GetResponseAsync(request);
+            return String.Empty;
         }
 
         public static async Task<string> PostDataAsync(string url, JObject data, bool waitForResponse = true, string contentType = "application/json")

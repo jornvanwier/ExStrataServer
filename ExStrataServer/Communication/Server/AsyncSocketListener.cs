@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using vtortola.WebSockets;
-
+using vtortola.WebSockets.Rfc6455;
 
 namespace ExStrataServer.Communication.Server
 {
     public class AsyncSocketListener
     {
-        private const int port = 912;
+        private const int port = 913;
         private static CancellationToken cancellationToken = new CancellationToken();
         private static WebSocketListener server;
 
@@ -25,13 +21,13 @@ namespace ExStrataServer.Communication.Server
             WebSocketListenerOptions serverOptions = new WebSocketListenerOptions();
             serverOptions.UseDualStackSocket = false;
             server = new WebSocketListener(new IPEndPoint(ip, port), serverOptions);
-            vtortola.WebSockets.Rfc6455.WebSocketFactoryRfc6455 rfc6455 = new vtortola.WebSockets.Rfc6455.WebSocketFactoryRfc6455(server);
+            WebSocketFactoryRfc6455 rfc6455 = new WebSocketFactoryRfc6455(server);
             server.Standards.RegisterStandard(rfc6455);
             server.Start();
 
             Log.Message(String.Format("Server initialized at {0}:{1}", ip, port));
 
-            Thread worker = new Thread(new ThreadStart(StartListening));
+            Thread worker = new Thread(StartListening);
             worker.Start();
         }
 

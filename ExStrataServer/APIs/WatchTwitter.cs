@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using ExStrataServer.Communication;
-using ExStrataServer.ColourPattern;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using ExStrataServer.ColourPattern;
+using ExStrataServer.Communication;
 
 namespace ExStrataServer.APIs
 {
@@ -24,7 +22,7 @@ namespace ExStrataServer.APIs
             set { user = value; }
         }
 
-        public WatchTwitter() : base()
+        public WatchTwitter()
         {
             Name = name;
             Description = description;
@@ -94,7 +92,7 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(25, Colour.Blue),
                     new Frame.GradientColour(50, Colour.White),
                     new Frame.GradientColour(75, Colour.Blue),
-                    new Frame.GradientColour(100, Colour.White),
+                    new Frame.GradientColour(100, Colour.White)
                 })),
                 new Pattern.GradientFrame(25, Frame.Gradient(new[]
                 {
@@ -102,7 +100,7 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(25, Colour.White),
                     new Frame.GradientColour(50, Colour.Blue),
                     new Frame.GradientColour(75, Colour.White),
-                    new Frame.GradientColour(100, Colour.Blue),
+                    new Frame.GradientColour(100, Colour.Blue)
                 })),
                 new Pattern.GradientFrame(50, Frame.Gradient(new[]
                 {
@@ -110,7 +108,7 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(25, Colour.Blue),
                     new Frame.GradientColour(50, Colour.White),
                     new Frame.GradientColour(75, Colour.Blue),
-                    new Frame.GradientColour(100, Colour.White),
+                    new Frame.GradientColour(100, Colour.White)
                 })),
                 new Pattern.GradientFrame(75, Frame.Gradient(new[]
                 {
@@ -118,7 +116,7 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(25, Colour.White),
                     new Frame.GradientColour(50, Colour.Blue),
                     new Frame.GradientColour(75, Colour.White),
-                    new Frame.GradientColour(100, Colour.Blue),
+                    new Frame.GradientColour(100, Colour.Blue)
                 })),
                 new Pattern.GradientFrame(100, Frame.Gradient(new[]
                 {
@@ -126,7 +124,7 @@ namespace ExStrataServer.APIs
                     new Frame.GradientColour(25, Colour.Blue),
                     new Frame.GradientColour(50, Colour.White),
                     new Frame.GradientColour(75, Colour.Blue),
-                    new Frame.GradientColour(100, Colour.White),
+                    new Frame.GradientColour(100, Colour.White)
                 }))
             }, "TwitterPattern", duration);
 

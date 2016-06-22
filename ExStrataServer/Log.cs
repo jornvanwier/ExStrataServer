@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace ExStrataServer
@@ -12,10 +9,10 @@ namespace ExStrataServer
         private static string name;
         private static string defaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
         private static bool
-            consoleOutputMessage = false,
-            consoleOutputAPI = false,
-            consoleOutputError = false,
-            consoleOutputRawData = false;
+            consoleOutputMessage,
+            consoleOutputAPI,
+            consoleOutputError,
+            consoleOutputRawData;
 
         private static object locker = new object();
 

@@ -10,7 +10,7 @@ namespace ExStrataServer.APIs
         private const string name = "Demo";
         private const string description = "Simpele APIWatcher om de laten zien hoe een nieuwe aangemaakt kan worden.";
 
-        public WatchDemo() : base()
+        public WatchDemo()
         {
             Name = name;
             Description = description;

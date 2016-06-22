@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ExStrataServer.ColourPattern;
 using Newtonsoft.Json.Linq;
@@ -59,11 +55,8 @@ namespace ExStrataServer.Communication
                 await UnsubscribeFromLiveControl(token);
                 return true;
             }
-            else
-            {
-                Log.Error("Could not obtain LiveControl token");
-                return false;
-            }
+            Log.Error("Could not obtain LiveControl token");
+            return false;
         }
 
         /// <summary>
@@ -89,25 +82,16 @@ namespace ExStrataServer.Communication
 
                         return token;
                     }
-                    else
-                    {
-                        Log.Error("LiveControl queue is not empty");
-                        await UnsubscribeFromLiveControl(token);
+                    Log.Error("LiveControl queue is not empty");
+                    await UnsubscribeFromLiveControl(token);
 
-                        return String.Empty;
-                    }
-                }
-                else
-                {
-                    Log.Error("SubscribeToLiveControl returned false");
                     return String.Empty;
                 }
-            }
-            else
-            {
-                Log.Error("Could not parse LiveControl token data");
+                Log.Error("SubscribeToLiveControl returned false");
                 return String.Empty;
             }
+            Log.Error("Could not parse LiveControl token data");
+            return String.Empty;
         }
 
         /// <summary>

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Net;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace ExStrataServer.ColourPattern
 {
@@ -56,14 +53,14 @@ namespace ExStrataServer.ColourPattern
                 this.colour = colour;
             }
         }
-        public static Frame Gradient(GradientColour[] colours, int start = 0, int stop = Frame.ExStrataHeight)
+        public static Frame Gradient(GradientColour[] colours, int start = 0, int stop = ExStrataHeight)
         {
             Frame result = new Frame();
             int currentRow = 0;
             for (int i = 0; i < colours.Length - 1; i++)
             {
                 float percentage = (float)(colours[i + 1].percentage - colours[i].percentage) / 100;
-                int ringsToNextPoint = (int)(Frame.ExStrataHeight * percentage);
+                int ringsToNextPoint = (int)(ExStrataHeight * percentage);
 
                 float rColorDiff = (colours[i + 1].colour.R - colours[i].colour.R) / (float)ringsToNextPoint,
                     gColorDiff = (colours[i + 1].colour.G - colours[i].colour.G) / (float)ringsToNextPoint,
