@@ -64,9 +64,8 @@ namespace ExStrataServer.Communication
         private static void HandleWebException(WebException e)
         {
             if (e.Response == null) Log.Error("Could not get response: " + e.Message);
-            else Log.Error(String.Format("Could not get response: ({0}) {1}",
-                ((HttpWebResponse)e.Response).StatusCode,
-                ((HttpWebResponse)e.Response).StatusDescription));
+            else Log.Error(
+                $"Could not get response: ({((HttpWebResponse) e.Response).StatusCode}) {((HttpWebResponse) e.Response).StatusDescription}");
         }
     }
 }

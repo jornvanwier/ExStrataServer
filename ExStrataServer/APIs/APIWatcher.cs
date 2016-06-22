@@ -11,7 +11,7 @@ namespace ExStrataServer.APIs
     public abstract class APIWatcher : IDisposable
     {
         private Timer checkTimer;
-        private int checkDelay;
+        private readonly int checkDelay;
         protected int duration;
         protected string displayDelay;
         private string name;

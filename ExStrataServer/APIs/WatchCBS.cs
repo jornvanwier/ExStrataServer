@@ -28,7 +28,8 @@ namespace ExStrataServer.APIs
             if (DateTime.Now.Hour == 13 && DateTime.Now.Minute == 55)
             {
                 JObject result;
-                string URI = String.Format("https://cbs.nl/nl-nl/visualisaties/bevolkingsteller/-/media/cbs/Infographics/Bevolkingsteller/{0}_{1}_{2}.json", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                string URI =
+                    $"https://cbs.nl/nl-nl/visualisaties/bevolkingsteller/-/media/cbs/Infographics/Bevolkingsteller/{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}.json";
                 string JSON = "{'data':" + await Request.GetDataAsync(URI) + "}";
                 if (Utilities.TryParseJObject(JSON, out result))
                 {
@@ -39,14 +40,12 @@ namespace ExStrataServer.APIs
                     for (int i = 1; i < stats.Count(); i++)
                     {
                         int delta = (int)stats[i] - (int)stats[i - 1];
+
                         if (delta > 0)
-                        {
                             born += delta;
-                        }
+
                         else if (delta < 0)
-                        {
                             died -= delta;
-                        }
                     }
                     
                     Send(GetPattern(born));

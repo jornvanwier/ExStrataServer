@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="vtortola.WebSockets, Version=2.2.0.2, Culture=neutral, PublicKeyToken=7f78616efb4a208d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WebSocketListener\vtortola.WebSockets\bin\Release\vtortola.WebSockets.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\vtortola.WebSockets.dll</HintPath>
     </Reference>
     <Reference Include="vtortola.WebSockets.Deflate, Version=2.2.0.2, Culture=neutral, PublicKeyToken=7f78616efb4a208d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

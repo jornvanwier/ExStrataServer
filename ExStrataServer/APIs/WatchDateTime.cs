@@ -73,10 +73,10 @@ namespace ExStrataServer.APIs
         private string FormatTime()
         {
             string result = String.Empty;
-            if (Month != -1) result += String.Format("Maand: {0} ", Month);
-            if (Day != -1) result += String.Format("Dag: {0} ", Day);
-            if (Hour != -1) result += String.Format("Uur: {0} ", Hour);
-            if (Minute != -1) result += String.Format("Minuut: {0} ", Minute);
+            if (Month != -1) result += $"Maand: {Month} ";
+            if (Day != -1) result += $"Dag: {Day} ";
+            if (Hour != -1) result += $"Uur: {Hour} ";
+            if (Minute != -1) result += $"Minuut: {Minute} ";
 
             return result;
         }

@@ -12,7 +12,7 @@ namespace ExStrataServer.Communication.Server
             new User("jfop", "Jos Foppele", CreatePassword("appel"))
         };
 
-        private static List<Token> tokens = new List<Token>();
+        private static readonly List<Token> tokens = new List<Token>();
 
         public static Token Authenticate(string username, string password)
         {

@@ -68,33 +68,28 @@ namespace ExStrataServer.Communication.Server
         private static string Login(JObject data)
         {
             JToken username;
-            if (data.TryGetValue("user", out username))
-            {
-                JToken password;
-                if (data.TryGetValue("pass", out password))
-                {
-                    Token token = UserManager.Authenticate((string)username, (string)password);
+            if (!data.TryGetValue("user", out username)) return String.Format(fieldMissing, "user");
+            JToken password;
+            if (!data.TryGetValue("pass", out password)) return String.Format(fieldMissing, "pass");
 
-                    if (token != null)
-                    {
-                        return JsonConvert.SerializeObject(new
-                        {
-                            success = true,
-                            code = 200,
-                            token = token.Code,
-                            displayName = token.User.Displayname
-                        });
-                    }
-                    return JsonConvert.SerializeObject(new
-                    {
-                        success = false,
-                        code = 400,
-                        error = "Username or password is invalid."
-                    });
-                }
-                return String.Format(fieldMissing, "pass");
+            Token token = UserManager.Authenticate((string)username, (string)password);
+
+            if (token != null)
+            {
+                return JsonConvert.SerializeObject(new
+                {
+                    success = true,
+                    code = 200,
+                    token = token.Code,
+                    displayName = token.User.Displayname
+                });
             }
-            return String.Format(fieldMissing, "user");
+            return JsonConvert.SerializeObject(new
+            {
+                success = false,
+                code = 400,
+                error = "Username or password is invalid."
+            });
         }
 
         private static string GetLoadedAPIs()
@@ -125,31 +120,28 @@ namespace ExStrataServer.Communication.Server
 
         private static string GetAllAPIs(JObject data)
         {
-            if (CheckToken(data))
+            if (!CheckToken(data)) return notAuthorized;
+
+            Type[] types = APIManager.AllAPIs;
+
+            List<object> values = new List<object>();
+
+            for (int i = 0; i < types.Length; i++)
             {
-                Type[] types = APIManager.AllAPIs;
-                List<List<Parameter>> parameters = APIManager.AllParameters;
-
-                List<object> values = new List<object>();
-
-                for (int i = 0; i < types.Length; i++)
+                values.Add(new
                 {
-                    values.Add(new
-                    {
-                        name = types[i].ToString().Split('.').Last().Substring(5),
-                        index = i,
-                        parameters = APIManager.AllParameters[i]
-                    });
-                }
-
-                return JsonConvert.SerializeObject(new
-                {
-                    success = true,
-                    code = 200,
-                    data = values
+                    name = types[i].ToString().Split('.').Last().Substring(5),
+                    index = i,
+                    parameters = APIManager.AllParameters[i]
                 });
             }
-            return notAuthorized;
+
+            return JsonConvert.SerializeObject(new
+            {
+                success = true,
+                code = 200,
+                data = values
+            });
         }
 
         private static string AddAPI(JObject data)
@@ -194,110 +186,88 @@ namespace ExStrataServer.Communication.Server
         private static string GetPattern(JObject data)
         {
             JToken patternName;
-            if (data.TryGetValue("patternName", out patternName))
+            if (!data.TryGetValue("patternName", out patternName)) return String.Format(fieldMissing, "patternName");
+
+            if (!APIManager.AllPatterns.ContainsKey((string)patternName)) return invalidIndex;
+
+            return JsonConvert.SerializeObject(new
             {
-                if (!APIManager.AllPatterns.ContainsKey((string)patternName)) return invalidIndex;
-
-                return JsonConvert.SerializeObject(new
-                {
-                    success = true,
-                    code = 200,
-                    data = APIManager.AllPatterns[(string)patternName].UnencodedSerialize()
-                });
-            }
-
-            return String.Format(fieldMissing, "patternName");
+                success = true,
+                code = 200,
+                data = APIManager.AllPatterns[(string)patternName].UnencodedSerialize()
+            });
         }
 
         private static string RemoveAPI(JObject data)
         {
             JToken index;
-            if (data.TryGetValue("index", out index))
-            {
-                int parsedIndex;
-                if (Int32.TryParse((string)index, out parsedIndex))
-                {
-                    if (APIManager.Remove(parsedIndex)) return success;
-                    return invalidIndex;
-                }
-                return invalidIndex;
-            }
-            return String.Format(fieldMissing, "index");
+            if (!data.TryGetValue("index", out index)) return String.Format(fieldMissing, "index");
+            int parsedIndex;
+            if (!Int32.TryParse((string) index, out parsedIndex)) return invalidIndex;
+
+            if (APIManager.Remove(parsedIndex)) return success;
+            return invalidIndex;
         }
 
         private static string ListLogs(JObject data)
         {
-            if (CheckToken(data))
+            if (!CheckToken(data)) return notAuthorized;
+
+            return JsonConvert.SerializeObject(new
             {
-                return JsonConvert.SerializeObject(new
-                {
-                    success = true,
-                    code = 200,
-                    logs = Log.List()
-                });
-            }
-            return notAuthorized;
+                success = true,
+                code = 200,
+                logs = Log.List()
+            });
         }
 
         private static string ReadLog(JObject data)
         {
-            if (CheckToken(data))
+            if (!CheckToken(data)) return notAuthorized;
+            JToken filename;
+            if (!data.TryGetValue("filename", out filename)) return String.Format(fieldMissing, "filename");
+            string result = Log.Read((string)filename);
+
+            if(result == String.Empty)
             {
-                JToken filename;
-                if (data.TryGetValue("filename", out filename))
+                return JsonConvert.SerializeObject(new
                 {
-                    string result = Log.Read((string)filename);
-                    if(result == String.Empty)
-                    {
-                        return JsonConvert.SerializeObject(new
-                        {
-                            success = false,
-                            code = 400,
-                            error = "Could not read file."
-                        });
-                    }
-                    return JsonConvert.SerializeObject(new
-                    {
-                        success = true,
-                        code = 200,
-                        log = result
-                    });
-                }
-                return String.Format(fieldMissing, "filename");
+                    success = false,
+                    code = 400,
+                    error = "Could not read file."
+                });
             }
-            return notAuthorized;
+            return JsonConvert.SerializeObject(new
+            {
+                success = true,
+                code = 200,
+                log = result
+            });
         }
 
         private static async Task<string> DirectControl(JObject data)
         {
-            if (CheckToken(data))
-            {
-                JToken patternIndex;
-                if (data.TryGetValue("pattern", out patternIndex))
-                {
-                    if (APIManager.AllPatterns.ContainsKey((string)patternIndex))
-                    {
-                        Pattern pattern = APIManager.AllPatterns[(string)patternIndex];
+            if (!CheckToken(data)) return notAuthorized;
 
-                        // Discard result
-                        if (await ExStrataAPI.PlayPattern(pattern))
-                        {
-                            Log.APISend("Direct Control", pattern.Name);
-                            return success;
-                        }
-                        Log.APISend("Direct Control", pattern.Name, false);
-                        return JsonConvert.SerializeObject(new
-                        {
-                            success = false,
-                            code = 400,
-                            error = "Failed to play pattern."
-                        });
-                    }
-                    return invalidIndex;
-                }
-                return String.Format(fieldMissing, "pattern");
+            JToken patternIndex;
+            if (!data.TryGetValue("pattern", out patternIndex)) return String.Format(fieldMissing, "pattern");
+            if (!APIManager.AllPatterns.ContainsKey((string) patternIndex)) return invalidIndex;
+
+            Pattern pattern = APIManager.AllPatterns[(string)patternIndex];
+
+            // Discard result
+            if (await ExStrataAPI.PlayPattern(pattern))
+            {
+                Log.APISend("Direct Control", pattern.Name);
+                return success;
             }
-            return notAuthorized;
+            Log.APISend("Direct Control", pattern.Name, false);
+            return JsonConvert.SerializeObject(new
+            {
+                success = false,
+                code = 400,
+                error = "Failed to play pattern."
+            });
         }
 
         private static bool CheckToken(JObject data)

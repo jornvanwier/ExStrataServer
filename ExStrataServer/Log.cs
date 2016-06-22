@@ -7,14 +7,14 @@ namespace ExStrataServer
     public static class Log
     {
         private static string name;
-        private static string defaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
+        private static readonly string defaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
         private static bool
             consoleOutputMessage,
             consoleOutputAPI,
             consoleOutputError,
             consoleOutputRawData;
 
-        private static object locker = new object();
+        private static readonly object locker = new object();
 
         /// <summary>
         /// Output messages to the console.
@@ -68,14 +68,14 @@ namespace ExStrataServer
 
         public static void Message(string data)
         {
-            string text = String.Format("[{0}] {1}", FormatTime(), data);
+            string text = $"[{FormatTime()}] {data}";
             Write(text);
             if (ConsoleOutputMessage) Console.WriteLine(text);
         }
 
         public static void APICheck(string senderName)
         {
-            string text = String.Format("[{0}] {1} is checking.", FormatTime(), senderName);
+            string text = $"[{FormatTime()}] {senderName} is checking.";
             Write(text);
 
             if (ConsoleOutputAPI) Console.WriteLine(text);
@@ -84,8 +84,8 @@ namespace ExStrataServer
         public static void APISend(string senderName, string patternName, bool success = true)
         {
             string text;
-            if (success) text = String.Format("[{0}] {1} played pattern {2}.", FormatTime(), senderName, patternName);
-            else text = String.Format("[{0}] {1} failed to play pattern {2}.", FormatTime(), senderName, patternName);
+            if (success) text = $"[{FormatTime()}] {senderName} played pattern {patternName}.";
+            else text = $"[{FormatTime()}] {senderName} failed to play pattern {patternName}.";
 
             Write(text);
             if (ConsoleOutputAPI) Console.WriteLine(text);
@@ -93,7 +93,7 @@ namespace ExStrataServer
 
         public static void Error(string data)
         {
-            string text = String.Format("[{0}] ERROR: {1}", FormatTime(), data);
+            string text = $"[{FormatTime()}] ERROR: {data}";
 
             Write(text);
             if (ConsoleOutputError) Console.WriteLine(text);
@@ -101,7 +101,7 @@ namespace ExStrataServer
 
         public static void RawData(string data)
         {
-            string text = String.Format("[{0}] RAW: {1}", FormatTime(), data);
+            string text = $"[{FormatTime()}] RAW: {data}";
             Write(text, "RawData_");
             if (ConsoleOutputRawData) Console.WriteLine(text);
         }

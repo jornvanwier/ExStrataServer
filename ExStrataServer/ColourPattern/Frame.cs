@@ -7,7 +7,7 @@ namespace ExStrataServer.ColourPattern
     public class Frame
     {
         public const int ExStrataHeight = 80;
-        private Colour[] colours = new Colour[ExStrataHeight];
+        private readonly Colour[] colours = new Colour[ExStrataHeight];
 
         public Colour[] Colours { get { return colours; } }
 

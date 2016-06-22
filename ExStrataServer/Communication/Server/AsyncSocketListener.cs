@@ -10,22 +10,21 @@ namespace ExStrataServer.Communication.Server
 {
     public class AsyncSocketListener
     {
-        private const int port = 913;
-        private static CancellationToken cancellationToken = new CancellationToken();
+        private const int port = 912;
+        private static readonly CancellationToken cancellationToken = new CancellationToken();
         private static WebSocketListener server;
 
         public static void Initialize()
         {
             IPAddress ip = Array.Find(Dns.GetHostEntry(Dns.GetHostName()).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);
 
-            WebSocketListenerOptions serverOptions = new WebSocketListenerOptions();
-            serverOptions.UseDualStackSocket = false;
+            WebSocketListenerOptions serverOptions = new WebSocketListenerOptions {UseDualStackSocket = false};
             server = new WebSocketListener(new IPEndPoint(ip, port), serverOptions);
             WebSocketFactoryRfc6455 rfc6455 = new WebSocketFactoryRfc6455(server);
             server.Standards.RegisterStandard(rfc6455);
             server.Start();
 
-            Log.Message(String.Format("Server initialized at {0}:{1}", ip, port));
+            Log.Message($"Server initialized at {ip}:{port}");
 
             Thread worker = new Thread(StartListening);
             worker.Start();

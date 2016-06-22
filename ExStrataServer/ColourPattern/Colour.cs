@@ -204,7 +204,7 @@ namespace ExStrataServer.ColourPattern
         /// <returns>The formatted string.</returns>
         public string Serialize()
         {
-            return String.Format("{0},{1},{2}", R, G, B);
+            return $"{R},{G},{B}";
         }
 
     }

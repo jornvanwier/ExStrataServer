@@ -31,7 +31,7 @@ namespace ExStrataServer.ColourPattern
             set { delay = value; }
         }
 
-        private int duration;
+        private readonly int duration;
 
         public int Length
         {
